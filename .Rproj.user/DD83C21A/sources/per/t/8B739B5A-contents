@@ -1,0 +1,23 @@
+---
+title: "Tutorial: visualising lockdown trends with ggplot2"
+tags:
+- policing
+- crime
+- COVID
+- R
+- ggplot2
+editor_options: 
+  chunk_output_type: console
+date: '2020-07-01'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
+```
+
+Over the past few weeks I have spent a bit of time exploring police recorded crime trends before and after 'lockdowns' induced by COVID19. As a recent [article](https://theconversation.com/lockdown-crime-trends-why-antisocial-behaviour-is-up-140479) of mine has briefly discussed, this is not straightforward.
+
+There is lots of talk of worldwide lockdowns signalling the [ultimate natural experiment in criminology](https://link.springer.com/article/10.1007/s12103-020-09546-0). Of course, this kind of claim will be challenged, especially when demonstrations involve police recorded crime data. Lots of parameters will have changed beyond people's routine activities, amongst them, people's ability and willingness to report crimes to the police, and policing resource allocation and recording practices.
+
+In the meantime, police recorded crime data can offer a unique insight into how criminal behaviour might have changed in the past few months. In the UK, open data is released on a monthly basis. This isn't ideal by any means, but it does allow for some preliminary exploration. Here, we're going to create a descriptive visualisation which (more or less) mimics some now infamous graphs by the FT to track coronovirus deaths worldwide. Here, we'll do this using using the `ggplot2` package in [R](ttps://www.r-project.org/).
+

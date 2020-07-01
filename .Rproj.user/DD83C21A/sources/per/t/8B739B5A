@@ -1,0 +1,27 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1593624741902.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3386539509",
+    "id" : "8B739B5A",
+    "lastKnownWriteTime" : 1593627555,
+    "last_content_update" : 1593627555917,
+    "path" : "~/GitHub/website_academic/content/post/tutorial1_crime_covid.Rmd",
+    "project_path" : "content/post/tutorial1_crime_covid.Rmd",
+    "properties" : {
+        "chunk_output_type" : "console",
+        "cursorPosition" : "21,524",
+        "scrollLine" : "9",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

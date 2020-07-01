@@ -1,0 +1,159 @@
+---
+title: "Tutorial: visualising lockdown trends with ggplot2"
+tags:
+- policing
+- crime
+- COVID
+- R
+- ggplot2
+editor_options: 
+  chunk_output_type: console
+date: '2020-07-01'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F, eval = F)
+```
+
+
+Over the past few weeks I have spent a bit of time exploring police recorded crime trends before and after 'lockdowns' induced by COVID19. As a recent [article](https://theconversation.com/lockdown-crime-trends-why-antisocial-behaviour-is-up-140479) of mine has briefly discussed, this is not straightforward.
+
+There is lots of talk of worldwide lockdowns signalling the [ultimate natural experiment in criminology](https://link.springer.com/article/10.1007/s12103-020-09546-0). Of course, this kind of claim will be challenged, especially when demonstrations involve police recorded crime data. Lots of parameters will have changed beyond people's routine activities, amongst them, people's ability and willingness to report crimes to the police, and policing resource allocation and recording practices.
+
+In the meantime, police recorded crime data can offer a unique insight into how criminal behaviour might have changed in the past few months. In the UK, open data is released on a monthly basis. This isn't ideal by any means, but it does allow for some preliminary exploration. Here, we're going to create a descriptive visualisation which (more or less) mimics some now infamous [graphs by the FT](https://www.ft.com/content/a26fbf7e-48f8-11ea-aeb3-955839e06441) to track coronavirus deaths worldwide. 
+
+<!-- ![](/img/ft_example.png) -->
+
+One powerful thing about these visuals is that they effortlessly account for _seasonal_ trends in death rates using previous years as a reference point. Readers can then intuitively understand what is 'normal', and identify fluctuations which are irregular, and thus likely a result of COVID19.
+
+Similarly, a defining characteristic of crime trends is seasonality. To disentangle fluctuations in crime, and pinpoint irregularity resulting from lockdown measures, we must account for typical monthly fluctuations. We can do this visually using open police recorded crime data and the `ggplot2` package in [R](ttps://www.r-project.org/). For now, focus on the base visual -- perhaps in further posts I can demonstrate how to more accurately mimic the 'FT look'. 
+
+## Open crime data
+
+There are several ways to download [open police data](https://data.police.uk/) in the UK. There is an [API](https://data.police.uk/docs/), an [R package](https://github.com/njtierney/ukpolice), and a [direct download page](https://data.police.uk/data/) from the website. To keep things simple, we are going to get most of the data through direct download.
+
+
+
+
+
+```{r}
+# Scientific notation off.
+options(scipen=99999)
+```
+
+```{r}
+# Extract list of working directories + file names for each csv. As of 1 July 2020, the earliest we can get 
+# is June 2017 and the latest is May 2020.
+file_names <- paste("data/met_police_june2017_to_june2020/", list.files("data/met_police_june2017_to_june2020", "*.csv", recursive=TRUE), sep = "")
+```
+
+```{r}
+# Loop through each and load.
+met_list <- lapply(file_names, read_csv)
+```
+
+```{r}
+# Bind together into one df.
+met_df <- bind_rows(met_list)
+```
+
+```{r}
+# Check we have the timeframe needed.
+unique(met_df$Month)
+```
+
+```{r}
+# Download missing 2017 months. Note that it takes a while (~5-10mins), as we can only block-download.
+#download.file(url = "https://data.police.uk/data/archive/2017-06.zip", destfile = "data/archive_to_jun_2017.zip")
+
+# For the purposes of the demo, I will host these missings month on GitHub.
+# Extract Jan-June of 2017.
+jan17 <- read_csv("data/archive_to_jun_2017/2017-01/2017-01-metropolitan-street.csv")
+feb17 <- read_csv("data/archive_to_jun_2017/2017-02/2017-02-metropolitan-street.csv") 
+mar17 <- read_csv("data/archive_to_jun_2017/2017-03/2017-03-metropolitan-street.csv") 
+apr17 <- read_csv("data/archive_to_jun_2017/2017-04/2017-04-metropolitan-street.csv") 
+may17 <- read_csv("data/archive_to_jun_2017/2017-05/2017-05-metropolitan-street.csv") 
+```
+
+```{r}
+# Extract 2016 (optional).
+dates_2016 <- list.files("data/archive_to_jun_2017", pattern = "2016")
+extra <- paste("data/archive_to_jun_2017", "/", dates_2016, "/", dates_2016, "-", "metropolitan-street.csv", sep = "")
+met_2016_list <- lapply(extra, read_csv)
+met_2016_df <- bind_rows(met_2016_list)
+```
+
+```{r}
+# Bind these to existing.
+met_full_df <- bind_rows(met_df, jan17, feb17, mar17, apr17, may17, met_2016_df)
+```
+
+```{r}
+# Counts.
+met_stats_df <- met_full_df %>%
+  separate(Month, into = c("Year","Month"), sep = "-") %>% 
+  group_by(Year, Month, `Crime type`) %>% 
+  summarise(counts = n()) %>% 
+  arrange(`Crime type`, Year, Month) %>% 
+  ungroup()
+```
+
+```{r}
+# Split.
+met_stats_list <- group_split(met_stats_df, `Crime type`)
+# Name.
+names(met_stats_list) <- unique(met_stats_df$`Crime type`)
+
+# Month vector.
+month_labs <- c(" ","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
+
+```
+
+```{r}
+# Base visual function.
+plot_fun <- function(x){
+  ggplot() +
+    geom_line(data = filter(x, Year != 2020),
+              mapping = aes(x = Month, y = counts, group = Year),
+              colour = "lightgrey") +
+    geom_vline(data = x,
+               mapping = aes(xintercept = 2.7),
+               linetype = "dotted") + 
+    stat_summary(data = filter(x, Year != 2020),
+                 aes(x = Month, y = counts, group = Year),
+                 fun = mean, colour = "white", geom = "line", group=1, size = 0.8) +
+    stat_summary(data = filter(x, Year != 2020),
+                 aes(x = Month, y = counts, group = Year),
+                 fun = mean, colour = "black", geom = "line", group=1, size = 0.7) +
+    geom_line(data = filter(x, Year == 2020),
+              mapping = aes(x = Month, y = counts, group = 1),
+              colour = "white", size = 1.1) +
+    geom_line(data = filter(x, Year == 2020),
+              mapping = aes(x = Month, y = counts, group = 1),
+              colour = "tomato", size = 1) +
+    scale_x_discrete(labels = month_labs) +
+    scale_y_continuous(limits = c(0.6*min(x$counts), 1.4*max(x$counts)), n.breaks = 5) +
+    labs(x = NULL, y = NULL) +
+    theme_bw() +
+    theme(axis.title = element_blank(),
+          axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 6),
+          axis.ticks = element_blank(),
+          plot.title = element_text(size = 8))  
+}
+```
+
+```{r}
+# Make plots and add titles.
+met_stats_plots <- list()
+for (i in seq(met_stats_list)) {
+  gg <- plot_fun(met_stats_list[[i]]) +
+    labs(title = str_replace_all(string = names(met_stats_list[i]), "_", " "))
+  met_stats_plots[[i]] <- gg
+}
+```
+
+```{r}
+# Plot grid
+plot_grid(plotlist = met_stats_plots, ncol = 3)
+```
