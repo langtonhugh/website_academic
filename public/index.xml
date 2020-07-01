@@ -165,22 +165,51 @@
     
     <item>
       <title>QGIS</title>
-      <link>/project/external-project/</link>
+      <link>/project/qgis-teaching/</link>
       <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
-      <guid>/project/external-project/</guid>
-      <description></description>
+      <guid>/project/qgis-teaching/</guid>
+      <description>&lt;h2 id=&#34;introduction-to-qgis&#34;&gt;Introduction to QGIS&lt;/h2&gt;
+&lt;p&gt;Developed and taught a 1-day introductory course at the 
+&lt;a href=&#34;https://www.cmi.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cathie Marsh Institute&lt;/a&gt; (University of Manchester). Material is available on 
+&lt;a href=&#34;https://github.com/langtonhugh/qgis_intro&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;A shorter introductory course has been held online for 
+&lt;a href=&#34;https://www.opendatamanchester.org.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Open Data Manchester&lt;/a&gt;, with an accompanying 
+&lt;a href=&#34;https://vimeo.com/417967553&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;video&lt;/a&gt;. Material is avaiable on 
+&lt;a href=&#34;https://github.com/langtonhugh/qgis_intro/tree/odm_qgis_intro&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+</description>
     </item>
     
     <item>
       <title>R</title>
-      <link>/project/internal-project/</link>
+      <link>/project/r-teaching/</link>
       <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
-      <guid>/project/internal-project/</guid>
-      <description>&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis posuere tellus ac convallis placerat. Proin tincidunt magna sed ex sollicitudin condimentum. Sed ac faucibus dolor, scelerisque sollicitudin nisi. Cras purus urna, suscipit quis sapien eu, pulvinar tempor diam. Quisque risus orci, mollis id ante sit amet, gravida egestas nisl. Sed ac tempus magna. Proin in dui enim. Donec condimentum, sem id dapibus fringilla, tellus enim condimentum arcu, nec volutpat est felis vel metus. Vestibulum sit amet erat at nulla eleifend gravida.&lt;/p&gt;
-&lt;p&gt;Nullam vel molestie justo. Curabitur vitae efficitur leo. In hac habitasse platea dictumst. Sed pulvinar mauris dui, eget varius purus congue ac. Nulla euismod, lorem vel elementum dapibus, nunc justo porta mi, sed tempus est est vel tellus. Nam et enim eleifend, laoreet sem sit amet, elementum sem. Morbi ut leo congue, maximus velit ut, finibus arcu. In et libero cursus, rutrum risus non, molestie leo. Nullam congue quam et volutpat malesuada. Sed risus tortor, pulvinar et dictum nec, sodales non mi. Phasellus lacinia commodo laoreet. Nam mollis, erat in feugiat consectetur, purus eros egestas tellus, in auctor urna odio at nibh. Mauris imperdiet nisi ac magna convallis, at rhoncus ligula cursus.&lt;/p&gt;
-&lt;p&gt;Cras aliquam rhoncus ipsum, in hendrerit nunc mattis vitae. Duis vitae efficitur metus, ac tempus leo. Cras nec fringilla lacus. Quisque sit amet risus at ipsum pharetra commodo. Sed aliquam mauris at consequat eleifend. Praesent porta, augue sed viverra bibendum, neque ante euismod ante, in vehicula justo lorem ac eros. Suspendisse augue libero, venenatis eget tincidunt ut, malesuada at lorem. Donec vitae bibendum arcu. Aenean maximus nulla non pretium iaculis. Quisque imperdiet, nulla in pulvinar aliquet, velit quam ultrices quam, sit amet fringilla leo sem vel nunc. Mauris in lacinia lacus.&lt;/p&gt;
-&lt;p&gt;Suspendisse a tincidunt lacus. Curabitur at urna sagittis, dictum ante sit amet, euismod magna. Sed rutrum massa id tortor commodo, vitae elementum turpis tempus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean purus turpis, venenatis a ullamcorper nec, tincidunt et massa. Integer posuere quam rutrum arcu vehicula imperdiet. Mauris ullamcorper quam vitae purus congue, quis euismod magna eleifend. Vestibulum semper vel augue eget tincidunt. Fusce eget justo sodales, dapibus odio eu, ultrices lorem. Duis condimentum lorem id eros commodo, in facilisis mauris scelerisque. Morbi sed auctor leo. Nullam volutpat a lacus quis pharetra. Nulla congue rutrum magna a ornare.&lt;/p&gt;
-&lt;p&gt;Aliquam in turpis accumsan, malesuada nibh ut, hendrerit justo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque sed erat nec justo posuere suscipit. Donec ut efficitur arcu, in malesuada neque. Nunc dignissim nisl massa, id vulputate nunc pretium nec. Quisque eget urna in risus suscipit ultricies. Pellentesque odio odio, tincidunt in eleifend sed, posuere a diam. Nam gravida nisl convallis semper elementum. Morbi vitae felis faucibus, vulputate orci placerat, aliquet nisi. Aliquam erat volutpat. Maecenas sagittis pulvinar purus, sed porta quam laoreet at.&lt;/p&gt;
+      <guid>/project/r-teaching/</guid>
+      <description>&lt;p&gt;I have taught a number of courses using R and RStudio, including the development of teaching material both on my own and with colleagues.&lt;/p&gt;
+&lt;h2 id=&#34;data-visualisation-in-r-using-crime-data&#34;&gt;Data visualisation in R using crime data&lt;/h2&gt;
+&lt;p&gt;1-day workshop on visualisation and mapping at the 
+&lt;a href=&#34;https://www.cmi.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cathie Marsh Institute&lt;/a&gt; (University of Manchester) in collaboration with the 
+&lt;a href=&#34;https://ukdataservice.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;UK Data Service&lt;/a&gt;. Material is available on 
+&lt;a href=&#34;https://github.com/langtonhugh/data_viz_R_workshop&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt; and the 
+&lt;a href=&#34;https://ukdataservice.ac.uk/news-and-events/eventsitem/?id=5552&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;UK Data Service website&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;r-for-police-forces&#34;&gt;R for police forces&lt;/h2&gt;
+&lt;p&gt;1-day workshop on data wrangling and visualisation for West Midlands Police Force. Please get in contact for material.&lt;/p&gt;
+&lt;h2 id=&#34;r-for-criminologists&#34;&gt;R for criminologists&lt;/h2&gt;
+&lt;p&gt;1-day workshop on data wrangling, visualisation and mapping hosted at the 
+&lt;a href=&#34;https://www.esc-eurocrim.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;European Society of Criminology&lt;/a&gt; with colleagues from the 
+&lt;a href=&#34;http://www.space-place-crime.eu/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Space Place and Crime working group&lt;/a&gt;. Material is available on 
+&lt;a href=&#34;https://github.com/langtonhugh/ESC2019&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt; and 
+&lt;a href=&#34;https://rpubs.com/spaceplacecrime&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;rpubs&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;getting-started-in-r---an-introduction-to-data-analysis-and-visualisation&#34;&gt;Getting Started in R - an introduction to data analysis and visualisation&lt;/h2&gt;
+&lt;p&gt;4-day comprehensive introductory course at the 
+&lt;a href=&#34;https://www.methods.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Methods@Manchester&lt;/a&gt; summer school, co-taught with colleagues. Material is available as a 
+&lt;a href=&#34;https://rcatlord.github.io/GSinR/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;website&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;cluster-analysis-in-r&#34;&gt;Cluster analysis in R&lt;/h2&gt;
+&lt;p&gt;1-day workshop introducing cluster analysis in R at the 
+&lt;a href=&#34;https://www.cmi.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cathie Marsh Institute&lt;/a&gt; (University of Manchester), co-taught with a colleage. Please get in contact for material.&lt;/p&gt;
+&lt;h2 id=&#34;r-for-social-scientists&#34;&gt;R for social scientists&lt;/h2&gt;
+&lt;p&gt;I am a qualified instructor for 
+&lt;a href=&#34;https://carpentries.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data and Software Carpentries&lt;/a&gt;, and supported colleagues in teaching the 
+&lt;a href=&#34;https://datacarpentry.org/r-socialsci/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;social science workshop&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     

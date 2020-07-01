@@ -14,10 +14,18 @@
     
     <item>
       <title>QGIS</title>
-      <link>/project/external-project/</link>
+      <link>/project/qgis-teaching/</link>
       <pubDate>Wed, 27 Apr 2016 00:00:00 +0000</pubDate>
-      <guid>/project/external-project/</guid>
-      <description></description>
+      <guid>/project/qgis-teaching/</guid>
+      <description>&lt;h2 id=&#34;introduction-to-qgis&#34;&gt;Introduction to QGIS&lt;/h2&gt;
+&lt;p&gt;Developed and taught a 1-day introductory course at the 
+&lt;a href=&#34;https://www.cmi.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cathie Marsh Institute&lt;/a&gt; (University of Manchester). Material is available on 
+&lt;a href=&#34;https://github.com/langtonhugh/qgis_intro&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;A shorter introductory course has been held online for 
+&lt;a href=&#34;https://www.opendatamanchester.org.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Open Data Manchester&lt;/a&gt;, with an accompanying 
+&lt;a href=&#34;https://vimeo.com/417967553&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;video&lt;/a&gt;. Material is avaiable on 
+&lt;a href=&#34;https://github.com/langtonhugh/qgis_intro/tree/odm_qgis_intro&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+</description>
     </item>
     
   </channel>
