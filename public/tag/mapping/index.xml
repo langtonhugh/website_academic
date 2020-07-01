@@ -5,12 +5,28 @@
     <link>/tag/mapping/</link>
       <atom:link href="/tag/mapping/index.xml" rel="self" type="application/rss+xml" />
     <description>mapping</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 07 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 27 Jun 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
       <title>mapping</title>
       <link>/tag/mapping/</link>
     </image>
+    
+    <item>
+      <title>QGIS</title>
+      <link>/project/qgis-teaching/</link>
+      <pubDate>Sat, 27 Jun 2020 00:00:00 +0000</pubDate>
+      <guid>/project/qgis-teaching/</guid>
+      <description>&lt;h2 id=&#34;introduction-to-qgis&#34;&gt;Introduction to QGIS&lt;/h2&gt;
+&lt;p&gt;Developed and taught a 1-day introductory course at the 
+&lt;a href=&#34;https://www.cmi.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cathie Marsh Institute&lt;/a&gt; (University of Manchester). Material is available on 
+&lt;a href=&#34;https://github.com/langtonhugh/qgis_intro&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;A shorter introductory course has been held online for 
+&lt;a href=&#34;https://www.opendatamanchester.org.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Open Data Manchester&lt;/a&gt;, with an accompanying 
+&lt;a href=&#34;https://vimeo.com/417967553&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;video&lt;/a&gt;. Material is avaiable on 
+&lt;a href=&#34;https://github.com/langtonhugh/qgis_intro/tree/odm_qgis_intro&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>GIS and Geovisual Analysis</title>

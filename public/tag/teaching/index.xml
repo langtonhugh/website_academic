@@ -5,7 +5,7 @@
     <link>/tag/teaching/</link>
       <atom:link href="/tag/teaching/index.xml" rel="self" type="application/rss+xml" />
     <description>teaching</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 27 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 27 Jun 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
       <title>teaching</title>
@@ -14,9 +14,9 @@
     
     <item>
       <title>QGIS</title>
-      <link>/project/qgis-project/</link>
-      <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
-      <guid>/project/qgis-project/</guid>
+      <link>/project/qgis-teaching/</link>
+      <pubDate>Sat, 27 Jun 2020 00:00:00 +0000</pubDate>
+      <guid>/project/qgis-teaching/</guid>
       <description>&lt;h2 id=&#34;introduction-to-qgis&#34;&gt;Introduction to QGIS&lt;/h2&gt;
 &lt;p&gt;Developed and taught a 1-day introductory course at the 
 &lt;a href=&#34;https://www.cmi.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cathie Marsh Institute&lt;/a&gt; (University of Manchester). Material is available on 
@@ -25,6 +25,40 @@
 &lt;a href=&#34;https://www.opendatamanchester.org.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Open Data Manchester&lt;/a&gt;, with an accompanying 
 &lt;a href=&#34;https://vimeo.com/417967553&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;video&lt;/a&gt;. Material is avaiable on 
 &lt;a href=&#34;https://github.com/langtonhugh/qgis_intro/tree/odm_qgis_intro&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>/project/r-teaching/</link>
+      <pubDate>Sat, 27 Jun 2020 00:00:00 +0000</pubDate>
+      <guid>/project/r-teaching/</guid>
+      <description>&lt;p&gt;I have taught a number of courses using R and RStudio, including the development of teaching material both on my own and with colleagues.&lt;/p&gt;
+&lt;h2 id=&#34;data-visualisation-in-r-using-crime-data&#34;&gt;Data visualisation in R using crime data&lt;/h2&gt;
+&lt;p&gt;1-day workshop on visualisation and mapping at the 
+&lt;a href=&#34;https://www.cmi.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cathie Marsh Institute&lt;/a&gt; (University of Manchester) in collaboration with the 
+&lt;a href=&#34;https://ukdataservice.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;UK Data Service&lt;/a&gt;. Material is available on 
+&lt;a href=&#34;https://github.com/langtonhugh/data_viz_R_workshop&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt; and the 
+&lt;a href=&#34;https://ukdataservice.ac.uk/news-and-events/eventsitem/?id=5552&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;UK Data Service website&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;r-for-police-forces&#34;&gt;R for police forces&lt;/h2&gt;
+&lt;p&gt;1-day workshop on data wrangling and visualisation for West Midlands Police Force. Please get in contact for material.&lt;/p&gt;
+&lt;h2 id=&#34;r-for-criminologists&#34;&gt;R for criminologists&lt;/h2&gt;
+&lt;p&gt;1-day workshop on data wrangling, visualisation and mapping hosted at the 
+&lt;a href=&#34;https://www.esc-eurocrim.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;European Society of Criminology&lt;/a&gt; with colleagues from the 
+&lt;a href=&#34;http://www.space-place-crime.eu/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Space Place and Crime working group&lt;/a&gt;. Material is available on 
+&lt;a href=&#34;https://github.com/langtonhugh/ESC2019&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt; and 
+&lt;a href=&#34;https://rpubs.com/spaceplacecrime&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;rpubs&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;getting-started-in-r---an-introduction-to-data-analysis-and-visualisation&#34;&gt;Getting Started in R - an introduction to data analysis and visualisation&lt;/h2&gt;
+&lt;p&gt;4-day comprehensive introductory course at the 
+&lt;a href=&#34;https://www.methods.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Methods@Manchester&lt;/a&gt; summer school, co-taught with colleagues. Material is available as a 
+&lt;a href=&#34;https://rcatlord.github.io/GSinR/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;website&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;cluster-analysis-in-r&#34;&gt;Cluster analysis in R&lt;/h2&gt;
+&lt;p&gt;1-day workshop introducing cluster analysis in R at the 
+&lt;a href=&#34;https://www.cmi.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cathie Marsh Institute&lt;/a&gt; (University of Manchester), co-taught with a colleage. Please get in contact for material.&lt;/p&gt;
+&lt;h2 id=&#34;r-for-social-scientists&#34;&gt;R for social scientists&lt;/h2&gt;
+&lt;p&gt;I am a qualified instructor for 
+&lt;a href=&#34;https://carpentries.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data and Software Carpentries&lt;/a&gt;, and supported colleagues in teaching the 
+&lt;a href=&#34;https://datacarpentry.org/r-socialsci/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;social science workshop&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     

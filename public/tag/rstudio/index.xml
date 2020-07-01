@@ -5,7 +5,7 @@
     <link>/tag/rstudio/</link>
       <atom:link href="/tag/rstudio/index.xml" rel="self" type="application/rss+xml" />
     <description>RStudio</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 27 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 27 Jun 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
       <title>RStudio</title>
@@ -14,9 +14,9 @@
     
     <item>
       <title>R</title>
-      <link>/project/r-project/</link>
-      <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
-      <guid>/project/r-project/</guid>
+      <link>/project/r-teaching/</link>
+      <pubDate>Sat, 27 Jun 2020 00:00:00 +0000</pubDate>
+      <guid>/project/r-teaching/</guid>
       <description>&lt;p&gt;I have taught a number of courses using R and RStudio, including the development of teaching material both on my own and with colleagues.&lt;/p&gt;
 &lt;h2 id=&#34;data-visualisation-in-r-using-crime-data&#34;&gt;Data visualisation in R using crime data&lt;/h2&gt;
 &lt;p&gt;1-day workshop on visualisation and mapping at the 
