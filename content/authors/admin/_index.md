@@ -1,7 +1,7 @@
 ---
 authors:
 - admin
-bio: My research focuses on describing and explaining the geographic patterning of crime, particularly the relationship between crime hotspots and where known offenders live. I am also interested in data visualisation, mapping and promoting the use of open software in social science.
+bio: My research focuses on describing and explaining the geographic patterning of crime. I am also interested in data visualisation, mapping and promoting the use of open software in social science.
 education:
   courses:
   - course: PhD in Sociology
@@ -46,4 +46,6 @@ user_groups:
 
 I am a researcher in quantitative criminology at the [Crime and Well-being Big Data Centre](https://www.mmu.ac.uk/crime-and-wellbeing-big-data-centre/), a research institute based at [Manchester Metropolitan University](https://www.mmu.ac.uk/).
 
-My research focuses on describing and explaining the geographic patterning of crime, particularly the relationship between crime hotspots and where known offenders live. I am also interested in data visualisation, mapping and promoting the use of open software in social science.
+My research focuses on describing and explaining the geographic patterning of crime. I am also interested in data visualisation, mapping and promoting the use of open software in social science.
+
+This website provides an overview of my ongoing work, but for a complete summary please check my [CV](https://www.samlangton.info/files/Langton_CV_2020.pdf).
