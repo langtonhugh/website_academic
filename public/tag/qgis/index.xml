@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>QGIS | Samuel Langton</title>
+    <link>/tag/qgis/</link>
+      <atom:link href="/tag/qgis/index.xml" rel="self" type="application/rss+xml" />
+    <description>QGIS</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 27 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
+      <title>QGIS</title>
+      <link>/tag/qgis/</link>
+    </image>
+    
+    <item>
+      <title>QGIS</title>
+      <link>/project/qgis-project/</link>
+      <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
+      <guid>/project/qgis-project/</guid>
+      <description>&lt;h2 id=&#34;introduction-to-qgis&#34;&gt;Introduction to QGIS&lt;/h2&gt;
+&lt;p&gt;Developed and taught a 1-day introductory course at the 
+&lt;a href=&#34;https://www.cmi.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cathie Marsh Institute&lt;/a&gt; (University of Manchester). Material is available on 
+&lt;a href=&#34;https://github.com/langtonhugh/qgis_intro&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;A shorter introductory course has been held online for 
+&lt;a href=&#34;https://www.opendatamanchester.org.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Open Data Manchester&lt;/a&gt;, with an accompanying 
+&lt;a href=&#34;https://vimeo.com/417967553&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;video&lt;/a&gt;. Material is avaiable on 
+&lt;a href=&#34;https://github.com/langtonhugh/qgis_intro/tree/odm_qgis_intro&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

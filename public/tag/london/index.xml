@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>London | Samuel Langton</title>
+    <link>/tag/london/</link>
+      <atom:link href="/tag/london/index.xml" rel="self" type="application/rss+xml" />
+    <description>London</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 12 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
+      <title>London</title>
+      <link>/tag/london/</link>
+    </image>
+    
+    <item>
+      <title>Lockdown crime trends. What we know and what we don&#39;t</title>
+      <link>/post/lockdown_conversation/</link>
+      <pubDate>Fri, 12 Jun 2020 00:00:00 +0000</pubDate>
+      <guid>/post/lockdown_conversation/</guid>
+      <description>
+
+
+&lt;p&gt;Understanding what has happened to crime during lockdown is challenging. We are in uncharted territory and it’s proving hard to draw definitive conclusions from the latest police recorded crime data. But a few trends, like a spike in antisocial behaviour and an increase in drug offences, are beginning to emerge.&lt;/p&gt;
+&lt;p&gt;Changes in people’s &lt;a href=&#34;https://www.gstatic.com/covid19/mobility/2020-05-29_GB_Mobility_Report_en-GB.pdf&#34;&gt;movements and activities&lt;/a&gt; can impact on the &lt;a href=&#34;https://theconversation.com/coronavirus-how-crime-changes-during-a-lockdown-134948&#34;&gt;opportunities&lt;/a&gt; available to potential offenders and, in turn, the volume and types of crime being committed. As a case study, we can look at &lt;a href=&#34;https://data.police.uk/data/&#34;&gt;Greater London&lt;/a&gt; and consider crimes recorded by the Metropolitan Police Service before and after the nationwide lockdown.&lt;/p&gt;
+&lt;p&gt;Using this data, I have visualised how the Met recorded antisocial behaviour and different crime types on a month-by-month basis. Importantly, there is enough open data to compare trends across years. This is useful for studying crime because many offence types are seasonal.&lt;/p&gt;
+&lt;p&gt;For instance, bicycle theft tends to increase in spring (around when the lockdown began) so looking at 2020 in isolation would be uninformative, or even misleading. This mimics the approach taken when &lt;a href=&#34;https://www.ft.com/content/a26fbf7e-48f8-11ea-aeb3-955839e06441&#34;&gt;visually tracking&lt;/a&gt; coronvirus fatalities due to the seasonality of death rates.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/met_grid_crimetypes_less_ticks.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Crimes such as burglary, shoplifting, robbery and theft all experienced remarkably sudden declines during April in comparison to previous years. Although we cannot differentiate individual days and weeks, some of these declines were already evident in March.&lt;/p&gt;
+&lt;p&gt;This aligns with what many will have expected. With most people spending so much time at home, shopping limited to essentials, and movement restricted to necessary travel and exercise, the opportunities available to commit such offences were severely curtailed.&lt;/p&gt;
+&lt;div id=&#34;anti-social-behaviour&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Anti-social behaviour&lt;/h2&gt;
+&lt;p&gt;One of the starkest trends observed is antisocial behaviour. Even by the end of March, recorded incidences were unusually high. But between March and April, the number of cases skyrocketed by over 270%. An increase at this time of year is expected, but a rise of this magnitude is unprecedented.&lt;/p&gt;
+&lt;p&gt;It is plausible that the lockdown resulted in a genuine shift in “traditional” antisocial behaviour, such as nuisance noise from neighbours. But the National Police Chiefs’ Council has said that this increase can largely be attributed to people &lt;a href=&#34;https://www.bbc.co.uk/news/uk-52298016&#34;&gt;breaching lockdown guidelines&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The picture is not so clear for criminal offences. There has not yet been any discernible impact on public order or the possession of weapons. Violence and sexual offences appear to have declined more steeply than usual.&lt;/p&gt;
+&lt;p&gt;However, using these charts in isolation, it is difficult to definitively attribute these changes to the lockdown. Even during less remarkable times, police recorded crime patterns can be subject to &lt;a href=&#34;https://the-sra.org.uk/SRA/Blog/whyyoucantidentifychangesincrimebycomparingthismonthtolastmonth.aspx&#34;&gt;short-term blips&lt;/a&gt;. Indeed, visualising the long-term trend for violence and sexual offences demonstrates that similarly volatile changes have occurred before.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/viole_lines_lessticks.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Drug offences appear to have gone up in comparison to previous years. Addiction experts have speculated that the lockdown could result in an &lt;a href=&#34;https://www.theguardian.com/society/2020/may/03/coronavirus-crisis-could-increase-users-drug-habits-report&#34;&gt;increase in drug usage&lt;/a&gt; among recreational users. At the same time, &lt;a href=&#34;https://www.bbc.co.uk/news/uk-england-sussex-52344249&#34;&gt;some police forces&lt;/a&gt; have suggested that the demand for drugs has remained the same, but that drug dealers now stick out on otherwise empty streets, increasing the number of arrests.&lt;/p&gt;
+&lt;p&gt;In other words, these changes may not necessarily reflect actual changes in criminal behaviour. The long-term picture, visualised below, demonstrates that April’s increase might also be part of a wider upward trend in Greater London. The rise in recent years might be partly attributable to action taken over &lt;a href=&#34;https://www.bbc.co.uk/news/uk-england-norfolk-52892907&#34;&gt;county lines&lt;/a&gt; drug networks.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/drugs_lines_lessticks.png&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exercising-caution&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Exercising caution&lt;/h2&gt;
+&lt;p&gt;Some have labelled the nationwide lockdown as an ideal natural experiment to study how a shift in the opportunities available to offenders might impact on crime. But of course, it is &lt;a href=&#34;https://www.kcl.ac.uk/news/no-the-coronavirus-crisis-isnt-a-cool-natural-experiment&#34;&gt;not that simple&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Numerous parameters have changed. Recording practices for lockdown breaches have had to be adapted overnight. The willingness and ability of people to report crimes to the police, particularly for domestic offences, will have changed in ways that cannot yet be quantified. Calls to a national &lt;a href=&#34;https://theconversation.com/coronavirus-murders-media-narrative-about-domestic-abuse-during-lockdown-is-wrong-and-harmful-137011&#34;&gt;domestic abuse&lt;/a&gt; helpline have &lt;a href=&#34;https://www.bbc.co.uk/news/uk-52433520&#34;&gt;increased&lt;/a&gt;, but open police records do not flag which violent and sexual offences, for instance, were domestic.&lt;/p&gt;
+&lt;p&gt;Policing priorities have also had to be adjusted in response to vague government guidelines and there has been considerable &lt;a href=&#34;https://www.polfed.org/gmp/news/2019/gmp-federation-chairman-stu-berry-reacts-to-the-latest-government-announcements-on-covid-19/&#34;&gt;strain&lt;/a&gt; on officers as a result.&lt;/p&gt;
+&lt;p&gt;One way of overcoming shortcomings in police data is by using victimisation surveys such as the &lt;a href=&#34;https://www.ons.gov.uk/surveys/informationforhouseholdsandindividuals/householdandindividualsurveys/crimesurveyforenglandandwales&#34;&gt;Crime Survey for England and Wales&lt;/a&gt; that can capture crimes not reported or identified by the police. This largely resolves issues around under-reporting and includes additional crime types such as cybercrime which might &lt;a href=&#34;http://blog.policy.manchester.ac.uk/digital-futures/2020/03/profiting-from-pandemics-covid-19-changing-routines-and-cyber-crimes/&#34;&gt;have increased&lt;/a&gt; during the lockdown. However, the survey data is not month-by-month and will not be released for some time.&lt;/p&gt;
+&lt;p&gt;For now, open data in the UK represents a unique opportunity to track police recorded crime – as long as it is used with a degree of caution.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

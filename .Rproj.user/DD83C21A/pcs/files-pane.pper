@@ -1,0 +1,9 @@
+{
+    "path" : "~/GitHub/website/content",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}

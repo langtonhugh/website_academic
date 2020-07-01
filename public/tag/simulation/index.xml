@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>simulation | Samuel Langton</title>
+    <link>/tag/simulation/</link>
+      <atom:link href="/tag/simulation/index.xml" rel="self" type="application/rss+xml" />
+    <description>simulation</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 07 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
+      <title>simulation</title>
+      <link>/tag/simulation/</link>
+    </image>
+    
+    <item>
+      <title>The integrity of crime statistics. Assessing the impact of police data bias on crime mapping</title>
+      <link>/publication/crimsim_preprint/</link>
+      <pubDate>Sun, 07 Jun 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/crimsim_preprint/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

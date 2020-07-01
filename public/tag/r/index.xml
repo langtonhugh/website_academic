@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R | Samuel Langton</title>
+    <link>/tag/r/</link>
+      <atom:link href="/tag/r/index.xml" rel="self" type="application/rss+xml" />
+    <description>R</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 27 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
+      <title>R</title>
+      <link>/tag/r/</link>
+    </image>
+    
+    <item>
+      <title>R</title>
+      <link>/project/r-project/</link>
+      <pubDate>Mon, 27 Jul 2020 00:00:00 +0000</pubDate>
+      <guid>/project/r-project/</guid>
+      <description>&lt;p&gt;I have taught a number of courses using R and RStudio, including the development of teaching material both on my own and with colleagues.&lt;/p&gt;
+&lt;h2 id=&#34;data-visualisation-in-r-using-crime-data&#34;&gt;Data visualisation in R using crime data&lt;/h2&gt;
+&lt;p&gt;1-day workshop on visualisation and mapping at the 
+&lt;a href=&#34;https://www.cmi.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cathie Marsh Institute&lt;/a&gt; (University of Manchester) in collaboration with the 
+&lt;a href=&#34;https://ukdataservice.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;UK Data Service&lt;/a&gt;. Material is available on 
+&lt;a href=&#34;https://github.com/langtonhugh/data_viz_R_workshop&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt; and the 
+&lt;a href=&#34;https://ukdataservice.ac.uk/news-and-events/eventsitem/?id=5552&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;UK Data Service website&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;r-for-police-forces&#34;&gt;R for police forces&lt;/h2&gt;
+&lt;p&gt;1-day workshop on data wrangling and visualisation for West Midlands Police Force. Please get in contact for material.&lt;/p&gt;
+&lt;h2 id=&#34;r-for-criminologists&#34;&gt;R for criminologists&lt;/h2&gt;
+&lt;p&gt;1-day workshop on data wrangling, visualisation and mapping hosted at the 
+&lt;a href=&#34;https://www.esc-eurocrim.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;European Society of Criminology&lt;/a&gt; with colleagues from the 
+&lt;a href=&#34;http://www.space-place-crime.eu/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Space Place and Crime working group&lt;/a&gt;. Material is available on 
+&lt;a href=&#34;https://github.com/langtonhugh/ESC2019&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt; and 
+&lt;a href=&#34;https://rpubs.com/spaceplacecrime&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;rpubs&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;getting-started-in-r---an-introduction-to-data-analysis-and-visualisation&#34;&gt;Getting Started in R - an introduction to data analysis and visualisation&lt;/h2&gt;
+&lt;p&gt;4-day comprehensive introductory course at the 
+&lt;a href=&#34;https://www.methods.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Methods@Manchester&lt;/a&gt; summer school, co-taught with colleagues. Material is available as a 
+&lt;a href=&#34;https://rcatlord.github.io/GSinR/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;website&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;cluster-analysis-in-r&#34;&gt;Cluster analysis in R&lt;/h2&gt;
+&lt;p&gt;1-day workshop introducing cluster analysis in R at the 
+&lt;a href=&#34;https://www.cmi.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cathie Marsh Institute&lt;/a&gt; (University of Manchester), co-taught with a colleage. Please get in contact for material.&lt;/p&gt;
+&lt;h2 id=&#34;r-for-social-scientists&#34;&gt;R for social scientists&lt;/h2&gt;
+&lt;p&gt;I am a qualified instructor for 
+&lt;a href=&#34;https://carpentries.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data and Software Carpentries&lt;/a&gt;, and supported colleagues in teaching the 
+&lt;a href=&#34;https://datacarpentry.org/r-socialsci/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;social science workshop&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Akmedoids. Anchored kmedoids for longitudinal data clustering</title>
+      <link>/publication/akmedoids/</link>
+      <pubDate>Tue, 07 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/akmedoids/</guid>
+      <description>&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    The package is on &lt;a href=&#34;https://cran.r-project.org/web/packages/akmedoids/index.html&#34;&gt;CRAN&lt;/a&gt; and has a corresponding &lt;a href=&#34;https://github.com/cran/akmedoids&#34;&gt;GitHub&lt;/a&gt; page.
+  &lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

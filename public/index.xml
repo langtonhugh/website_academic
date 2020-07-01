@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Samuel Langton</title>
+    <link>/</link>
+      <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <description>Samuel Langton</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 12 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
+      <title>Samuel Langton</title>
+      <link>/</link>
+    </image>
+    
+    <item>
+      <title>Lockdown crime trends. What we know and what we don&#39;t</title>
+      <link>/post/lockdown_conversation/</link>
+      <pubDate>Fri, 12 Jun 2020 00:00:00 +0000</pubDate>
+      <guid>/post/lockdown_conversation/</guid>
+      <description>
+
+
+&lt;p&gt;Understanding what has happened to crime during lockdown is challenging. We are in uncharted territory and it’s proving hard to draw definitive conclusions from the latest police recorded crime data. But a few trends, like a spike in antisocial behaviour and an increase in drug offences, are beginning to emerge.&lt;/p&gt;
+&lt;p&gt;Changes in people’s &lt;a href=&#34;https://www.gstatic.com/covid19/mobility/2020-05-29_GB_Mobility_Report_en-GB.pdf&#34;&gt;movements and activities&lt;/a&gt; can impact on the &lt;a href=&#34;https://theconversation.com/coronavirus-how-crime-changes-during-a-lockdown-134948&#34;&gt;opportunities&lt;/a&gt; available to potential offenders and, in turn, the volume and types of crime being committed. As a case study, we can look at &lt;a href=&#34;https://data.police.uk/data/&#34;&gt;Greater London&lt;/a&gt; and consider crimes recorded by the Metropolitan Police Service before and after the nationwide lockdown.&lt;/p&gt;
+&lt;p&gt;Using this data, I have visualised how the Met recorded antisocial behaviour and different crime types on a month-by-month basis. Importantly, there is enough open data to compare trends across years. This is useful for studying crime because many offence types are seasonal.&lt;/p&gt;
+&lt;p&gt;For instance, bicycle theft tends to increase in spring (around when the lockdown began) so looking at 2020 in isolation would be uninformative, or even misleading. This mimics the approach taken when &lt;a href=&#34;https://www.ft.com/content/a26fbf7e-48f8-11ea-aeb3-955839e06441&#34;&gt;visually tracking&lt;/a&gt; coronvirus fatalities due to the seasonality of death rates.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/met_grid_crimetypes_less_ticks.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Crimes such as burglary, shoplifting, robbery and theft all experienced remarkably sudden declines during April in comparison to previous years. Although we cannot differentiate individual days and weeks, some of these declines were already evident in March.&lt;/p&gt;
+&lt;p&gt;This aligns with what many will have expected. With most people spending so much time at home, shopping limited to essentials, and movement restricted to necessary travel and exercise, the opportunities available to commit such offences were severely curtailed.&lt;/p&gt;
+&lt;div id=&#34;anti-social-behaviour&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Anti-social behaviour&lt;/h2&gt;
+&lt;p&gt;One of the starkest trends observed is antisocial behaviour. Even by the end of March, recorded incidences were unusually high. But between March and April, the number of cases skyrocketed by over 270%. An increase at this time of year is expected, but a rise of this magnitude is unprecedented.&lt;/p&gt;
+&lt;p&gt;It is plausible that the lockdown resulted in a genuine shift in “traditional” antisocial behaviour, such as nuisance noise from neighbours. But the National Police Chiefs’ Council has said that this increase can largely be attributed to people &lt;a href=&#34;https://www.bbc.co.uk/news/uk-52298016&#34;&gt;breaching lockdown guidelines&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The picture is not so clear for criminal offences. There has not yet been any discernible impact on public order or the possession of weapons. Violence and sexual offences appear to have declined more steeply than usual.&lt;/p&gt;
+&lt;p&gt;However, using these charts in isolation, it is difficult to definitively attribute these changes to the lockdown. Even during less remarkable times, police recorded crime patterns can be subject to &lt;a href=&#34;https://the-sra.org.uk/SRA/Blog/whyyoucantidentifychangesincrimebycomparingthismonthtolastmonth.aspx&#34;&gt;short-term blips&lt;/a&gt;. Indeed, visualising the long-term trend for violence and sexual offences demonstrates that similarly volatile changes have occurred before.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/viole_lines_lessticks.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Drug offences appear to have gone up in comparison to previous years. Addiction experts have speculated that the lockdown could result in an &lt;a href=&#34;https://www.theguardian.com/society/2020/may/03/coronavirus-crisis-could-increase-users-drug-habits-report&#34;&gt;increase in drug usage&lt;/a&gt; among recreational users. At the same time, &lt;a href=&#34;https://www.bbc.co.uk/news/uk-england-sussex-52344249&#34;&gt;some police forces&lt;/a&gt; have suggested that the demand for drugs has remained the same, but that drug dealers now stick out on otherwise empty streets, increasing the number of arrests.&lt;/p&gt;
+&lt;p&gt;In other words, these changes may not necessarily reflect actual changes in criminal behaviour. The long-term picture, visualised below, demonstrates that April’s increase might also be part of a wider upward trend in Greater London. The rise in recent years might be partly attributable to action taken over &lt;a href=&#34;https://www.bbc.co.uk/news/uk-england-norfolk-52892907&#34;&gt;county lines&lt;/a&gt; drug networks.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/drugs_lines_lessticks.png&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exercising-caution&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Exercising caution&lt;/h2&gt;
+&lt;p&gt;Some have labelled the nationwide lockdown as an ideal natural experiment to study how a shift in the opportunities available to offenders might impact on crime. But of course, it is &lt;a href=&#34;https://www.kcl.ac.uk/news/no-the-coronavirus-crisis-isnt-a-cool-natural-experiment&#34;&gt;not that simple&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Numerous parameters have changed. Recording practices for lockdown breaches have had to be adapted overnight. The willingness and ability of people to report crimes to the police, particularly for domestic offences, will have changed in ways that cannot yet be quantified. Calls to a national &lt;a href=&#34;https://theconversation.com/coronavirus-murders-media-narrative-about-domestic-abuse-during-lockdown-is-wrong-and-harmful-137011&#34;&gt;domestic abuse&lt;/a&gt; helpline have &lt;a href=&#34;https://www.bbc.co.uk/news/uk-52433520&#34;&gt;increased&lt;/a&gt;, but open police records do not flag which violent and sexual offences, for instance, were domestic.&lt;/p&gt;
+&lt;p&gt;Policing priorities have also had to be adjusted in response to vague government guidelines and there has been considerable &lt;a href=&#34;https://www.polfed.org/gmp/news/2019/gmp-federation-chairman-stu-berry-reacts-to-the-latest-government-announcements-on-covid-19/&#34;&gt;strain&lt;/a&gt; on officers as a result.&lt;/p&gt;
+&lt;p&gt;One way of overcoming shortcomings in police data is by using victimisation surveys such as the &lt;a href=&#34;https://www.ons.gov.uk/surveys/informationforhouseholdsandindividuals/householdandindividualsurveys/crimesurveyforenglandandwales&#34;&gt;Crime Survey for England and Wales&lt;/a&gt; that can capture crimes not reported or identified by the police. This largely resolves issues around under-reporting and includes additional crime types such as cybercrime which might &lt;a href=&#34;http://blog.policy.manchester.ac.uk/digital-futures/2020/03/profiting-from-pandemics-covid-19-changing-routines-and-cyber-crimes/&#34;&gt;have increased&lt;/a&gt; during the lockdown. However, the survey data is not month-by-month and will not be released for some time.&lt;/p&gt;
+&lt;p&gt;For now, open data in the UK represents a unique opportunity to track police recorded crime – as long as it is used with a degree of caution.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>The integrity of crime statistics. Assessing the impact of police data bias on crime mapping</title>
+      <link>/publication/crimsim_preprint/</link>
+      <pubDate>Sun, 07 Jun 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/crimsim_preprint/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>GIS and Geovisual Analysis</title>
+      <link>/publication/gis_chapter/</link>
+      <pubDate>Sat, 07 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>/publication/gis_chapter/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Even the most beautiful maps can be misleading</title>
+      <link>/post/maps_conversation/</link>
+      <pubDate>Thu, 07 Nov 2019 00:00:00 +0000</pubDate>
+      <guid>/post/maps_conversation/</guid>
+      <description>
+
+
+&lt;p&gt;From reporting &lt;a href=&#34;https://www.bbc.co.uk/news/election/2017/results&#34;&gt;election results&lt;/a&gt; to issuing &lt;a href=&#34;https://www.bbc.co.uk/weather/2643743&#34;&gt;weather forecasts&lt;/a&gt;, maps offer a powerful, accessible and visually appealing way to convey complex information. Yet even the most beautiful maps can introduce some degree of misrepresentation.&lt;/p&gt;
+&lt;p&gt;To see how, consider the latest statistics on deprivation released by the UK government. The government ranked 32,844 neighbourhoods, based on measures of deprivation such as income, employment, health and crime. The figures were widely reported, from &lt;a href=&#34;https://www.bbc.co.uk/news/uk-england-49812519&#34;&gt;the BBC&lt;/a&gt; to &lt;a href=&#34;https://www.theguardian.com/society/2019/sep/26/wealthy-incomers-changing-profile-of-londons-most-deprived-areas&#34;&gt;The Guardian&lt;/a&gt; and the &lt;a href=&#34;https://www.dailymail.co.uk/news/article-7507575/Essex-seaside-village-Jaywick-named-Englands-deprived-neighbourhood.html&#34;&gt;Daily Mail&lt;/a&gt;, reigniting long-standing debates about persistent inequality in England.&lt;/p&gt;
+&lt;p&gt;Of course, many outlets &lt;a href=&#34;https://imd2019.group.shef.ac.uk/&#34;&gt;used maps&lt;/a&gt; to share these findings with the public. But using traditional boundaries can divert readers’ attention away from important information. In &lt;a href=&#34;https://www.bbc.co.uk/news/uk-england-49812519&#34;&gt;BBC’s&lt;/a&gt; map of deprivation across local authorities, for instance, sparsely populated rural areas dominate a disproportionately large area, while urban areas, such as London, containing millions of people, are rendered almost invisible.&lt;/p&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;The map included in the BBC’s report on deprivation is interesting. It would be good to take a look at the Ofsted rating of schools in the most deprived areas... &lt;a href=&#34;https://t.co/iUR2hINBRn&#34;&gt;https://t.co/iUR2hINBRn&lt;/a&gt; &lt;a href=&#34;https://t.co/lFq6s8l1In&#34;&gt;pic.twitter.com/lFq6s8l1In&lt;/a&gt;&lt;/p&gt;&amp;mdash; SailingAway (@Heatherleatt) &lt;a href=&#34;https://twitter.com/Heatherleatt/status/1177466763312689152?ref_src=twsrc%5Etfw&#34;&gt;September 27, 2019&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+
+&lt;div id=&#34;distorted-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Distorted data&lt;/h2&gt;
+&lt;p&gt;Recent &lt;a href=&#34;https://osf.io/preprints/socarxiv/t6agd/&#34;&gt;research shows&lt;/a&gt; that people can interpret information inaccurately, when they look at maps with these shortcomings. But other techniques can be used to create a more accurate impression of the underlying data. For instance, &lt;a href=&#34;https://www.tandfonline.com/doi/full/10.1111/j.1467-8306.2004.09401004.x?casa_token=PCQuJ1wUlkoAAAAA:m8aWeOyHWcKv-iL8T1-bXlcunBnzZV2lkAz3-gYAxUtgRCihbAYOIWz8-HJFvSOO8WP4W25tLA&#34;&gt;cartograms&lt;/a&gt; deliberately distort geography by scaling areas according to a specific variable, such as local population.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.arcgis.com/home/item.html?id=b686a7679cb747e9825d1d1bb6b26046&#34;&gt;Dorling cartograms&lt;/a&gt; take this one step further, scaling areas according to a specified variable, but also representing each area using the same shape, such as a square or a circle. Other methods achieve uniformity in both size and shape: &lt;a href=&#34;http://gisruk.org/ProceedingsGISRUK2018/GISRUK2018_Contribution_023.pdf&#34;&gt;hexograms&lt;/a&gt; and &lt;a href=&#34;https://github.com/jbaileyh/geogrid&#34;&gt;geogrids&lt;/a&gt; transform the original boundaries of the map into hexagons or squares of the same size, while still aiming to preserve their original arrangement.&lt;/p&gt;
+&lt;p&gt;Mapping neighbourhood deprivation in England represents &lt;a href=&#34;https://theconversation.com/these-maps-show-how-tricky-it-is-to-measure-inequality-in-local-areas-across-england-109143&#34;&gt;a significant challenge&lt;/a&gt;, even for experts. This is because the government defines a neighbourhood as a &lt;a href=&#34;https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeography&#34;&gt;“lower super output area”&lt;/a&gt; – each of which contains around 1,500 residents.&lt;/p&gt;
+&lt;p&gt;Because highly deprived neighbourhoods tend to be densely populated, they are less visible on a regular map. By contrast, wealthier suburban areas – which are often less densely populated and therefore much larger – dominate the map. So there’s a risk that readers might draw inaccurate conclusions about the level of deprivation in any given area.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;shaping-up&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Shaping up&lt;/h2&gt;
+&lt;p&gt;Using &lt;a href=&#34;https://www.arcgis.com/home/item.html?id=b686a7679cb747e9825d1d1bb6b26046&#34;&gt;Dorling cartograms&lt;/a&gt; scaled by resident population, and regular hexagonal &lt;a href=&#34;https://github.com/jbaileyh/geogrid&#34;&gt;geogrids&lt;/a&gt;, I’ve attempted to minimise any misrepresentation. Take the example of Blackpool, which was &lt;a href=&#34;https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/835115/IoD2019_Statistical_Release.pdf&#34;&gt;ranked&lt;/a&gt; the most deprived local authority in England. Around 42% of neighbourhoods in Blackpool are in the top 10% most deprived in England (the “first decile”). Yet these neighbourhoods only make up around 29% of the city’s actual area.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/blackpool.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Using a Dorling cartogram scaled by resident population size, neighbourhoods in the first decile now take up 41% of the map’s area, and the larger, less deprived neighbourhoods (in light blue) have been shrunk accordingly to become less dominant. With a regular hexagonal geogrid, the map now mimics the underlying data, with neighbourhoods in the first decile of deprivation taking up 42% of the total area.&lt;/p&gt;
+&lt;p&gt;The variation in the shapes and sizes of Blackpool’s neighbourhoods can no longer divert attention or mislead readers, and arguably, the underlying data has been conveyed more accurately than with the original map.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;mapping-deprivation-differently&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Mapping deprivation differently&lt;/h2&gt;
+&lt;p&gt;A striking difference can be seen using different types of maps to visualise deprivation in Burnley and Hartlepool, which were among England’s most deprived local authorities. Both areas are characterised by many small, densely populated neighbourhoods in the first decile (most deprived), surrounded by much larger and wealthier suburbs.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/burn_hart.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;At first glance, deprivation appears understated in the map that uses the original boundaries. But with the Dorling cartogram (again scaled by population) and the hexagonal geogrids, the issue can be somewhat rectified. This comes with its own difficulties, though.&lt;/p&gt;
+&lt;p&gt;The geogrid in particular pushed some neighbourhoods further apart and forced some closer together than they appear on the original map. This might prove problematic in cases where the primary aim of the map is to convey distinct geographic patterns, such as the clustering of highly deprived neighbourhoods. In making the transformation, these patterns might be lost, or spurious patterns generated.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;encouraging-experimentation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Encouraging experimentation&lt;/h2&gt;
+&lt;p&gt;Birmingham and Manchester – ranked in the top ten most deprived local authorities – present a different challenge. With much larger populations, and many more neighbourhoods to visualise, the original map presents an overwhelming amount of information.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/birm_manc.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Once again, both the Dorling cartogram and the geogrid perform admirably, scaling down the visual impact of larger, wealthier areas (especially in the north of Birmingham) and making the maps easier to read – without skewing the geographic patterning of deprivation across each city.&lt;/p&gt;
+&lt;p&gt;There are no firm rules about how best to create beautiful but accurate maps. In this case, using the latest neighbourhood deprivation data in England, mapping out the original boundaries can clearly introduce some degree of misrepresentation. There’s &lt;a href=&#34;https://osf.io/preprints/socarxiv/t6agd/&#34;&gt;real value&lt;/a&gt; in experimenting with different cartographic techniques – and media organisations and the government would do well to think outside the box when it comes to sharing the latest findings with the public.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Cartograms, hexograms and regular grids. Minimising misrepresentation in spatial data visualisations</title>
+      <link>/publication/hexo_epb/</link>
+      <pubDate>Sun, 01 Sep 2019 00:00:00 +0000</pubDate>
+      <guid>/publication/hexo_epb/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>When crime drops, the demands on the police don’t necessarily fall</title>
+      <link>/post/crimedrop_conversation/</link>
+      <pubDate>Thu, 06 Jul 2017 00:00:00 +0000</pubDate>
+      <guid>/post/crimedrop_conversation/</guid>
+      <description>
+
+
+&lt;p&gt;On a day-to-day basis, the exposure citizens have to the police is often fleeting, with officers passing by in a blur as they respond to emergency calls. Official crime figures can be disputed, but &lt;a href=&#34;https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/445662/rec-crime-2003-2015.ods&#34;&gt;the long-term trend&lt;/a&gt; appears to be that levels of crime in England and Wales are heading downward. Yet it is a myth to think that an apparent drop in crime relieves some of the pressures placed on police forces.&lt;/p&gt;
+&lt;p&gt;In reality, the demands placed on police forces do not originate primarily from obvious criminal behaviour. Forces are increasingly burdened with what’s called “latent” crime demand, such as child sexual exploitation or modern slavery, where victims are afraid or unwilling to approach police, as well as non-crime issues, such as missing persons.&lt;/p&gt;
+&lt;p&gt;The volume of this demand, and the time spent on addressing it, is much more problematic to estimate, and yet the safety of the public depends on both the police and the government having a handle on such estimations.&lt;/p&gt;
+&lt;p&gt;Out on the streets, police forces need to demonstrate an understanding of current and future demand to allocate resources efficiently and ensure calls are responded to in time. In Westminster, the funding allocations to the 43 forces of England and Wales are dictated by estimations of demand. In an era of austerity, measuring this demand has never been more crucial.&lt;/p&gt;
+&lt;div id=&#34;measuring-demand&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Measuring demand&lt;/h2&gt;
+&lt;p&gt;Reports by the &lt;a href=&#34;http://www.college.police.uk/News/College-news/Documents/Demand%20Report%2023_1_15_noBleed.pdf&#34;&gt;College of Policing&lt;/a&gt; and &lt;a href=&#34;http://www.justiceinspectorates.gov.uk/hmic/wp-content/uploads/state-of-policing-2016.pdf&#34;&gt;HM Inspectorate of Constabulary&lt;/a&gt; (HMIC), have shown how the realities of modern policing render traditional estimates of demand outdated and inaccurate.&lt;/p&gt;
+&lt;p&gt;In its annual review of policing in England and Wales, HMIC rates how well each police force estimates the current and future demand for their services. For their latest report, published in &lt;a href=&#34;http://www.justiceinspectorates.gov.uk/hmic/wp-content/uploads/state-of-policing-2016.pdf&#34;&gt;March 2017&lt;/a&gt; and covering inspections between February 2016 and March 2017, the message is clear: most forces are doing a good job, but there is room for improvement.&lt;/p&gt;
+&lt;p&gt;The map below, generated using open-source &lt;a href=&#34;http://geoportal.statistics.gov.uk/datasets/3e5a096a8c7c456fb6d3164a3f44b005_0&#34;&gt;spatial data&lt;/a&gt;, plots the latest force ratings. It paints a positive picture for England and Wales, but nine out of 43 police forces require improvement, and only a handful managed to achieve the top grade.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/map_police1.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;A key component of improving police awareness of their demand will be refining the understanding of “latent” and non-crime demand. Latent demand often involves vulnerable people who are unwilling to come forward due to the nature of the crime, or live in communities with a widespread distrust of the police. It is therefore extremely difficult to make reliable estimations about this kind of demand on police time.&lt;/p&gt;
+&lt;p&gt;A substantial proportion of the demands placed on police forces originate from non-crime issues such as mental health. Although &lt;a href=&#34;https://www.publications.parliament.uk/pa/cm201516/cmselect/cmhaff/476/47608.htm&#34;&gt;estimates&lt;/a&gt; vary, some forces estimate that 70% to 80% of their demand is comprised of non-crime incidents. A number of forces &lt;a href=&#34;https://www.publications.parliament.uk/pa/cm201516/cmselect/cmhaff/476/47608.htm&#34;&gt;believe&lt;/a&gt; that the increase in non-criminal incidents being dealt with by the police may be partially driven by cuts to other areas of the public sector.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;money-depends-on-it&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Money depends on it&lt;/h2&gt;
+&lt;p&gt;To ensure that police forces are allocated money appropriately, in the interests of public safety and economic efficiency, the government also needs to demonstrate an understanding of demand. The issue of police funding remains a highly charged one, and budget cuts were &lt;a href=&#34;https://theconversation.com/fact-check-have-the-conservatives-protected-police-and-counter-terrorism-budgets-78782&#34;&gt;keenly debated&lt;/a&gt; during the 2017 election campaign.&lt;/p&gt;
+&lt;p&gt;The map here uses recent police funding &lt;a href=&#34;https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/588196/Police_Grant_report_2017-18_Accessible.pdf&#34;&gt;figures&lt;/a&gt; from 2017-2018 to demonstrate the vast sums of public money involved, and how much these sums can vary between police force areas&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/map_police2.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Despite the implications and public concern over police funding, refining the formula used to apportion money has been fraught with difficulties. A &lt;a href=&#34;https://www.publications.parliament.uk/pa/cm201516/cmselect/cmhaff/476/476.pdf&#34;&gt;December 2015 report&lt;/a&gt; by MPs on the Home Affairs Committee demonstrated the problems the government has faced when attempting to estimate demand for the purposes of funding allocations. It detailed how a freshly proposed police funding formula, which aimed to simplify the estimation process, was almost immediately put on hold following the realisation that incorrect data was being used for the calculation. Although &lt;a href=&#34;https://www.publications.parliament.uk/pa/cm201617/cmselect/cmhaff/1093/1093.pdf&#34;&gt;a new government consultation&lt;/a&gt; on a revised funding calculation was launched in September 2016, its outcome has not yet been announced.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-role-of-experts&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The role of experts&lt;/h2&gt;
+&lt;p&gt;Academic researchers are often &lt;a href=&#34;http://blogs.lse.ac.uk/impactofsocialsciences/2015/04/09/academic-promotion-scholars-popular-media/&#34;&gt;justifiably scolded&lt;/a&gt; for not engaging with real-world discussions, and failing to offer practical solutions to contemporary problems in society. Yet here they clearly have something to offer.&lt;/p&gt;
+&lt;p&gt;HMIC &lt;a href=&#34;http://www.justiceinspectorates.gov.uk/hmic/wp-content/uploads/state-of-policing-2016.pdf&#34;&gt;reported&lt;/a&gt; that some police forces have made significant improvements to their demand estimations by working with academic research institutions who can provide much needed methodological expertise. But such collaborations are not widespread. Only recently has there been an acceptance that a concerted collaborative effort, including academic experts, is required to improve the government’s demand-based funding formula. Hopefully in this way past errors by the Home Office can be rectified, and trust in the system restored.&lt;/p&gt;
+&lt;p&gt;Recent history tells us that collaborations can be fruitful, and that there is the potential to drastically improve estimations of demand through such partnership. Academics, police forces and the government must bear the responsibility of instigating further change. The safety of the public may depend on it.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Residential burglary target selection. An analysis at the property-level using Google Street View</title>
+      <link>/publication/burg_ag/</link>
+      <pubDate>Sat, 01 Jul 2017 00:00:00 +0000</pubDate>
+      <guid>/publication/burg_ag/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

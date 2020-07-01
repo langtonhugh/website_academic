@@ -1,0 +1,49 @@
+---
+title: "Even the most beautiful maps can be misleading"
+subtitle: "<font size=2> This article was first published on [The Conversation](https://theconversation.com/even-the-most-beautiful-maps-can-be-misleading-126474) website. <font size=4.9>"
+tags:
+- visualisation
+- maps
+- deprivation
+- neighbourhoods
+- dorling
+- cartograms
+editor_options: 
+  chunk_output_type: console
+date: '2019-11-07'
+---
+
+
+
+<p>From reporting <a href="https://www.bbc.co.uk/news/election/2017/results">election results</a> to issuing <a href="https://www.bbc.co.uk/weather/2643743">weather forecasts</a>, maps offer a powerful, accessible and visually appealing way to convey complex information. Yet even the most beautiful maps can introduce some degree of misrepresentation.</p>
+<p>To see how, consider the latest statistics on deprivation released by the UK government. The government ranked 32,844 neighbourhoods, based on measures of deprivation such as income, employment, health and crime. The figures were widely reported, from <a href="https://www.bbc.co.uk/news/uk-england-49812519">the BBC</a> to <a href="https://www.theguardian.com/society/2019/sep/26/wealthy-incomers-changing-profile-of-londons-most-deprived-areas">The Guardian</a> and the <a href="https://www.dailymail.co.uk/news/article-7507575/Essex-seaside-village-Jaywick-named-Englands-deprived-neighbourhood.html">Daily Mail</a>, reigniting long-standing debates about persistent inequality in England.</p>
+<p>Of course, many outlets <a href="https://imd2019.group.shef.ac.uk/">used maps</a> to share these findings with the public. But using traditional boundaries can divert readers’ attention away from important information. In <a href="https://www.bbc.co.uk/news/uk-england-49812519">BBC’s</a> map of deprivation across local authorities, for instance, sparsely populated rural areas dominate a disproportionately large area, while urban areas, such as London, containing millions of people, are rendered almost invisible.</p>
+{{% tweet "1177466763312689152" %}}
+<div id="distorted-data" class="section level2">
+<h2>Distorted data</h2>
+<p>Recent <a href="https://osf.io/preprints/socarxiv/t6agd/">research shows</a> that people can interpret information inaccurately, when they look at maps with these shortcomings. But other techniques can be used to create a more accurate impression of the underlying data. For instance, <a href="https://www.tandfonline.com/doi/full/10.1111/j.1467-8306.2004.09401004.x?casa_token=PCQuJ1wUlkoAAAAA:m8aWeOyHWcKv-iL8T1-bXlcunBnzZV2lkAz3-gYAxUtgRCihbAYOIWz8-HJFvSOO8WP4W25tLA">cartograms</a> deliberately distort geography by scaling areas according to a specific variable, such as local population.</p>
+<p><a href="https://www.arcgis.com/home/item.html?id=b686a7679cb747e9825d1d1bb6b26046">Dorling cartograms</a> take this one step further, scaling areas according to a specified variable, but also representing each area using the same shape, such as a square or a circle. Other methods achieve uniformity in both size and shape: <a href="http://gisruk.org/ProceedingsGISRUK2018/GISRUK2018_Contribution_023.pdf">hexograms</a> and <a href="https://github.com/jbaileyh/geogrid">geogrids</a> transform the original boundaries of the map into hexagons or squares of the same size, while still aiming to preserve their original arrangement.</p>
+<p>Mapping neighbourhood deprivation in England represents <a href="https://theconversation.com/these-maps-show-how-tricky-it-is-to-measure-inequality-in-local-areas-across-england-109143">a significant challenge</a>, even for experts. This is because the government defines a neighbourhood as a <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeography">“lower super output area”</a> – each of which contains around 1,500 residents.</p>
+<p>Because highly deprived neighbourhoods tend to be densely populated, they are less visible on a regular map. By contrast, wealthier suburban areas – which are often less densely populated and therefore much larger – dominate the map. So there’s a risk that readers might draw inaccurate conclusions about the level of deprivation in any given area.</p>
+</div>
+<div id="shaping-up" class="section level2">
+<h2>Shaping up</h2>
+<p>Using <a href="https://www.arcgis.com/home/item.html?id=b686a7679cb747e9825d1d1bb6b26046">Dorling cartograms</a> scaled by resident population, and regular hexagonal <a href="https://github.com/jbaileyh/geogrid">geogrids</a>, I’ve attempted to minimise any misrepresentation. Take the example of Blackpool, which was <a href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/835115/IoD2019_Statistical_Release.pdf">ranked</a> the most deprived local authority in England. Around 42% of neighbourhoods in Blackpool are in the top 10% most deprived in England (the “first decile”). Yet these neighbourhoods only make up around 29% of the city’s actual area.</p>
+<p><img src="/img/blackpool.png" /></p>
+<p>Using a Dorling cartogram scaled by resident population size, neighbourhoods in the first decile now take up 41% of the map’s area, and the larger, less deprived neighbourhoods (in light blue) have been shrunk accordingly to become less dominant. With a regular hexagonal geogrid, the map now mimics the underlying data, with neighbourhoods in the first decile of deprivation taking up 42% of the total area.</p>
+<p>The variation in the shapes and sizes of Blackpool’s neighbourhoods can no longer divert attention or mislead readers, and arguably, the underlying data has been conveyed more accurately than with the original map.</p>
+</div>
+<div id="mapping-deprivation-differently" class="section level2">
+<h2>Mapping deprivation differently</h2>
+<p>A striking difference can be seen using different types of maps to visualise deprivation in Burnley and Hartlepool, which were among England’s most deprived local authorities. Both areas are characterised by many small, densely populated neighbourhoods in the first decile (most deprived), surrounded by much larger and wealthier suburbs.</p>
+<p><img src="/img/burn_hart.png" /></p>
+<p>At first glance, deprivation appears understated in the map that uses the original boundaries. But with the Dorling cartogram (again scaled by population) and the hexagonal geogrids, the issue can be somewhat rectified. This comes with its own difficulties, though.</p>
+<p>The geogrid in particular pushed some neighbourhoods further apart and forced some closer together than they appear on the original map. This might prove problematic in cases where the primary aim of the map is to convey distinct geographic patterns, such as the clustering of highly deprived neighbourhoods. In making the transformation, these patterns might be lost, or spurious patterns generated.</p>
+</div>
+<div id="encouraging-experimentation" class="section level2">
+<h2>Encouraging experimentation</h2>
+<p>Birmingham and Manchester – ranked in the top ten most deprived local authorities – present a different challenge. With much larger populations, and many more neighbourhoods to visualise, the original map presents an overwhelming amount of information.</p>
+<p><img src="/img/birm_manc.png" /></p>
+<p>Once again, both the Dorling cartogram and the geogrid perform admirably, scaling down the visual impact of larger, wealthier areas (especially in the north of Birmingham) and making the maps easier to read – without skewing the geographic patterning of deprivation across each city.</p>
+<p>There are no firm rules about how best to create beautiful but accurate maps. In this case, using the latest neighbourhood deprivation data in England, mapping out the original boundaries can clearly introduce some degree of misrepresentation. There’s <a href="https://osf.io/preprints/socarxiv/t6agd/">real value</a> in experimenting with different cartographic techniques – and media organisations and the government would do well to think outside the box when it comes to sharing the latest findings with the public.</p>
+</div>

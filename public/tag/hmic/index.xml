@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>HMIC | Samuel Langton</title>
+    <link>/tag/hmic/</link>
+      <atom:link href="/tag/hmic/index.xml" rel="self" type="application/rss+xml" />
+    <description>HMIC</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Thu, 06 Jul 2017 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
+      <title>HMIC</title>
+      <link>/tag/hmic/</link>
+    </image>
+    
+    <item>
+      <title>When crime drops, the demands on the police don’t necessarily fall</title>
+      <link>/post/crimedrop_conversation/</link>
+      <pubDate>Thu, 06 Jul 2017 00:00:00 +0000</pubDate>
+      <guid>/post/crimedrop_conversation/</guid>
+      <description>
+
+
+&lt;p&gt;On a day-to-day basis, the exposure citizens have to the police is often fleeting, with officers passing by in a blur as they respond to emergency calls. Official crime figures can be disputed, but &lt;a href=&#34;https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/445662/rec-crime-2003-2015.ods&#34;&gt;the long-term trend&lt;/a&gt; appears to be that levels of crime in England and Wales are heading downward. Yet it is a myth to think that an apparent drop in crime relieves some of the pressures placed on police forces.&lt;/p&gt;
+&lt;p&gt;In reality, the demands placed on police forces do not originate primarily from obvious criminal behaviour. Forces are increasingly burdened with what’s called “latent” crime demand, such as child sexual exploitation or modern slavery, where victims are afraid or unwilling to approach police, as well as non-crime issues, such as missing persons.&lt;/p&gt;
+&lt;p&gt;The volume of this demand, and the time spent on addressing it, is much more problematic to estimate, and yet the safety of the public depends on both the police and the government having a handle on such estimations.&lt;/p&gt;
+&lt;p&gt;Out on the streets, police forces need to demonstrate an understanding of current and future demand to allocate resources efficiently and ensure calls are responded to in time. In Westminster, the funding allocations to the 43 forces of England and Wales are dictated by estimations of demand. In an era of austerity, measuring this demand has never been more crucial.&lt;/p&gt;
+&lt;div id=&#34;measuring-demand&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Measuring demand&lt;/h2&gt;
+&lt;p&gt;Reports by the &lt;a href=&#34;http://www.college.police.uk/News/College-news/Documents/Demand%20Report%2023_1_15_noBleed.pdf&#34;&gt;College of Policing&lt;/a&gt; and &lt;a href=&#34;http://www.justiceinspectorates.gov.uk/hmic/wp-content/uploads/state-of-policing-2016.pdf&#34;&gt;HM Inspectorate of Constabulary&lt;/a&gt; (HMIC), have shown how the realities of modern policing render traditional estimates of demand outdated and inaccurate.&lt;/p&gt;
+&lt;p&gt;In its annual review of policing in England and Wales, HMIC rates how well each police force estimates the current and future demand for their services. For their latest report, published in &lt;a href=&#34;http://www.justiceinspectorates.gov.uk/hmic/wp-content/uploads/state-of-policing-2016.pdf&#34;&gt;March 2017&lt;/a&gt; and covering inspections between February 2016 and March 2017, the message is clear: most forces are doing a good job, but there is room for improvement.&lt;/p&gt;
+&lt;p&gt;The map below, generated using open-source &lt;a href=&#34;http://geoportal.statistics.gov.uk/datasets/3e5a096a8c7c456fb6d3164a3f44b005_0&#34;&gt;spatial data&lt;/a&gt;, plots the latest force ratings. It paints a positive picture for England and Wales, but nine out of 43 police forces require improvement, and only a handful managed to achieve the top grade.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/map_police1.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;A key component of improving police awareness of their demand will be refining the understanding of “latent” and non-crime demand. Latent demand often involves vulnerable people who are unwilling to come forward due to the nature of the crime, or live in communities with a widespread distrust of the police. It is therefore extremely difficult to make reliable estimations about this kind of demand on police time.&lt;/p&gt;
+&lt;p&gt;A substantial proportion of the demands placed on police forces originate from non-crime issues such as mental health. Although &lt;a href=&#34;https://www.publications.parliament.uk/pa/cm201516/cmselect/cmhaff/476/47608.htm&#34;&gt;estimates&lt;/a&gt; vary, some forces estimate that 70% to 80% of their demand is comprised of non-crime incidents. A number of forces &lt;a href=&#34;https://www.publications.parliament.uk/pa/cm201516/cmselect/cmhaff/476/47608.htm&#34;&gt;believe&lt;/a&gt; that the increase in non-criminal incidents being dealt with by the police may be partially driven by cuts to other areas of the public sector.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;money-depends-on-it&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Money depends on it&lt;/h2&gt;
+&lt;p&gt;To ensure that police forces are allocated money appropriately, in the interests of public safety and economic efficiency, the government also needs to demonstrate an understanding of demand. The issue of police funding remains a highly charged one, and budget cuts were &lt;a href=&#34;https://theconversation.com/fact-check-have-the-conservatives-protected-police-and-counter-terrorism-budgets-78782&#34;&gt;keenly debated&lt;/a&gt; during the 2017 election campaign.&lt;/p&gt;
+&lt;p&gt;The map here uses recent police funding &lt;a href=&#34;https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/588196/Police_Grant_report_2017-18_Accessible.pdf&#34;&gt;figures&lt;/a&gt; from 2017-2018 to demonstrate the vast sums of public money involved, and how much these sums can vary between police force areas&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/map_police2.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Despite the implications and public concern over police funding, refining the formula used to apportion money has been fraught with difficulties. A &lt;a href=&#34;https://www.publications.parliament.uk/pa/cm201516/cmselect/cmhaff/476/476.pdf&#34;&gt;December 2015 report&lt;/a&gt; by MPs on the Home Affairs Committee demonstrated the problems the government has faced when attempting to estimate demand for the purposes of funding allocations. It detailed how a freshly proposed police funding formula, which aimed to simplify the estimation process, was almost immediately put on hold following the realisation that incorrect data was being used for the calculation. Although &lt;a href=&#34;https://www.publications.parliament.uk/pa/cm201617/cmselect/cmhaff/1093/1093.pdf&#34;&gt;a new government consultation&lt;/a&gt; on a revised funding calculation was launched in September 2016, its outcome has not yet been announced.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-role-of-experts&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The role of experts&lt;/h2&gt;
+&lt;p&gt;Academic researchers are often &lt;a href=&#34;http://blogs.lse.ac.uk/impactofsocialsciences/2015/04/09/academic-promotion-scholars-popular-media/&#34;&gt;justifiably scolded&lt;/a&gt; for not engaging with real-world discussions, and failing to offer practical solutions to contemporary problems in society. Yet here they clearly have something to offer.&lt;/p&gt;
+&lt;p&gt;HMIC &lt;a href=&#34;http://www.justiceinspectorates.gov.uk/hmic/wp-content/uploads/state-of-policing-2016.pdf&#34;&gt;reported&lt;/a&gt; that some police forces have made significant improvements to their demand estimations by working with academic research institutions who can provide much needed methodological expertise. But such collaborations are not widespread. Only recently has there been an acceptance that a concerted collaborative effort, including academic experts, is required to improve the government’s demand-based funding formula. Hopefully in this way past errors by the Home Office can be rectified, and trust in the system restored.&lt;/p&gt;
+&lt;p&gt;Recent history tells us that collaborations can be fruitful, and that there is the potential to drastically improve estimations of demand through such partnership. Academics, police forces and the government must bear the responsibility of instigating further change. The safety of the public may depend on it.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

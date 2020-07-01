@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R | Samuel Langton</title>
+    <link>/category/r/</link>
+      <atom:link href="/category/r/index.xml" rel="self" type="application/rss+xml" />
+    <description>R</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language>
+    <image>
+      <url>/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>R</title>
+      <link>/category/r/</link>
+    </image>
+    
+    <item>
+      <title>Lockdown crime trends: what we know and what we don&#39;t</title>
+      <link>/post/lockdown_conversation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/post/lockdown_conversation/</guid>
+      <description>
+
+
+&lt;p&gt;Understanding what has happened to crime during lockdown is challenging. We are in uncharted territory and it’s proving very hard to draw definitive conclusions from the latest police recorded crime data. But a few trends, like a spike in antisocial behaviour and an increase in drug offences, are beginning to emerge.&lt;/p&gt;
+&lt;p&gt;Changes in people’s &lt;a href=&#34;https://www.gstatic.com/covid19/mobility/2020-05-29_GB_Mobility_Report_en-GB.pdf&#34;&gt;movements and activities&lt;/a&gt; can impact on the &lt;a href=&#34;https://theconversation.com/coronavirus-how-crime-changes-during-a-lockdown-134948&#34;&gt;opportunities&lt;/a&gt; available to potential offenders and, in turn, the volume and types of crime being committed. As a case study, we can look at &lt;a href=&#34;https://data.police.uk/data/&#34;&gt;Greater London&lt;/a&gt; and consider crimes recorded by the Metropolitan Police Service before and after the nationwide lockdown.&lt;/p&gt;
+&lt;p&gt;Using this data, I have visualised how the Met recorded antisocial behaviour and different crime types on a month-by-month basis. Importantly, there is enough open data to compare trends across years. This is useful for studying crime because many offence types are seasonal.&lt;/p&gt;
+&lt;p&gt;For instance, bicycle theft tends to increase in spring (around when the lockdown began) so looking at 2020 in isolation would be uninformative, or even misleading. This mimics the approach taken when &lt;a href=&#34;https://www.ft.com/content/a26fbf7e-48f8-11ea-aeb3-955839e06441&#34;&gt;visually tracking&lt;/a&gt; coronvirus fatalities due to the seasonality of death rates.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;met_grid_crimetypes_less_ticks.png&#34; width=&#34;300px&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
