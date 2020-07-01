@@ -5,7 +5,7 @@
     <link>/tag/clustering/</link>
       <atom:link href="/tag/clustering/index.xml" rel="self" type="application/rss+xml" />
     <description>clustering</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 07 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
       <title>clustering</title>
@@ -14,15 +14,10 @@
     
     <item>
       <title>Akmedoids. Anchored kmedoids for longitudinal data clustering</title>
-      <link>/publication/akmedoids/</link>
-      <pubDate>Tue, 07 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>/publication/akmedoids/</guid>
-      <description>&lt;div class=&#34;alert alert-note&#34;&gt;
-  &lt;div&gt;
-    The package is on &lt;a href=&#34;https://cran.r-project.org/web/packages/akmedoids/index.html&#34;&gt;CRAN&lt;/a&gt; and has a corresponding &lt;a href=&#34;https://github.com/cran/akmedoids&#34;&gt;GitHub&lt;/a&gt; page.
-  &lt;/div&gt;
-&lt;/div&gt;
-</description>
+      <link>/publication/akmedoid/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/akmedoid/</guid>
+      <description></description>
     </item>
     
   </channel>

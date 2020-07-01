@@ -27,10 +27,10 @@
   
     
   
-  <meta name="description" content="Paper using Google Street View data to investigate the extent to which the physical attributes of residential homes contribute to the risk of burglary. Please feel free to contact me for a copy if you do not have access!">
+  <meta name="description" content="R package to implement anchored k-medoids, a method for clustering longitudinal data.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/publication/burg_ag/">
+  <link rel="alternate" hreflang="en-us" href="/publication/akmedoid/">
 
   
 
@@ -217,7 +217,7 @@
   <link rel="icon" type="image/png" href="/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_32x32_fill_lanczos_center_2.png">
   <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_192x192_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="/publication/burg_ag/">
+  <link rel="canonical" href="/publication/akmedoid/">
 
   
   
@@ -235,15 +235,15 @@
   <meta property="twitter:creator" content="@sh_langton">
   
   <meta property="og:site_name" content="Samuel Langton">
-  <meta property="og:url" content="/publication/burg_ag/">
-  <meta property="og:title" content="Residential burglary target selection. An analysis at the property-level using Google Street View | Samuel Langton">
-  <meta property="og:description" content="Paper using Google Street View data to investigate the extent to which the physical attributes of residential homes contribute to the risk of burglary. Please feel free to contact me for a copy if you do not have access!"><meta property="og:image" content="/publication/burg_ag/featured.jpg">
-  <meta property="twitter:image" content="/publication/burg_ag/featured.jpg"><meta property="og:locale" content="en-us">
+  <meta property="og:url" content="/publication/akmedoid/">
+  <meta property="og:title" content="Akmedoids. Anchored kmedoids for longitudinal data clustering | Samuel Langton">
+  <meta property="og:description" content="R package to implement anchored k-medoids, a method for clustering longitudinal data."><meta property="og:image" content="/publication/akmedoid/featured.jpg">
+  <meta property="twitter:image" content="/publication/akmedoid/featured.jpg"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2017-07-01T00:00:00&#43;00:00">
+      <meta property="article:published_time" content="2020-01-01T00:00:00&#43;00:00">
     
-    <meta property="article:modified_time" content="2017-07-01T00:00:00&#43;00:00">
+    <meta property="article:modified_time" content="2020-01-01T00:00:00&#43;00:00">
   
 
   
@@ -265,20 +265,20 @@
   "@type": "Article",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "/publication/burg_ag/"
+    "@id": "/publication/akmedoid/"
   },
-  "headline": "Residential burglary target selection. An analysis at the property-level using Google Street View",
+  "headline": "Akmedoids. Anchored kmedoids for longitudinal data clustering",
   
   "image": [
-    "/publication/burg_ag/featured.jpg"
+    "/publication/akmedoid/featured.jpg"
   ],
   
-  "datePublished": "2017-07-01T00:00:00Z",
-  "dateModified": "2017-07-01T00:00:00Z",
+  "datePublished": "2020-01-01T00:00:00Z",
+  "dateModified": "2020-01-01T00:00:00Z",
   
   "author": {
     "@type": "Person",
-    "name": "Samuel Langton"
+    "name": "Monsuru Adepeju"
   },
   
   "publisher": {
@@ -289,7 +289,7 @@
       "url": "/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "Paper using Google Street View data to investigate the extent to which the physical attributes of residential homes contribute to the risk of burglary. Please feel free to contact me for a copy if you do not have access!"
+  "description": "R package to implement anchored k-medoids, a method for clustering longitudinal data."
 }
 </script>
 
@@ -307,7 +307,7 @@
 
 
 
-  <title>Residential burglary target selection. An analysis at the property-level using Google Street View | Samuel Langton</title>
+  <title>Akmedoids. Anchored kmedoids for longitudinal data clustering | Samuel Langton</title>
 
 </head>
 <body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
@@ -607,7 +607,7 @@
   
   
 <div class="article-container pt-3">
-  <h1>Residential burglary target selection. An analysis at the property-level using Google Street View</h1>
+  <h1>Akmedoids. Anchored kmedoids for longitudinal data clustering</h1>
 
   
 
@@ -625,7 +625,7 @@
     
 
   
-  <span >Samuel Langton</span>, <span >Wouter Steenbeek</span>
+  <span >Monsuru Adepeju</span>, <span >Samuel Langton</span>, <span >Jon Bannister</span>
   </div>
   
   
@@ -636,7 +636,7 @@
     
       
     
-    July 2017
+    January 2020
   </span>
   
 
@@ -684,7 +684,7 @@
 
 
 
-<a class="btn btn-outline-primary my-1 mr-1" href="https://www.sciencedirect.com/science/article/abs/pii/S0143622816304970" target="_blank" rel="noopener">
+<a class="btn btn-outline-primary my-1 mr-1" href="https://cran.r-project.org/web/packages/akmedoids/akmedoids.pdf" target="_blank" rel="noopener">
   PDF
 </a>
 
@@ -716,28 +716,9 @@
 
     
     <h3>Abstract</h3>
-    <p class="pub-abstract">Objectives. To quantitatively test findings from offender-based literaturedprimarily consisting of smallsample interviews or experimental scenarios with convicted burglarsdto investigate the extent to which the physical attributes of residential homes and their immediate surrounding area contribute to the risk of burglary. Methods. Collecting fresh, micro-level data using Google Street View (GSV) as a tool of Systematic Social Observation (SSO), we utilise a case-control design to isolate property-level effects. Analysis is carried out using conditional logistic regression. Results. The ease of escape from a property, the extent to which the dwelling is accessible, and the extent to which it is closed to surveillance from neighbours and passers-by are all positively related to burglary risk. There is no evidence that indications of resident wealth are related to the likelihood of victimisation, or that the effect of surveillability varies depending on the extent of collective efficacy in a neighbourhood. Conclusions. Burglary target selection does not stop at the selection of a target neighbourhood, but certain characteristics of individual properties within the same neighbourhood are in turn indicative of burglary risk. Quantitative analyses partly support findings from the offender-based research on residential burglary. We encourage future research to consider using GSV as a method of collecting fresh data, with the broader aim of explaining criminal behaviour at micro-spatial scales.</p>
+    <p class="pub-abstract">The &lsquo;akmedoids&rsquo; package advances a set of R functions for longitudinal clustering of long-term trajectories and determines the optimal solution based on the Calinski-Harabatz criterion. The package also includes a set of functions for addressing common data issues, such as missing entries and outliers, prior to conducting analysis.</p>
     
 
-    
-    <div class="row">
-      <div class="col-md-1"></div>
-      <div class="col-md-10">
-        <div class="row">
-          <div class="col-12 col-md-3 pub-row-heading">Type</div>
-          <div class="col-12 col-md-9">
-            
-            
-            <a href="/publication/#2">
-              Journal article
-            </a>
-            
-          </div>
-        </div>
-      </div>
-      <div class="col-md-1"></div>
-    </div>
-    <div class="d-md-none space-below"></div>
     
 
     
@@ -746,7 +727,7 @@
       <div class="col-md-10">
         <div class="row">
           <div class="col-12 col-md-3 pub-row-heading">Publication</div>
-          <div class="col-12 col-md-9">Applied Geography</div>
+          <div class="col-12 col-md-9">CRAN</div>
         </div>
       </div>
       <div class="col-md-1"></div>
@@ -767,15 +748,15 @@
 
 <div class="article-tags">
   
-  <a class="badge badge-light" href="/tag/burglary/">burglary</a>
-  
-  <a class="badge badge-light" href="/tag/google-street-view/">google street view</a>
-  
   <a class="badge badge-light" href="/tag/crime/">crime</a>
   
-  <a class="badge badge-light" href="/tag/rational-choice/">rational choice</a>
+  <a class="badge badge-light" href="/tag/clustering/">clustering</a>
   
-  <a class="badge badge-light" href="/tag/situational-crime-prevention/">situational crime prevention</a>
+  <a class="badge badge-light" href="/tag/kmeans/">kmeans</a>
+  
+  <a class="badge badge-light" href="/tag/longitudinal/">longitudinal</a>
+  
+  <a class="badge badge-light" href="/tag/r/">R</a>
   
 </div>
 
@@ -792,7 +773,7 @@
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=/publication/burg_ag/&amp;text=Residential%20burglary%20target%20selection.%20An%20analysis%20at%20the%20property-level%20using%20Google%20Street%20View" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=/publication/akmedoid/&amp;text=Akmedoids.%20Anchored%20kmedoids%20for%20longitudinal%20data%20clustering" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -805,7 +786,7 @@
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=/publication/burg_ag/&amp;t=Residential%20burglary%20target%20selection.%20An%20analysis%20at%20the%20property-level%20using%20Google%20Street%20View" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=/publication/akmedoid/&amp;t=Akmedoids.%20Anchored%20kmedoids%20for%20longitudinal%20data%20clustering" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -818,7 +799,7 @@
       
       
       <li>
-        <a href="mailto:?subject=Residential%20burglary%20target%20selection.%20An%20analysis%20at%20the%20property-level%20using%20Google%20Street%20View&amp;body=/publication/burg_ag/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Akmedoids.%20Anchored%20kmedoids%20for%20longitudinal%20data%20clustering&amp;body=/publication/akmedoid/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -831,7 +812,7 @@
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=/publication/burg_ag/&amp;title=Residential%20burglary%20target%20selection.%20An%20analysis%20at%20the%20property-level%20using%20Google%20Street%20View" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=/publication/akmedoid/&amp;title=Akmedoids.%20Anchored%20kmedoids%20for%20longitudinal%20data%20clustering" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -844,7 +825,7 @@
       
       
       <li>
-        <a href="whatsapp://send?text=Residential%20burglary%20target%20selection.%20An%20analysis%20at%20the%20property-level%20using%20Google%20Street%20View%20/publication/burg_ag/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="whatsapp://send?text=Akmedoids.%20Anchored%20kmedoids%20for%20longitudinal%20data%20clustering%20/publication/akmedoid/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -857,7 +838,7 @@
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=/publication/burg_ag/&amp;title=Residential%20burglary%20target%20selection.%20An%20analysis%20at%20the%20property-level%20using%20Google%20Street%20View" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=/publication/akmedoid/&amp;title=Akmedoids.%20Anchored%20kmedoids%20for%20longitudinal%20data%20clustering" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -874,6 +855,17 @@
 
 
 
+
+
+  
+    
+    
+
+
+
+
+
+  
 
 
   
@@ -917,9 +909,11 @@
     <h3>Related</h3>
     <ul>
       
-      <li><a href="/publication/akmedoid/">Akmedoids. Anchored kmedoids for longitudinal data clustering</a></li>
+      <li><a href="/publication/burg_ag/">Residential burglary target selection. An analysis at the property-level using Google Street View</a></li>
       
       <li><a href="/publication/crimsim_preprint/">The integrity of crime statistics. Assessing the impact of police data bias on crime mapping</a></li>
+      
+      <li><a href="/project/r-teaching/">R</a></li>
       
       <li><a href="/post/lockdown_conversation/">Lockdown crime trends. What we know and what we don&#39;t</a></li>
       
