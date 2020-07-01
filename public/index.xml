@@ -108,19 +108,6 @@
     </item>
     
     <item>
-      <title>Akmedoids. Anchored kmedoids for longitudinal data clustering</title>
-      <link>/publication/akmedoids/</link>
-      <pubDate>Tue, 07 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>/publication/akmedoids/</guid>
-      <description>&lt;div class=&#34;alert alert-note&#34;&gt;
-  &lt;div&gt;
-    The package is on &lt;a href=&#34;https://cran.r-project.org/web/packages/akmedoids/index.html&#34;&gt;CRAN&lt;/a&gt; and has a corresponding &lt;a href=&#34;https://github.com/cran/akmedoids&#34;&gt;GitHub&lt;/a&gt; page.
-  &lt;/div&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
       <title>GIS and Geovisual Analysis</title>
       <link>/publication/gis_chapter/</link>
       <pubDate>Sat, 07 Dec 2019 00:00:00 +0000</pubDate>
@@ -179,24 +166,6 @@
       <pubDate>Sun, 01 Sep 2019 00:00:00 +0000</pubDate>
       <guid>/publication/hexo_epb/</guid>
       <description></description>
-    </item>
-    
-    <item>
-      <title>Privacy Policy</title>
-      <link>/privacy/</link>
-      <pubDate>Thu, 28 Jun 2018 00:00:00 +0100</pubDate>
-      <guid>/privacy/</guid>
-      <description>&lt;p&gt;&amp;hellip;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Terms</title>
-      <link>/terms/</link>
-      <pubDate>Thu, 28 Jun 2018 00:00:00 +0100</pubDate>
-      <guid>/terms/</guid>
-      <description>&lt;p&gt;&amp;hellip;&lt;/p&gt;
-</description>
     </item>
     
     <item>
