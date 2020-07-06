@@ -1,0 +1,1100 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.8.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Samuel Langton">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Over the past few weeks I have spent a bit of time exploring police recorded crime trends before and after the UK-wide lockdown.
+There has been talk of lockdowns representing the largest natural experiment in criminological history.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/update_lockdown/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="/post/update_lockdown/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="twitter:site" content="@sh_langton">
+  <meta property="twitter:creator" content="@sh_langton">
+  
+  <meta property="og:site_name" content="Samuel Langton">
+  <meta property="og:url" content="/post/update_lockdown/">
+  <meta property="og:title" content="Update: lockdown crime trends | Samuel Langton">
+  <meta property="og:description" content="Over the past few weeks I have spent a bit of time exploring police recorded crime trends before and after the UK-wide lockdown.
+There has been talk of lockdowns representing the largest natural experiment in criminological history."><meta property="og:image" content="/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-07-06T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2020-07-06T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/post/update_lockdown/"
+  },
+  "headline": "Update: lockdown crime trends",
+  
+  "datePublished": "2020-07-06T00:00:00Z",
+  "dateModified": "2020-07-06T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Samuel Langton"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Samuel Langton",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "Over the past few weeks I have spent a bit of time exploring police recorded crime trends before and after the UK-wide lockdown.\nThere has been talk of lockdowns representing the largest natural experiment in criminological history."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Update: lockdown crime trends | Samuel Langton</title>
+
+</head>
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Samuel Langton</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Samuel Langton</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>About</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#research"><span>Research</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#teaching"><span>Teaching</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/files/Langton_CV_2020.pdf"><span>CV</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link js-theme-selector" data-toggle="dropdown" aria-haspopup="true">
+          <i class="fas fa-palette" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Update: lockdown crime trends</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Jul 6, 2020
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+
+
+<p><font size=4.9></p>
+<p>Over the past few weeks I have spent a bit of time exploring police recorded crime trends before and after the UK-wide lockdown.</p>
+<p>There has been talk of lockdowns representing the <a href="https://link.springer.com/article/10.1007/s12103-020-09546-0">largest natural experiment in criminological history</a>. Of course, determining the impact of this ‘experiment’ using police recorded crime data is not straightforward. Lots of parameters will have changed beyond people’s routine activities, amongst them, people’s ability and willingness to report crimes to the police, and policing resource allocation. It might be some time before we can fully understand how lockdowns have curbed the spatial and temporal patterns of crime.</p>
+<p>In the meantime, <a href="https://data.police.uk/">open</a> police recorded crime data can offer insight into how criminal behaviour might have changed in the past few months.</p>
+<div id="visualising-trends" class="section level2">
+<h2>Visualising trends</h2>
+<p>A recent <a href="https://theconversation.com/lockdown-crime-trends-why-antisocial-behaviour-is-up-140479">article</a> of mine explored how crime trends changed in March and April following the lockdown using London as a case study. It used a descriptive visualisation inspired by those used in <a href="https://www.ft.com/content/a26fbf7e-48f8-11ea-aeb3-955839e06441">the FT</a> to track coronavirus deaths whilst accounting for seasonal changes in death rates. A key characteristic of long-term crime trends is seasonality. To disentangle fluctuations in crime, and pinpoint irregularity resulting from lockdown measures, we must account for typical monthly fluctuations. Even then, monthly open data is <a href="https://the-sra.org.uk/SRA/Blog/whyyoucantidentifychangesincrimebycomparingthismonthtolastmonth.aspx">far from ideal</a>, but you can’t have everything (especially when working from your living room).</p>
+<p>We now have some updated data – up to and including May – which demonstrates the start of a turnaround upon the relaxation of lockdown rules. The code to make this visual is now available on <a href="https://github.com/langtonhugh/crime_covid_visual">GitHub</a>.</p>
+<p><img src="/img/full_met.png" /></p>
+<p>The dramatic declines in burglary, robbery, theft and shoplifting observed in March and April have began to reverse, or at least stabilise. Shops are beginning to re-open, and people returning to work are now leaving their homes unguarded. Bicycle theft has more or less returned to normal when compared with previous years. As lockdown restrictions have eased, opporunties for crime have begun to (re)emerge. Counts are still unusually low amongst many crime types, but we are certainly witnessing a turnaround.</p>
+<p>Given that we can attribute most ASB incidents to <a href="https://www.bbc.co.uk/news/uk-52298016">lockdown breaches</a>, it is no surprise to see counts beginning to decline. It will be interesting to see where this goes in June and July. We might see a resurgence of ‘traditional’ ASB amidst a fall in incidents associated with lockdown breaches, which will complicate the picture somewhat. We will be able to disentangle this through the analysis of secure records which provide some context to incidents (e.g. text logs), but the continued closure of universities (and thus, many secure data facilities) might slow this down.</p>
+</div>
+<div id="drug-activity" class="section level2">
+<h2>Drug activity</h2>
+<p>One of the most interesting talking points is around drugs. Initially, some reports suggested that drug use would <a href="https://www.theguardian.com/society/2020/may/03/coronavirus-crisis-could-increase-users-drug-habits-report">rise</a> during lockdown, partly due to the resultant strains on mental health. Now, there are reports that usage, at least for party drugs like ecstasy and cocaine, has <a href="https://www.theguardian.com/society/2020/jun/29/fall-in-use-of-party-drugs-as-more-britons-turn-to-alcohol-in-lockdown">declined</a>. We might then have expected a fall in drug offences, which includes possession, consumption and/or supply. Instead, we’ve seen an unprecedented increase.</p>
+<p>It is perfectly plausible that drug activity, such as those relating to <a href="https://www.nationalcrimeagency.gov.uk/what-we-do/crime-threats/drug-trafficking/county-lines">‘County Lines’</a>, has <a href="https://www.theguardian.com/uk-news/2020/apr/13/gangs-still-forcing-children-into-county-lines-drug-trafficking-police-covid-19-lockdown">not changed much</a>, or <a href="https://shoc.rusi.org/informer/part-2-how-covid-19-affecting-county-lines">declined</a>, even amidst an increase in the number of offences being recorded by the police. Some forces reported an increase in arrests simply due to dealers <a href="https://www.bbc.co.uk/news/uk-england-sussex-52344249">sticking out</a> on empty streets. This has been described as like <a href="https://twitter.com/gmhales/status/1249962083631980549">shooting fish in a barrel</a> for police, and represents a good example of how trends in police recorded crime – however useful – should be interpreted with caution.</p>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>The monthly release of open police crime data in the UK offers a useful on-the-fly opportunity to examine how the lockdown may have impacted on crime. I’ll be updating this visual periodically upon new data releases to see how things are changing. Please do <a href="https://www.samlangton.info/#contact">get in contact</a> if you have any suggestions or comments so far.</p>
+</div>
+<div id="further-reads" class="section level2">
+<h2>Further reads</h2>
+<p>Stickle, B., &amp; Felson, M. (2020). Crime Rates in a Pandemic: the Largest Criminological Experiment in History. American Journal of Criminal Justice, 1-12.</p>
+<p>Ashby, M. (2020). Changes in police calls for service during the early months of the 2020 coronavirus pandemic.</p>
+<p>Gerell, M. (2020). Minor covid-19 association with crime in Sweden, a five week follow up.</p>
+</div>
+
+    </div>
+
+    
+
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/policing/">policing</a>
+  
+  <a class="badge badge-light" href="/tag/crime/">crime</a>
+  
+  <a class="badge badge-light" href="/tag/covid/">covid</a>
+  
+  <a class="badge badge-light" href="/tag/r/">R</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/post/update_lockdown/&amp;text=Update:%20lockdown%20crime%20trends" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/post/update_lockdown/&amp;t=Update:%20lockdown%20crime%20trends" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Update:%20lockdown%20crime%20trends&amp;body=/post/update_lockdown/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/post/update_lockdown/&amp;title=Update:%20lockdown%20crime%20trends" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=Update:%20lockdown%20crime%20trends%20/post/update_lockdown/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/post/update_lockdown/&amp;title=Update:%20lockdown%20crime%20trends" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+    
+    
+    
+      
+    
+    
+    
+    <div class="media author-card content-widget-hr">
+      
+        
+        <img class="avatar mr-3 avatar-circle" src="/author/samuel-langton/avatar_hue1f0919ad9e08cb2d68b95c1c9e0c45f_38483_270x270_fill_q90_lanczos_center.jpg" alt="Samuel Langton">
+      
+
+      <div class="media-body">
+        <h5 class="card-title"><a href="/">Samuel Langton</a></h5>
+        <h6 class="card-subtitle">Researcher in criminology</h6>
+        <p class="card-text">My research focuses on describing and explaining the geographic patterning of crime. I am also interested in data visualisation, mapping and promoting the use of open software in social science.</p>
+        <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/sh_langton" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/citations?user=GKweRb8AAAAJ&amp;hl=en&amp;oi=ao" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/langtonhugh" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+</ul>
+
+      </div>
+    </div>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/post/lockdown_conversation/">Lockdown crime trends. What we know and what we don&#39;t</a></li>
+      
+      <li><a href="/publication/akmedoid/">Akmedoids. Anchored kmedoids for longitudinal data clustering</a></li>
+      
+      <li><a href="/post/crimedrop_conversation/">When crime drops, the demands on the police don’t necessarily fall</a></li>
+      
+      <li><a href="/publication/crimsim_preprint/">The integrity of crime statistics. Assessing the impact of police data bias on crime mapping</a></li>
+      
+      <li><a href="/project/r-teaching/">R</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <script src="/js/academic.min.cbb55fd8eafa574bce72dcb94f65cd2c.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

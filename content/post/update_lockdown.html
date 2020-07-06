@@ -1,0 +1,41 @@
+---
+title: "Update: lockdown crime trends"
+tags:
+- policing
+- crime
+- COVID
+- R
+editor_options: 
+  chunk_output_type: console
+date: '2020-07-06'
+---
+
+
+
+<p><font size=4.9></p>
+<p>Over the past few weeks I have spent a bit of time exploring police recorded crime trends before and after the UK-wide lockdown.</p>
+<p>There has been talk of lockdowns representing the <a href="https://link.springer.com/article/10.1007/s12103-020-09546-0">largest natural experiment in criminological history</a>. Of course, determining the impact of this ‘experiment’ using police recorded crime data is not straightforward. Lots of parameters will have changed beyond people’s routine activities, amongst them, people’s ability and willingness to report crimes to the police, and policing resource allocation. It might be some time before we can fully understand how lockdowns have curbed the spatial and temporal patterns of crime.</p>
+<p>In the meantime, <a href="https://data.police.uk/">open</a> police recorded crime data can offer insight into how criminal behaviour might have changed in the past few months.</p>
+<div id="visualising-trends" class="section level2">
+<h2>Visualising trends</h2>
+<p>A recent <a href="https://theconversation.com/lockdown-crime-trends-why-antisocial-behaviour-is-up-140479">article</a> of mine explored how crime trends changed in March and April following the lockdown using London as a case study. It used a descriptive visualisation inspired by those used in <a href="https://www.ft.com/content/a26fbf7e-48f8-11ea-aeb3-955839e06441">the FT</a> to track coronavirus deaths whilst accounting for seasonal changes in death rates. A key characteristic of long-term crime trends is seasonality. To disentangle fluctuations in crime, and pinpoint irregularity resulting from lockdown measures, we must account for typical monthly fluctuations. Even then, monthly open data is <a href="https://the-sra.org.uk/SRA/Blog/whyyoucantidentifychangesincrimebycomparingthismonthtolastmonth.aspx">far from ideal</a>, but you can’t have everything (especially when working from your living room).</p>
+<p>We now have some updated data – up to and including May – which demonstrates the start of a turnaround upon the relaxation of lockdown rules. The code to make this visual is now available on <a href="https://github.com/langtonhugh/crime_covid_visual">GitHub</a>.</p>
+<p><img src="/img/full_met.png" /></p>
+<p>The dramatic declines in burglary, robbery, theft and shoplifting observed in March and April have began to reverse, or at least stabilise. Shops are beginning to re-open, and people returning to work are now leaving their homes unguarded. Bicycle theft has more or less returned to normal when compared with previous years. As lockdown restrictions have eased, opporunties for crime have begun to (re)emerge. Counts are still unusually low amongst many crime types, but we are certainly witnessing a turnaround.</p>
+<p>Given that we can attribute most ASB incidents to <a href="https://www.bbc.co.uk/news/uk-52298016">lockdown breaches</a>, it is no surprise to see counts beginning to decline. It will be interesting to see where this goes in June and July. We might see a resurgence of ‘traditional’ ASB amidst a fall in incidents associated with lockdown breaches, which will complicate the picture somewhat. We will be able to disentangle this through the analysis of secure records which provide some context to incidents (e.g. text logs), but the continued closure of universities (and thus, many secure data facilities) might slow this down.</p>
+</div>
+<div id="drug-activity" class="section level2">
+<h2>Drug activity</h2>
+<p>One of the most interesting talking points is around drugs. Initially, some reports suggested that drug use would <a href="https://www.theguardian.com/society/2020/may/03/coronavirus-crisis-could-increase-users-drug-habits-report">rise</a> during lockdown, partly due to the resultant strains on mental health. Now, there are reports that usage, at least for party drugs like ecstasy and cocaine, has <a href="https://www.theguardian.com/society/2020/jun/29/fall-in-use-of-party-drugs-as-more-britons-turn-to-alcohol-in-lockdown">declined</a>. We might then have expected a fall in drug offences, which includes possession, consumption and/or supply. Instead, we’ve seen an unprecedented increase.</p>
+<p>It is perfectly plausible that drug activity, such as those relating to <a href="https://www.nationalcrimeagency.gov.uk/what-we-do/crime-threats/drug-trafficking/county-lines">‘County Lines’</a>, has <a href="https://www.theguardian.com/uk-news/2020/apr/13/gangs-still-forcing-children-into-county-lines-drug-trafficking-police-covid-19-lockdown">not changed much</a>, or <a href="https://shoc.rusi.org/informer/part-2-how-covid-19-affecting-county-lines">declined</a>, even amidst an increase in the number of offences being recorded by the police. Some forces reported an increase in arrests simply due to dealers <a href="https://www.bbc.co.uk/news/uk-england-sussex-52344249">sticking out</a> on empty streets. This has been described as like <a href="https://twitter.com/gmhales/status/1249962083631980549">shooting fish in a barrel</a> for police, and represents a good example of how trends in police recorded crime – however useful – should be interpreted with caution.</p>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>The monthly release of open police crime data in the UK offers a useful on-the-fly opportunity to examine how the lockdown may have impacted on crime. I’ll be updating this visual periodically upon new data releases to see how things are changing. Please do <a href="https://www.samlangton.info/#contact">get in contact</a> if you have any suggestions or comments so far.</p>
+</div>
+<div id="further-reads" class="section level2">
+<h2>Further reads</h2>
+<p>Stickle, B., &amp; Felson, M. (2020). Crime Rates in a Pandemic: the Largest Criminological Experiment in History. American Journal of Criminal Justice, 1-12.</p>
+<p>Ashby, M. (2020). Changes in police calls for service during the early months of the 2020 coronavirus pandemic.</p>
+<p>Gerell, M. (2020). Minor covid-19 association with crime in Sweden, a five week follow up.</p>
+</div>

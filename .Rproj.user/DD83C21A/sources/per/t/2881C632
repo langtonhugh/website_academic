@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1594024867991.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3122755247",
+    "id" : "2881C632",
+    "lastKnownWriteTime" : 1594047656,
+    "last_content_update" : 1594047656335,
+    "path" : "~/GitHub/website_academic/content/post/update_lockdown.Rmd",
+    "project_path" : "content/post/update_lockdown.Rmd",
+    "properties" : {
+        "chunk_output_type" : "console",
+        "cursorPosition" : "26,220",
+        "scrollLine" : "21"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
