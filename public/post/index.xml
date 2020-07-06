@@ -5,12 +5,181 @@
     <link>/post/</link>
       <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     <description>Posts</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 12 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jul 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
       <title>Posts</title>
       <link>/post/</link>
     </image>
+    
+    <item>
+      <title>Tutorial: visualising lockdown crime trends</title>
+      <link>/post/tutorial1_crime_covid/</link>
+      <pubDate>Wed, 01 Jul 2020 00:00:00 +0000</pubDate>
+      <guid>/post/tutorial1_crime_covid/</guid>
+      <description>
+
+
+&lt;p&gt;Over the past few weeks I have spent a bit of time exploring police recorded crime trends before and after nationwide lockdowns induced by the COVID19 pandemic. Some of this has involved making &lt;a href=&#34;https://theconversation.com/lockdown-crime-trends-why-antisocial-behaviour-is-up-140479&#34;&gt;descriptive graphics&lt;/a&gt; across different crime types, using London (UK) as a case study.&lt;/p&gt;
+&lt;p&gt;In this post, I will take you through how you can create these visuals in &lt;code&gt;R&lt;/code&gt;. It’s worth emphasising that this is simply a demonstration of ‘how I get did’ not ‘how to do it’ – there will be many ways of doing the same thing, some probably more beautiful and concise.&lt;/p&gt;
+&lt;div id=&#34;background&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Background&lt;/h2&gt;
+&lt;p&gt;There has been talk of lockdowns representing the &lt;a href=&#34;https://link.springer.com/article/10.1007/s12103-020-09546-0&#34;&gt;largest natural experiment in criminological history&lt;/a&gt;. Of course, this kind of claim will be challenged, especially when demonstrations involve police recorded crime data. Lots of parameters will have changed beyond people’s routine activities, amongst them, people’s ability and willingness to report crimes to the police, and policing resource allocation. It might be some time before we can fully understand how lockdowns have curbed the spatial and temporal patterns of crime.&lt;/p&gt;
+&lt;p&gt;In the meantime, police recorded crime data can offer a unique insight into how criminal behaviour &lt;em&gt;might&lt;/em&gt; have changed in the past few months. In the UK, open data is released on a monthly basis. This &lt;a href=&#34;https://the-sra.org.uk/SRA/Blog/whyyoucantidentifychangesincrimebycomparingthismonthtolastmonth.aspx&#34;&gt;isn’t ideal&lt;/a&gt; by any means, but it does allow for some preliminary exploration. Here, we’re going to create a descriptive visualisation inspired by some infamous graphs by &lt;a href=&#34;https://www.ft.com/content/a26fbf7e-48f8-11ea-aeb3-955839e06441&#34;&gt;the FT&lt;/a&gt; used to track COVID19 deaths.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/ft_example.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;One powerful thing about these visuals is that they effortlessly account for &lt;em&gt;seasonal&lt;/em&gt; trends in death rates using previous years as a reference point. Readers can then intuitively understand what is ‘normal’, and identify fluctuations which are irregular, and thus likely a result of COVID19.&lt;/p&gt;
+&lt;p&gt;Similarly, a key characteristic of long-term crime trends is seasonality. To disentangle fluctuations in crime, and pinpoint irregularity resulting from lockdown measures, we must account for typical monthly fluctuations. We can do this descriptively (and visually) using open police recorded crime data and some packages in &lt;code&gt;R&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For now, we will focus on the base visual – perhaps in further posts I can demonstrate how to more accurately mimic the ‘FT look’. We’ll aim for something like the graphic below, representing multiple crime type trends in London from January 2016 to May 2020.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/full_met.png&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;project-and-packages&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Project and packages&lt;/h2&gt;
+&lt;p&gt;To make following this tutorial easier, some of you might want to download the associated repository on GitHub. By working within the R project on the repository, and using the same folder structure, the subsequent code won’t need to be edited. Any data we download should just be placed into the &lt;strong&gt;data&lt;/strong&gt; folder, and named accordingly. Whatever works for you!&lt;/p&gt;
+&lt;p&gt;Although we are mainly using &lt;code&gt;ggplot2&lt;/code&gt; for the visual, we use a number of other packages for data wrangling and plot arrangement. Load them using &lt;code&gt;library()&lt;/code&gt; now. If you don’t have some of these packages, ensure they are installed using &lt;code&gt;install.packages()&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(readr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(cowplot)
+library(stringr)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;open-crime-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Open crime data&lt;/h2&gt;
+&lt;p&gt;First, we need the data. There are several ways to download &lt;a href=&#34;https://data.police.uk/&#34;&gt;open police data&lt;/a&gt; in the UK. There is an &lt;a href=&#34;https://data.police.uk/docs/&#34;&gt;API&lt;/a&gt;, an &lt;a href=&#34;https://github.com/njtierney/ukpolice&#34;&gt;R package&lt;/a&gt;, and a &lt;a href=&#34;https://data.police.uk/data/&#34;&gt;direct download page&lt;/a&gt; from the website.&lt;/p&gt;
+&lt;p&gt;Here, we are going to get most of the data through direct download from the &lt;a href=&#34;https://data.police.uk/data/&#34;&gt;online data portal&lt;/a&gt;. Remembering that we want previous years as our reference point, we are going to select the widest date range possible (at the time of writing), which is the 36 months spanning from June 2017 to May 2020. As new data is released, this 36-month window will shift. So for example, once June 2020 becomes available, you will only be able to download July 2017 to June 2020. This isn’t a huge deal, but remember to take that into account when following subsequent steps.&lt;/p&gt;
+&lt;p&gt;You can select the latest 36-month range using the dropdown menus, and then tick whatever police force(s) we want. In this example, I am going to use the Metropolitan Police Service, which serve Greater London. So, our selection will look something like this:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/dates_met.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;We can then ‘Generate file’ at the bottom of the page, and on the next page, download a .zip file containing all our crime data for the past 36 months. Here, I call the .zip file &lt;strong&gt;met_police_june2017_to_june2020&lt;/strong&gt; and save it to a local folder named &lt;strong&gt;data&lt;/strong&gt;, as per the associated GitHub repository.&lt;/p&gt;
+&lt;p&gt;Ideally, I’d like to go even further back, before June 2017, to get the best picture possible about seasonal crime trends. We can do this using the open &lt;a href=&#34;https://data.police.uk/data/archive/&#34;&gt;archive&lt;/a&gt; data. This comes in a pretty unfriendly format, because you cannot download by force, and cannot select specific time periods. Anyway, you can download all the data prior to June 2017 using a direct download from the &lt;a href=&#34;https://data.police.uk/data/archive/&#34;&gt;archive page&lt;/a&gt; and the following option:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/archive.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Remember that if your 36-month window is more recent than this demonstration, you will need to select a different corresponding archive folder! I name mine &lt;strong&gt;archive_to_jun_2017&lt;/strong&gt; and save it in the same &lt;strong&gt;data&lt;/strong&gt; folder. Note that this might take 5-10 minutes to download, depending on your internet connection. Once unzipped, you should have two folders in your &lt;strong&gt;data&lt;/strong&gt; folder, named accordingly. Mine look like this:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/file_names.png&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;loading-the-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Loading the data&lt;/h2&gt;
+&lt;p&gt;You will notice that, once unzipped, data for the last 36 months (named &lt;strong&gt;met_police_june2017_to_june2020&lt;/strong&gt;) is spread across multiple folders – one for each month. This is not ideal, but using some tricks in &lt;code&gt;R&lt;/code&gt; we can automatically load these files and bind them together into one data frame.&lt;/p&gt;
+&lt;p&gt;First, let’s generate a list containing all the working directories and .csv files in the downloaded folder. Note that we are taking the location and name of the folder relative to where our R project is saved (&lt;code&gt;&#34;data/met_police_june2017_to_june2020/&#34;&lt;/code&gt;), extracting the name of every .csv file contained within it, and pasting them together.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Extract list of working directories + file names for each csv.
+file_names &amp;lt;- paste(&amp;quot;data/met_police_june2017_to_june2020/&amp;quot;, list.files(&amp;quot;data/met_police_june2017_to_june2020&amp;quot;, &amp;quot;*.csv&amp;quot;, recursive=TRUE), sep = &amp;quot;&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Printing the object &lt;code&gt;file_names&lt;/code&gt; to your Console will provide you with the working directory and file name of the .csv files – of which there are 36 – contained within &lt;strong&gt;met_police_june2017_to_june2020&lt;/strong&gt;. We can then load all of these .csv files into &lt;code&gt;R&lt;/code&gt; by looping the &lt;code&gt;read_csv()&lt;/code&gt; function from &lt;code&gt;readr&lt;/code&gt; through the &lt;code&gt;file_names&lt;/code&gt; object.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Loop through each to load.
+met_list &amp;lt;- lapply(file_names, read_csv)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Okay, we are nearly there. We can complete the missing months for 2017 using the archive material. Again, remember that you might need additional months depending on the 36-month time window you’re using. Here, we only need January to May, so rather than use another loop, let’s just load them individually, assigning them to meaningful object names.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;jan17_df &amp;lt;- read_csv(&amp;quot;data/archive_to_jun_2017/2017-01/2017-01-metropolitan-street.csv&amp;quot;)
+feb17_df &amp;lt;- read_csv(&amp;quot;data/archive_to_jun_2017/2017-02/2017-02-metropolitan-street.csv&amp;quot;) 
+mar17_df &amp;lt;- read_csv(&amp;quot;data/archive_to_jun_2017/2017-03/2017-03-metropolitan-street.csv&amp;quot;) 
+apr17_df &amp;lt;- read_csv(&amp;quot;data/archive_to_jun_2017/2017-04/2017-04-metropolitan-street.csv&amp;quot;) 
+may17_df &amp;lt;- read_csv(&amp;quot;data/archive_to_jun_2017/2017-05/2017-05-metropolitan-street.csv&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally (the interesting bit is coming, I promise), let’s extract the monthly data for 2016 from the archive data, so we have the complete set from 2016-2020. We do this like the first example, but with a few extra options to ensure that we select data from the Metropolitan Police only, rather than every police force. Remember that the archive data automatically contains data from every police force – but we only want the Met.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Extract 2016 for the Met only.
+dates_2016 &amp;lt;- list.files(&amp;quot;data/archive_to_jun_2017&amp;quot;, pattern = &amp;quot;2016&amp;quot;)
+extra &amp;lt;- paste(&amp;quot;data/archive_to_jun_2017&amp;quot;, &amp;quot;/&amp;quot;, dates_2016, &amp;quot;/&amp;quot;, dates_2016, &amp;quot;-&amp;quot;, &amp;quot;metropolitan-street.csv&amp;quot;, sep = &amp;quot;&amp;quot;)
+
+# Load in loop.
+met_2016_list &amp;lt;- lapply(extra, read_csv)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now, at last, we can bind all these data together row-wise using &lt;code&gt;bind_rows()&lt;/code&gt;. The resulting object &lt;code&gt;met_full_df&lt;/code&gt; contains all records for the Metropolitan Police from Janury 2016 to May 2020. Okay, it’s been a bit of palavar, but we have managed to download and compile over 4.5 million crime records with (relative) ease. Hurrah!&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Bind these to existing data frame objects.
+met_full_df &amp;lt;- bind_rows(met_2016_list, jan17_df, feb17_df, mar17_df, apr17_df, may17_df, met_recent_df)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;visual-plot&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Visual plot&lt;/h2&gt;
+&lt;p&gt;What we have currently are individual records of crime recorded by the Met from January 2016 to May 2020. We can aggregate these records by month, year and crime type using a series of functions in &lt;code&gt;dplyr&lt;/code&gt; along with the piping operator &lt;code&gt;%&amp;gt;%&lt;/code&gt;. Note the steps taken. We first filter out ‘other crimes’ – a crude decision simply because I don’t think this crime type offers much insight. We then create separate month and year variables, group by months, years and crime type, count the number of crimes for each combination, arrange for easy viewing, and then ungroup. The final step splits the data frame into a list of data frames by each crime type, so we can easily generate a plot for each crime type later.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Counts.
+met_stats_df &amp;lt;- met_full_df %&amp;gt;%                             # select the data frame
+  filter(`Crime type` != &amp;quot;Other crime&amp;quot;)                     # filter out other crimes
+  separate(Month, into = c(&amp;quot;Year&amp;quot;,&amp;quot;Month&amp;quot;), sep = &amp;quot;-&amp;quot;) %&amp;gt;%  # create new &amp;#39;month&amp;#39; and &amp;#39;year&amp;#39; variables
+  group_by(Year, Month, `Crime type`) %&amp;gt;%                   # group by year, month and crime type
+  summarise(counts = n()) %&amp;gt;%                               # count rows per group combination
+  arrange(`Crime type`, Year, Month) %&amp;gt;%                    # sort data frame for viewing with View()
+  ungroup() %&amp;gt;%                                             # ungroup data frame
+  split_group(`Crime type`)                                 # split into lists of df by crime type&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can then create the &lt;code&gt;ggplot&lt;/code&gt; function which will be used to generate the plots for each crime type.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Base visual function.
+plot_fun &amp;lt;- function(x){
+  ggplot() +
+    geom_line(data = filter(x, Year != 2020),
+              mapping = aes(x = Month, y = counts, group = Year),
+              colour = &amp;quot;lightgrey&amp;quot;) +
+    geom_vline(data = x,
+               mapping = aes(xintercept = 2.7),
+               linetype = &amp;quot;dotted&amp;quot;) + 
+    stat_summary(data = filter(x, Year != 2020),
+                 aes(x = Month, y = counts, group = Year),
+                 fun = mean, colour = &amp;quot;white&amp;quot;, geom = &amp;quot;line&amp;quot;, group=1, size = 0.8) +
+    stat_summary(data = filter(x, Year != 2020),
+                 aes(x = Month, y = counts, group = Year),
+                 fun = mean, colour = &amp;quot;black&amp;quot;, geom = &amp;quot;line&amp;quot;, group=1, size = 0.7) +
+    geom_line(data = filter(x, Year == 2020),
+              mapping = aes(x = Month, y = counts, group = 1),
+              colour = &amp;quot;white&amp;quot;, size = 1.1) +
+    geom_line(data = filter(x, Year == 2020),
+              mapping = aes(x = Month, y = counts, group = 1),
+              colour = &amp;quot;tomato&amp;quot;, size = 1) +
+    scale_x_discrete(labels = c(&amp;quot; &amp;quot;,&amp;quot;Feb&amp;quot;,&amp;quot;Mar&amp;quot;,&amp;quot;Apr&amp;quot;,&amp;quot;May&amp;quot;,&amp;quot;Jun&amp;quot;,&amp;quot;Jul&amp;quot;,&amp;quot;Aug&amp;quot;,&amp;quot;Sep&amp;quot;,&amp;quot;Oct&amp;quot;,&amp;quot;Nov&amp;quot;,&amp;quot;Dec&amp;quot;)) +
+    scale_y_continuous(limits = c(0.6*min(x$counts), 1.4*max(x$counts))) +
+    labs(x = NULL, y = NULL) +
+    theme_bw() +
+    theme(axis.title = element_blank(),
+          axis.text.x = element_blank(),
+          axis.text.y = element_text(size = 6),
+          axis.ticks = element_blank(),
+          plot.title = element_text(size = 8))  
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This function can then be looped through &lt;code&gt;met_stats_list&lt;/code&gt;, the list of data frames by crime type. Note that we first name each data frame in the list so that we can add titles automatically. In doing so, we also remove the underscores. The resulting object &lt;code&gt;met_stats_plots&lt;/code&gt; is a list of ggplot objects, visualising crime trends for each crime type.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Create a character vector naming each crime type, which helps us automatically add titles to our plots.
+names(met_stats_list) &amp;lt;- sort(unique(met_full_df$`Crime type`))
+
+# Make plots and add titles.
+met_stats_plots &amp;lt;- list()
+for (i in seq(met_stats_list)) {
+  gg &amp;lt;- plot_fun(met_stats_list[[i]]) +
+    labs(title = str_replace_all(string = names(met_stats_list[i]), &amp;quot;_&amp;quot;, &amp;quot; &amp;quot;))
+  met_stats_plots[[i]] &amp;lt;- gg
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can arrange the list of plots using the &lt;code&gt;plot_grid()&lt;/code&gt; function from &lt;code&gt;cowplot&lt;/code&gt; to get a basic summary of crime trends in London.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Plot grid.
+plot_grid(plotlist = met_stats_plots, ncol = 3)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/img/full_met_basic.png&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;annotating-and-arranging&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Annotating and arranging&lt;/h2&gt;
+&lt;p&gt;The problem with the above graph is the lack of annotation. Rather than add a legend, we can simply annotate one of these plots. The starkest trend is probably anti-social behaviour, so let’s retrieve this plot from our list.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Pluck out ASB for annotation.
+Anti_social_behaviour &amp;lt;- pluck(met_stats_plots, 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can then add arrows and text labels using &lt;code&gt;annotate()&lt;/code&gt;. This seems rather fiddly at first (because it is) but once you’re used to it, stating accurate x and y arguments is quite straightforward. Note that by specifying &lt;code&gt;axis.text.x&lt;/code&gt; we bring back the x-axis annotation we used in the original function, specifying the months.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Annotate.
+asb &amp;lt;- Anti_social_behaviour +
+  theme(axis.text.x = element_text(size = 6, angle = 90, vjust = -1.5)) +
+  labs(title = &amp;quot;Anti-social behaviour&amp;quot;) +
+  #2020 label
+  annotate(geom = &amp;quot;curve&amp;quot; , x = 7, y = 73000, xend = 5, yend = 61000,
+           curvature = 0.3, arrow = arrow(length = unit(1, &amp;quot;mm&amp;quot;))) +
+  annotate(geom = &amp;quot;text&amp;quot;, x = 7.8, y = 73000, label = &amp;quot;2020&amp;quot;, fontface = &amp;quot;bold&amp;quot;, size = 3) +
+  #lockdown label
+  annotate(geom = &amp;quot;curve&amp;quot;, x = 4, y = 9000, xend = 2.8, yend = 9000,
+           curvature = 0.1, arrow = arrow(length = unit(1, &amp;quot;mm&amp;quot;))) +
+  annotate(geom = &amp;quot;text&amp;quot;, x = 5.5, y = 9000, label = &amp;quot;Lockdown&amp;quot;, fontface = &amp;quot;bold&amp;quot;, size = 3) +
+  #recent years label
+  annotate(geom = &amp;quot;curve&amp;quot;, x = 8, y = 38500, xend = 8.3, yend = 26000,
+           curvature = -0.1, arrow = arrow(length = unit(1, &amp;quot;mm&amp;quot;))) +
+  annotate(geom = &amp;quot;text&amp;quot;, x = 8, y = 43000, label = &amp;quot;Recent years (inc. mean)&amp;quot;, fontface = &amp;quot;bold&amp;quot;, size = 3) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now we’ve made a separate (annotated) plot for anti-social behaviour, we can get rid of the one contained in our original list.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Remove ASB for plot list to avoid repeat.
+met_stats_plots[[1]] &amp;lt;- NULL&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then comes the arranging. Here, I use the &lt;code&gt;plot_grid&lt;/code&gt; function from the amusingly named &lt;code&gt;cowplot&lt;/code&gt; package. Again, this is quite fiddly – an alternative might be &lt;a href=&#34;https://github.com/thomasp85/patchwork&#34;&gt;patchwork&lt;/a&gt;, but I am quite familiar with cowplot already. Note that we actually create two separate cowplots – one for anti-social behaviour, and one for our main plots – and then stick them together.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asb_blank &amp;lt;- plot_grid(asb, NULL, nrow = 1)
+all_plots &amp;lt;- plot_grid(plotlist = met_stats_plots, nrow = 4)
+full_plot &amp;lt;- plot_grid(asb_blank, all_plots, nrow = 2, rel_heights = c(2,5))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can then print the plot to your &lt;strong&gt;Viewer&lt;/strong&gt; or save it.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Save
+ggsave(full_plot, filename = &amp;quot;visuals/full_met.png&amp;quot;, height = 8, width = 6)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/img/full_met.png&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Lockdown crime trends. What we know and what we don&#39;t</title>
