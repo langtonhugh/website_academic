@@ -5,16 +5,16 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "166094000",
+    "hash" : "1861309388",
     "id" : "2BBDA666",
-    "lastKnownWriteTime" : 1594123325,
-    "last_content_update" : 1594123325078,
+    "lastKnownWriteTime" : 1594298515,
+    "last_content_update" : 1594298515585,
     "path" : "~/GitHub/website_academic/content/post/update_lockdown.Rmd",
     "project_path" : "content/post/update_lockdown.Rmd",
     "properties" : {
         "chunk_output_type" : "console",
-        "cursorPosition" : "39,0",
-        "scrollLine" : "39"
+        "cursorPosition" : "54,178",
+        "scrollLine" : "41"
     },
     "read_only" : false,
     "read_only_alternatives" : [
