@@ -46,10 +46,13 @@ The monthly release of open police crime data in the UK offers a useful on-the-f
 
 ## Further reads
 
-Stickle, B., & Felson, M. (2020). Crime Rates in a Pandemic: the Largest Criminological Experiment in History. American Journal of Criminal Justice, 1-12.
-
 Ashby, M. (2020). Changes in police calls for service during the early months of the 2020 coronavirus pandemic. [Pre-print](https://osf.io/preprints/socarxiv/h4mcu/).
+
+Campedelli, G. M., Aziani, A., & Favarin, S. (2020). Exploring the effect of 2019-nCoV containment policies on crime: The case of los angeles. [Pre-print](https://osf.io/gcpq8/).
 
 Gerell, M. (2020). Minor covid-19 association with crime in Sweden, a five week follow up. [Pre-print](https://osf.io/preprints/socarxiv/w7gka/).
 
-Campedelli, G. M., Aziani, A., & Favarin, S. (2020). Exploring the effect of 2019-nCoV containment policies on crime: The case of los angeles. [Pre-print](https://osf.io/gcpq8/).
+Halford, E., Dixon, A., Farrell, G., Malleson, N., & Tilley, N. (2020). Crime and coronavirus: social distancing, lockdown, and the mobility elasticity of crime. Crime Science, 9(1), 1-12.
+
+Stickle, B., & Felson, M. (2020). Crime Rates in a Pandemic: the Largest Criminological Experiment in History. American Journal of Criminal Justice, 1-12.
+
