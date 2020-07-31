@@ -22,6 +22,6 @@ tags:
 - policing
 - visualisation
 title: Crime and Anti-social Behaviour in Greater London
-url_pdf: "files/COVIDCrimeStatsBulletin_3_Langton_GtrLondonCrime.pdf"
+url_pdf: "https://covid19-crime.com/wp-content/uploads/sites/92/2020/07/COVIDCrimeStatsBulletin_3_Langton_GtrLondonCrime-3.pdf"
 ---
 
