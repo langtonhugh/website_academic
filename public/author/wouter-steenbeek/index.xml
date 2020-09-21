@@ -5,12 +5,20 @@
     <link>/author/wouter-steenbeek/</link>
       <atom:link href="/author/wouter-steenbeek/index.xml" rel="self" type="application/rss+xml" />
     <description>Wouter Steenbeek</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 01 Jul 2017 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 21 Sep 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
       <title>Wouter Steenbeek</title>
       <link>/author/wouter-steenbeek/</link>
     </image>
+    
+    <item>
+      <title>An examination of variability in offender residences across different spatial scales. A case study in Birmingham.</title>
+      <link>/publication/spatialscale_preprint/</link>
+      <pubDate>Mon, 21 Sep 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/spatialscale_preprint/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Residential burglary target selection. An analysis at the property-level using Google Street View</title>
