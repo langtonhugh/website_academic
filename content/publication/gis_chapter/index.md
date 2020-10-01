@@ -24,4 +24,5 @@ tags:
 - visualisation
 title: GIS and Geovisual Analysis
 url_preprint: https://www.research.manchester.ac.uk/portal/en/publications/gis-and-geovisual-analysis(6f08f8f5-fb0c-4280-8c82-c8f1b7e02d76).html
+url_pdf: http://methods.sagepub.com/foundations/gis-and-geovisual-analysis
 ---
