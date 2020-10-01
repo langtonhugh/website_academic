@@ -57,3 +57,7 @@ I have taught a number of courses using R and RStudio, including the development
 ## R for social scientists
 
 I am a qualified instructor for [Data and Software Carpentries](https://carpentries.org/), and supported colleagues in teaching the [social science workshop](https://datacarpentry.org/r-socialsci/).
+
+## A Beginner’s Guide to Statistics for Criminology and Criminal Justice Using R
+
+Co-authored a textbook introducing R for criminology students. Currently in press with Springer.
