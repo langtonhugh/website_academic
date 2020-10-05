@@ -4,7 +4,7 @@ authors:
 bio: My research focuses on describing and explaining the geographic patterning of crime. I am also interested in data visualisation, mapping and promoting the use of open software in social science.
 education:
   courses:
-  - course: PhD in Sociology
+  - course: PhD in Criminology
     institution: Manchester Metropolitan University, UK
     year: 2020
   - course: MSc in Sociology and Social Research
