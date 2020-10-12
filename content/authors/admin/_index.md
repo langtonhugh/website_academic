@@ -21,9 +21,9 @@ interests:
 - Data visualisation
 - R, QGIS, GeoDa
 organizations:
-- name: Manchester Metropolitan University
-  url: "https://www.mmu.ac.uk/crime-and-wellbeing-big-data-centre/"
-role: Researcher in criminology
+- name: University of Leeds
+  url: "https://covid19-crime.com/"
+role: Research Fellow in Crime Science
 social:
 - icon: envelope
   icon_pack: fas
@@ -44,7 +44,7 @@ user_groups:
 - Visitors
 ---
 
-I am a researcher in quantitative criminology at the [Crime and Well-being Big Data Centre](https://www.mmu.ac.uk/crime-and-wellbeing-big-data-centre/), a research institute based at [Manchester Metropolitan University](https://www.mmu.ac.uk/).
+I am a Research Fellow in Crime Science on the [COVID-19 and crime project](https://covid19-crime.com/) at the [University of Leeds](https://www.leeds.ac.uk/).
 
 My research focuses on describing and explaining the geographic patterning of crime. I am also interested in data visualisation, mapping and promoting the use of open software in social science.
 
