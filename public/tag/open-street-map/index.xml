@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Reka Solymosi | Samuel Langton</title>
-    <link>/author/reka-solymosi/</link>
-      <atom:link href="/author/reka-solymosi/index.xml" rel="self" type="application/rss+xml" />
-    <description>Reka Solymosi</description>
+    <title>open street map | Samuel Langton</title>
+    <link>/tag/open-street-map/</link>
+      <atom:link href="/tag/open-street-map/index.xml" rel="self" type="application/rss+xml" />
+    <description>open street map</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 20 Nov 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
-      <title>Reka Solymosi</title>
-      <link>/author/reka-solymosi/</link>
+      <title>open street map</title>
+      <link>/tag/open-street-map/</link>
     </image>
     
     <item>
@@ -17,14 +17,6 @@
       <link>/publication/osm_chapter/</link>
       <pubDate>Fri, 20 Nov 2020 00:00:00 +0000</pubDate>
       <guid>/publication/osm_chapter/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Cartograms, hexograms and regular grids. Minimising misrepresentation in spatial data visualisations</title>
-      <link>/publication/hexo_epb/</link>
-      <pubDate>Sun, 01 Sep 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/hexo_epb/</guid>
       <description></description>
     </item>
     

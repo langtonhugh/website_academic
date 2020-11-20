@@ -5,12 +5,20 @@
     <link>/tag/maps/</link>
       <atom:link href="/tag/maps/index.xml" rel="self" type="application/rss+xml" />
     <description>maps</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 21 Sep 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 20 Nov 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
       <title>maps</title>
       <link>/tag/maps/</link>
     </image>
+    
+    <item>
+      <title>Open Data for Crime and Place Research. A Practical Guide in R.</title>
+      <link>/publication/osm_chapter/</link>
+      <pubDate>Fri, 20 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/osm_chapter/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>An examination of variability in offender residences across different spatial scales. A case study in Birmingham.</title>
