@@ -5,12 +5,20 @@
     <link>/tag/r/</link>
       <atom:link href="/tag/r/index.xml" rel="self" type="application/rss+xml" />
     <description>R</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 06 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 05 Dec 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
       <title>R</title>
       <link>/tag/r/</link>
     </image>
+    
+    <item>
+      <title>Akmedoids R package for generating directionally-homogeneous clusters of longitudinal data sets</title>
+      <link>/publication/akmedoid/</link>
+      <pubDate>Sat, 05 Dec 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/akmedoid/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Update: lockdown crime trends</title>
@@ -86,14 +94,6 @@
 &lt;h2 id=&#34;a-beginners-guide-to-statistics-for-criminology-and-criminal-justice-using-r&#34;&gt;A Beginner’s Guide to Statistics for Criminology and Criminal Justice Using R&lt;/h2&gt;
 &lt;p&gt;Co-authored a textbook introducing R for criminology students. Currently in press with Springer.&lt;/p&gt;
 </description>
-    </item>
-    
-    <item>
-      <title>Akmedoids. Anchored kmedoids for longitudinal data clustering</title>
-      <link>/publication/akmedoid/</link>
-      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>/publication/akmedoid/</guid>
-      <description></description>
     </item>
     
   </channel>

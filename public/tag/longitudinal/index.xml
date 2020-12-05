@@ -5,7 +5,7 @@
     <link>/tag/longitudinal/</link>
       <atom:link href="/tag/longitudinal/index.xml" rel="self" type="application/rss+xml" />
     <description>longitudinal</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 05 Dec 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
       <title>longitudinal</title>
@@ -13,9 +13,9 @@
     </image>
     
     <item>
-      <title>Akmedoids. Anchored kmedoids for longitudinal data clustering</title>
+      <title>Akmedoids R package for generating directionally-homogeneous clusters of longitudinal data sets</title>
       <link>/publication/akmedoid/</link>
-      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 05 Dec 2020 00:00:00 +0000</pubDate>
       <guid>/publication/akmedoid/</guid>
       <description></description>
     </item>
