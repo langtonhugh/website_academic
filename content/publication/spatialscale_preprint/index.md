@@ -24,6 +24,6 @@ tags:
 - crime
 - offenders
 - neighbourhoods
-title: An examination of variability in offender residences across different spatial scales. A case study in Birmingham.
+title: An examination of variability in offender residences across different spatial scales. A case study in Birmingham
 url_preprint: "https://osf.io/preprints/socarxiv/xe7fq/"
 ---

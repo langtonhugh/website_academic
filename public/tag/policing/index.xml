@@ -5,12 +5,20 @@
     <link>/tag/policing/</link>
       <atom:link href="/tag/policing/index.xml" rel="self" type="application/rss+xml" />
     <description>policing</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 19 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 04 Jan 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
       <title>policing</title>
       <link>/tag/policing/</link>
     </image>
+    
+    <item>
+      <title>Six Months In. Pandemic Crime Trends in England and Wales</title>
+      <link>/publication/covid_crimescience/</link>
+      <pubDate>Mon, 04 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>/publication/covid_crimescience/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Six months in. Pandemic crime trends in England and Wales to August 2020</title>
