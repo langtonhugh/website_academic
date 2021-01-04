@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>micro | Samuel Langton</title>
+    <link>/tag/micro/</link>
+      <atom:link href="/tag/micro/index.xml" rel="self" type="application/rss+xml" />
+    <description>micro</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 04 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
+      <title>micro</title>
+      <link>/tag/micro/</link>
+    </image>
+    
+    <item>
+      <title>The universality of street segments: length and sinuosity</title>
+      <link>/post/street_segments_1/</link>
+      <pubDate>Mon, 04 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>/post/street_segments_1/</guid>
+      <description>
+
+
+&lt;p&gt;In recent years, a consensus has begun to emerge over the suitability of street segments for visualising and analysing the geographic patterning of crime. A number of studies have argued / demonstrated that these so-called ‘micro’ places are not only &lt;a href=&#34;https://books.google.co.uk/books?hl=en&amp;amp;lr=&amp;amp;id=ROZoAgAAQBAJ&amp;amp;oi=fnd&amp;amp;pg=PP1&amp;amp;dq=weisburd+street+segments&amp;amp;ots=OkrI6wjGXS&amp;amp;sig=nDXmxB3UAgNe4e5kDa4oa2-RGII&amp;amp;redir_esc=y#v=onepage&amp;amp;q=weisburd%20street%20segments&amp;amp;f=false&#34;&gt;theoretically meaningful&lt;/a&gt; behavioural spaces, but that &lt;a href=&#34;https://link.springer.com/article/10.1007/s10940-015-9276-3&#34;&gt;most ‘action’&lt;/a&gt; occurs among street segments. This makes them particularly useful units of analysis for studying criminal behaviour and designing crime-reducing interventions.&lt;/p&gt;
+&lt;p&gt;But how useful is the ‘street segment’ in different urban contexts? To what extent are these micro units comparable between cities, and between countries? So far, I haven’t found much data-driven research into the uniformity and ‘universality’ of street segments in terms of their physical characteristics. But to me, there are reasons to examine this issue further. In Sweden, for instance, street segments have been described as &lt;a href=&#34;https://search.proquest.com/docview/1899605599?fromopenview=true&amp;amp;pq-origsite=gscholar&#34;&gt;“virtually useless”&lt;/a&gt; because many urban areas are designed to be car-free, and consequently do not have ‘street segments’ in the same sense that the United States does.&lt;/p&gt;
+&lt;p&gt;Unfortunately for us, the UK does not have the foresight to have many car-free urban areas. However, it does contain cities with highly variable histories of urban development. It seems / seemed implausible to me that the physical characteristics of street segments in, say, Milton Keynes, a purpose-built town which did not exist until the 1960s, were comparable to those in Edinburgh, which gained city status around 400 years ago, or Birmingham, which underwent dramatic urban regeneration following extensive bombing in World War II.&lt;/p&gt;
+&lt;p&gt;To satisfy my own curiosity, and to gauge people’s interest / enthusiasm for the topic, I have spent a bit of time exploring the physical characteristics (length and sinuosity) of street segments in the UK. All the code used to generate these (very preliminary) findings is &lt;a href=&#34;https://github.com/langtonhugh/micro_units&#34;&gt;openly available&lt;/a&gt;. This work represents early thoughts and explorations, so if anyone has any comments or pointers, please do get in touch.&lt;/p&gt;
+&lt;div id=&#34;street-segments&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Street segments&lt;/h2&gt;
+&lt;p&gt;Street segments are defined as &lt;a href=&#34;https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1745-9125.2004.tb00521.x?casa_token=LSNEumu1MGwAAAAA:yco0oZEmw4BlaPq3coC4NKeywwXGv9zcLUaw4vf57spPyVA8qYzlCfxwYgSCm6fUGLkkldJ3Lly7rZU&#34;&gt;“the two block faces on both sides of the street between two intersections”&lt;/a&gt;. While the definition is geared towards the grid-based street networks of North America, we can apply a comparable concept to the UK using data from &lt;a href=&#34;https://www.ordnancesurvey.co.uk/business-government/products/open-map-roads&#34;&gt;Ordnance Survey Open Roads&lt;/a&gt;. Here, individual streets are defined (and given a unique ID) based on meeting intersections. As an example, the following visual plots street segments within a 500-metre buffer in the centre of Manchester. Each road ID has been coloured to help demonstrate the individual street segments.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/manc_ex.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;To me, the Ordnance Survey data fits the definition of street segments rather well. Each line (i.e. individual ID) represents both sides of the street, and each line is segmented based on its intersection with another road.&lt;/p&gt;
+&lt;p&gt;I collated this data for eight major towns and cities in the UK. Roads were clipped according to the town or city boundary (defined using the Open Street Map API – &lt;a href=&#34;https://github.com/langtonhugh/micro_units&#34;&gt;see code&lt;/a&gt;), and those roads classified as motorways (highways) were removed. As evidenced below, the city boundaries sometimes include satellite towns and hamlets. This raises a related discussion about the universality of street segments in terms of urban/rural areas and how city boundaries are defined – I might return to this another time.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/study_regions_lq.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;For now, I focus on describing the physical characteristics of these street segments in two ways: &lt;strong&gt;length&lt;/strong&gt; and &lt;strong&gt;sinuosity&lt;/strong&gt;. By examining the degree to which street segments are homogeneous in length and sinuosity, both within and between study regions, we might shed some light on the degree to which they can be considered uniform, and in turn, ‘universal’ units of analysis.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Length&lt;/strong&gt; is fairly self-explanatory. We are talking about it in the conventional sense (metric length) rather than other definitions (e.g. &lt;a href=&#34;https://link.springer.com/article/10.1007/s10940-014-9235-4&#34;&gt;topological length&lt;/a&gt;). Although there is not much information out there, there appears to be at least &lt;em&gt;some&lt;/em&gt; variation in the length of street segments used in crime concentration research. It is often added as a control variable, since longer streets might have more crime by virtue of their length, rather than whatever we are interested in.&lt;/p&gt;
+&lt;p&gt;But would excessive ranges (maximum - minimum) and variation in street segment length undermine the idea that street segments are a universally useful micro unit of analysis? Can we confidently compare study regions which are comprised of street segments with drastically different length characteristics (e.g. mean, variation, minimum, maximum)?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Sinuosity&lt;/strong&gt; is a fairly new concept to me. In crude terms, and at the risk of annoying geographers and mathematicians, sinuosity in this context represents a measure of ‘straightness’. It is calculated by &lt;a href=&#34;https://en.wikipedia.org/wiki/Sinuosity&#34;&gt;dividing the actual length of a line by the straight line distance&lt;/a&gt; (i.e. the distance between the start and end point). So, a perfectly straight street segment, for which the actual length and straight line length are the same, will have a sinuosity of 1, the smallest value possible. The example below, using street segments randomly sampled from Birmingham, demonstrates this concept. The black line represents the raw street segment, and the red line is the shortest distance from start to finish.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/sin_example.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Again, the reasoning behind examining sinuosity is to scrutinise the universality of street segments as meaningful behavioural spaces to study crime. A huge amount of variation in the sinuosity of street segments (either within the same study region, or between different study regions) might give reason to question this. Modern, grid-based cities might be almost entirely comprised of street segments with a sinuosity of 1. Cities with a long and convoluted history of urban development might have far more irregularity or quirks (e.g. right figure above). In which case, would the definition of ‘street segment’ generate units of analysis which still hold the same theoretical meaning?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;characteristics&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Characteristics&lt;/h2&gt;
+&lt;p&gt;For now, I have generated a series of descriptive statistics to try and summarise the length and sinuosity of the eight study regions. On top of statistics on raw length (e.g. ‘Mean length’) and sinuosity (e.g. ‘Mean sin.’) for each study region, I have calculated the proportion of street segments which are straight (‘Prop. straight’). This is simply the proportion of streets with a sinuosity of 1 (when rounded to six decimal places).&lt;/p&gt;
+&lt;p&gt;The figures on &lt;strong&gt;length&lt;/strong&gt; alone generate some interesting discussion. The maximum lengths, which range from around 1200 metres to nearly 3600 metres, are clearly dragging the mean up. Recall that we removed motorways, but not A-roads or B-roads, which can be quite long. That said, A and B-roads are common even in dense urban areas, and contain plenty of opportunities for crime (e.g. petrol stations, residential dwellings). Removing them would come at a cost. The minimum values are amusingly small – perhaps showcasing some quirk in how the Ordnance Survey generate segments (e.g. roundabouts, which in &lt;a href=&#34;https://link.springer.com/article/10.1007/s10940-014-9235-4&#34;&gt;previous research&lt;/a&gt; required additional data handling). The median might prove more useful. Quite a few study regions have a median street segment length of ~60 metres, but for instance, Edinburgh is noticeably longer (~72 metres) and Manchester a little shorter (~53 metres).&lt;/p&gt;
+&lt;table&gt;
+&lt;colgroup&gt;
+&lt;col width=&#34;6%&#34; /&gt;
+&lt;col width=&#34;11%&#34; /&gt;
+&lt;col width=&#34;12%&#34; /&gt;
+&lt;col width=&#34;10%&#34; /&gt;
+&lt;col width=&#34;11%&#34; /&gt;
+&lt;col width=&#34;11%&#34; /&gt;
+&lt;col width=&#34;5%&#34; /&gt;
+&lt;col width=&#34;6%&#34; /&gt;
+&lt;col width=&#34;4%&#34; /&gt;
+&lt;col width=&#34;5%&#34; /&gt;
+&lt;col width=&#34;5%&#34; /&gt;
+&lt;col width=&#34;8%&#34; /&gt;
+&lt;/colgroup&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;City&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Mean length (metres)&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Median length (metres)&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;SD length (metres)&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Min. length (metres)&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Max. length (metres)&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Mean sin.&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Median sin.&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;SD sin.&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Min. sin.&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Max. sin.&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Prop. straight&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Birmingham&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;91.29&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;69.28&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;83.48&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.01&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3573.64&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.05&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.30&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;26.13&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.60&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Leeds&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;90.32&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;62.62&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;111.75&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.01&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2716.05&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.05&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.32&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;30.39&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.62&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;M. Keynes&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;96.94&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;61.80&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;137.50&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.03&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3489.49&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.08&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.81&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;219.30&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.48&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Edinburgh&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;102.59&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;72.44&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;126.60&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.11&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3116.51&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.07&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.34&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;16.53&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.57&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Manchester&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;68.02&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;53.40&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;59.50&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.02&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1227.02&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.07&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.04&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;632.77&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.74&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Liverpool&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;81.10&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;60.42&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;72.65&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.03&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1557.76&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.05&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.32&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;28.99&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.68&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Newcastle&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;85.51&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;61.00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;95.72&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.13&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3010.29&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.07&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.46&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;29.08&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.64&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;York&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;111.76&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;69.35&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;159.06&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.10&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3442.73&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.06&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.25&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;8.66&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.58&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;How do these UK cities compare to elsewhere? &lt;a href=&#34;https://link.springer.com/article/10.1007/s10940-015-9276-3&#34;&gt;One study&lt;/a&gt; from The Hague (the Netherlands) reported a mean length of 94 metres and a standard deviation of 108 metres. This makes it fairly similar to Leeds, for instance. &lt;a href=&#34;https://link.springer.com/article/10.1007/s10940-009-9082-x?mod=article_inline&#34;&gt;A study in Boston&lt;/a&gt; (United States) reported a mean of 130 metres, although no standard deviation was mentioned. The maximum length is that study was ~640 metres. &lt;a href=&#34;https://link.springer.com/article/10.1007/s10940-016-9304-y&#34;&gt;Another in Brooklyn Park&lt;/a&gt; (United States) had a mean length of 182 metres. This is considerably different to say, Manchester (Mean = 68 metres, Median = 53 metres), and strikes me as quite important when it comes to treating street segments as a universal micro unit of analysis.&lt;/p&gt;
+&lt;p&gt;What about &lt;strong&gt;sinuosity&lt;/strong&gt;? Generally speaking, it appears that street segments are fairly straight. The median sinuosity across all study regions is 1. Mean sinuosity is fairly low (but similar to the left example above – which isn’t exactly straight), although this may be dragged up by outliers, such as in Manchester.&lt;/p&gt;
+&lt;p&gt;The proportion of street segments which are straight (sinuosity = 1, to nearest six decimal places) is quite high, but varies quite considerably between cities. In Milton Keynes, only 48% of street segments are straight, whereas this figure is 74% in Manchester. If you had asked me beforehand, I would have guessed that Milton Keynes would have had the highest percentage out of all the study regions, due to its unusual (for the UK) grid system. The surprise might result from the study region boundaries, which for Milton Keynes included villages and hamlets outside of the main town centre. Note that it still has a median sinuosity of 1 due to rounding.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;This has been a very preliminary investigation into the homogeneity of street segments in terms of &lt;strong&gt;length&lt;/strong&gt; and &lt;strong&gt;sinuosity&lt;/strong&gt;. The idea is / was that street segments should have &lt;em&gt;reasonably&lt;/em&gt; homogeneous physical characteristics if we want to consider them to be ‘universal’ micro-level units of analysis in crime concentration research, and represent comparable behavioural spaces to study crime.&lt;/p&gt;
+&lt;p&gt;To me, findings certainly suggest that it is worth investigating this topic further. The length of street segments appears to vary quite considerably between study regions – both those presented here, and those in existing research. These differences may well narrow with further data handling, for instance, the removal of outliers or specific features such as a roundabouts. However, in that case, we might consider (1) outlining how and why street segments were kept/removed from analysis in a manner which is systematic and transparent, (2) demonstrating or discussing the implications of keeping/removing street segments, and/or (3) refining the definition of street segment to exclude those roads which are far too short or long to be reasonably comparable.&lt;/p&gt;
+&lt;p&gt;In terms of sinuosity, I have been surprised to see that many street segments in these UK study regions are more or less straight. However, the degree to which this holds true varies between study regions. Outliers with exceptionally high sinuosity might prove problematic in terms of keeping micro units of analysis uniform and comparable. In which case, the same three points above would apply regarding transparency, implications and definitions.&lt;/p&gt;
+&lt;p&gt;Next steps might be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Perform some further data handling on the Ordnance Survey data to establish whether some systematic rules can create study regions with uniform street segments in terms of length and sinuosity.&lt;/li&gt;
+&lt;li&gt;Explore the implications of the above for crime analysis.&lt;/li&gt;
+&lt;li&gt;Explore alternative definitions of street segments (e.g. segment roads based on angle change between nodes, rather than intersections alone).&lt;/li&gt;
+&lt;li&gt;Examine other physical characteristics (e.g. width).&lt;/li&gt;
+&lt;li&gt;International comparisons.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;further-reading&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Further reading&lt;/h2&gt;
+&lt;p&gt;Buil-Gil, D., Moretti, A., &amp;amp; Langton, S. (2020). The integrity of crime statistics: Assessing the impact of police data bias on crime mapping. &lt;a href=&#34;https://doi.org/10.31235/osf.io/myfhp&#34;&gt;Pre-print&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Steenbeek, W., &amp;amp; Weisburd, D. (2016). Where the action is in crime? An examination of variability of crime across different spatial units in The Hague, 2001–2009. Journal of Quantitative Criminology, 32(3), 449-469.&lt;/p&gt;
+&lt;p&gt;Taylor, R. B. (2015). Community criminology: Fundamentals of spatial and temporal scaling, ecological indicators, and selectivity bias (Vol. 12). NYU Press.&lt;/p&gt;
+&lt;p&gt;Weisburd, D., Groff, E. R., &amp;amp; Yang, S. M. (2012). The criminology of place: Street segments and our understanding of the crime problem. Oxford University Press.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

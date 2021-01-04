@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1609779654479.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3742056704",
+    "id" : "7C2DF159",
+    "lastKnownWriteTime" : 1593596577,
+    "last_content_update" : 1593596577,
+    "path" : "~/GitHub/website_academic/content/post/crimedrop_conversation.Rmd",
+    "project_path" : "content/post/crimedrop_conversation.Rmd",
+    "properties" : {
+        "chunk_output_type" : "console",
+        "cursorPosition" : "33,0",
+        "scrollLine" : "28"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

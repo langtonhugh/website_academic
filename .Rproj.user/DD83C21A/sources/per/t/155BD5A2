@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1609779404710.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3928427647",
+    "id" : "155BD5A2",
+    "lastKnownWriteTime" : 1609780175,
+    "last_content_update" : 1609780175246,
+    "path" : "~/GitHub/website_academic/content/post/street_segments_1.Rmd",
+    "project_path" : "content/post/street_segments_1.Rmd",
+    "properties" : {
+        "content_preview_inline" : "false",
+        "cursorPosition" : "15,753",
+        "scrollLine" : "4"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
