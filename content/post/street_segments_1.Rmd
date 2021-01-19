@@ -27,7 +27,7 @@ Street segments are defined as [“the two block faces on both sides of the stre
 
 ![](/img/manc_ex.png)
 
-To me, the Ordnance Survey data fits the definition of street segments rather well. Each coloured line (i.e. individual ID) represents both sides of the street, and each line appears to be segmented based on its intersection with another road. 
+To me, the Ordnance Survey data fits the definition of street segments rather well. Each coloured line (i.e. individual ID) represents both sides of the street, and each line is segmented based on its intersection with another road. 
 
 I collated this data for eight major towns and cities in the UK. Roads were clipped according to the town or city boundary (defined using the Open Street Map API -- [see code](https://github.com/langtonhugh/micro_units)), and those roads classified as motorways (highways) were removed. As evidenced below, the city boundaries sometimes include satellite towns and hamlets. This raises a related discussion about the universality of street segments in terms of urban/rural areas and how city boundaries are defined -- I might return to this another time.
 
