@@ -36,7 +36,10 @@ I have taught a number of courses using R and RStudio, including the development
 
 ## Data visualisation in R using crime data
 
-1-day workshop on visualisation and mapping at the [Cathie Marsh Institute](https://www.cmi.manchester.ac.uk/) (University of Manchester) in collaboration with the [UK Data Service](https://ukdataservice.ac.uk/). Material is available on [GitHub](https://github.com/langtonhugh/data_viz_R_workshop) and the [UK Data Service website](https://ukdataservice.ac.uk/news-and-events/eventsitem/?id=5552).
+1-day workshop on data visualisation and mapping at the [Cathie Marsh Institute](https://www.cmi.manchester.ac.uk/) (University of Manchester) in collaboration with the [UK Data Service](https://ukdataservice.ac.uk/). Material can be found on the [UK Data Service website](https://ukdataservice.ac.uk/news-and-events/eventsitem/?id=5552).
+
+The course was subsequently updated and re-ran online with the [UK Data Service](https://ukdataservice.ac.uk/) and [Methods@Manchester](https://www.methods.manchester.ac.uk/). All material is available on [GitHub](https://github.com/langtonhugh/data_viz_R_workshop).
+
 
 ## R for police forces
 

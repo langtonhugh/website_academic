@@ -67,11 +67,14 @@
       <guid>/project/r-teaching/</guid>
       <description>&lt;p&gt;I have taught a number of courses using R and RStudio, including the development of teaching material both on my own and with colleagues.&lt;/p&gt;
 &lt;h2 id=&#34;data-visualisation-in-r-using-crime-data&#34;&gt;Data visualisation in R using crime data&lt;/h2&gt;
-&lt;p&gt;1-day workshop on visualisation and mapping at the 
+&lt;p&gt;1-day workshop on data visualisation and mapping at the 
 &lt;a href=&#34;https://www.cmi.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cathie Marsh Institute&lt;/a&gt; (University of Manchester) in collaboration with the 
-&lt;a href=&#34;https://ukdataservice.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;UK Data Service&lt;/a&gt;. Material is available on 
-&lt;a href=&#34;https://github.com/langtonhugh/data_viz_R_workshop&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt; and the 
+&lt;a href=&#34;https://ukdataservice.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;UK Data Service&lt;/a&gt;. Material can be found on the 
 &lt;a href=&#34;https://ukdataservice.ac.uk/news-and-events/eventsitem/?id=5552&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;UK Data Service website&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The course was subsequently updated and re-ran online with the 
+&lt;a href=&#34;https://ukdataservice.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;UK Data Service&lt;/a&gt; and 
+&lt;a href=&#34;https://www.methods.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Methods@Manchester&lt;/a&gt;. All material is available on 
+&lt;a href=&#34;https://github.com/langtonhugh/data_viz_R_workshop&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;r-for-police-forces&#34;&gt;R for police forces&lt;/h2&gt;
 &lt;p&gt;1-day workshop on data wrangling and visualisation for West Midlands Police Force. Please get in contact for material.&lt;/p&gt;
 &lt;h2 id=&#34;r-for-criminologists&#34;&gt;R for criminologists&lt;/h2&gt;
