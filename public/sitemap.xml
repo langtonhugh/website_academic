@@ -4,16 +4,91 @@
   
   <url>
     <loc>/publication-type/3/</loc>
-    <lastmod>2021-01-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/author/anthony-dixon/</loc>
-    <lastmod>2021-01-04T00:00:00+00:00</lastmod>
+    <lastmod>2021-01-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/authors/</loc>
+    <lastmod>2021-01-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/demand/</loc>
+    <lastmod>2021-01-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/geography/</loc>
+    <lastmod>2021-01-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/author/jon-bannister/</loc>
+    <lastmod>2021-01-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/author/karolina-krzemieniewska-nandwani/</loc>
+    <lastmod>2021-01-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/author/mark-ellison/</loc>
+    <lastmod>2021-01-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/mental-health/</loc>
+    <lastmod>2021-01-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/author/muhammad-salman-haleem/</loc>
+    <lastmod>2021-01-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/policing/</loc>
+    <lastmod>2021-01-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication/pmih_preprint/</loc>
+    <lastmod>2021-01-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication_types/</loc>
+    <lastmod>2021-01-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication/</loc>
+    <lastmod>2021-01-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/author/samuel-langton/</loc>
+    <lastmod>2021-01-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2021-01-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2021-01-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/text-mining/</loc>
+    <lastmod>2021-01-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/author/anthony-dixon/</loc>
     <lastmod>2021-01-04T00:00:00+00:00</lastmod>
   </url>
   
@@ -24,11 +99,6 @@
   
   <url>
     <loc>/tag/crime/</loc>
-    <lastmod>2021-01-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tag/geography/</loc>
     <lastmod>2021-01-04T00:00:00+00:00</lastmod>
   </url>
   
@@ -48,37 +118,12 @@
   </url>
   
   <url>
-    <loc>/tag/policing/</loc>
-    <lastmod>2021-01-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/post/</loc>
     <lastmod>2021-01-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/publication_types/</loc>
-    <lastmod>2021-01-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/publication/</loc>
-    <lastmod>2021-01-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/tag/reporting/</loc>
-    <lastmod>2021-01-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/author/samuel-langton/</loc>
-    <lastmod>2021-01-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/</loc>
     <lastmod>2021-01-04T00:00:00+00:00</lastmod>
   </url>
   
@@ -89,11 +134,6 @@
   
   <url>
     <loc>/publication/covid_crimescience/</loc>
-    <lastmod>2021-01-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
     <lastmod>2021-01-04T00:00:00+00:00</lastmod>
   </url>
   
@@ -114,11 +154,6 @@
   
   <url>
     <loc>/tag/clustering/</loc>
-    <lastmod>2020-12-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/author/jon-bannister/</loc>
     <lastmod>2020-12-05T00:00:00+00:00</lastmod>
   </url>
   
