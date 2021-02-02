@@ -5,12 +5,20 @@
     <link>/author/monsuru-adepeju/</link>
       <atom:link href="/author/monsuru-adepeju/index.xml" rel="self" type="application/rss+xml" />
     <description>Monsuru Adepeju</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 05 Dec 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 02 Feb 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
       <title>Monsuru Adepeju</title>
       <link>/author/monsuru-adepeju/</link>
     </image>
+    
+    <item>
+      <title>Anchored k-medoids. A novel adaptation of k-medoids further refined to measure long-term instability in the exposure to crime</title>
+      <link>/publication/akmedoid_jcss/</link>
+      <pubDate>Tue, 02 Feb 2021 00:00:00 +0000</pubDate>
+      <guid>/publication/akmedoid_jcss/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Akmedoids R package for generating directionally-homogeneous clusters of longitudinal data sets</title>
