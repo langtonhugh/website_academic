@@ -13,7 +13,7 @@ education:
   - course: BSc in Social Policy with Government
     institution: London School of Economics, UK
     year: 2012
-email: "sam.langton@mmu.ac.uk"
+email: "s.langton@leeds.ac.uk"
 interests:
 - Geography of crime
 - Crime science
