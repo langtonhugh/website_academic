@@ -1,7 +1,7 @@
 ---
 authors:
 - admin
-bio: My research focuses on describing and explaining the geographic patterning of crime. I am also interested in data visualisation, mapping and promoting the use of open software in social science.
+bio: My research focuses on the spatial and temporal patterning of crime and police demand. I am also interested in data visualisation, mapping and promoting the use of open software in social science.
 education:
   courses:
   - course: PhD in Criminology
@@ -13,17 +13,17 @@ education:
   - course: BSc in Social Policy with Government
     institution: London School of Economics, UK
     year: 2012
-email: "s.langton@leeds.ac.uk"
+email: "SLangton@nscr.nl"
 interests:
 - Geography of crime
 - Crime science
-- Mapping
+- Police demand
 - Data visualisation
 - R, QGIS, GeoDa
 organizations:
-- name: University of Leeds
-  url: "https://covid19-crime.com/"
-role: Research Fellow in Crime Science
+- name: Netherlands Institute for the Study of Crime and Law Enforcement
+  url: "https://nscr.nl/"
+role: Postdoctoral researcher
 social:
 - icon: envelope
   icon_pack: fas
@@ -44,8 +44,8 @@ user_groups:
 - Visitors
 ---
 
-I am a Research Fellow in Crime Science on the [COVID-19 and crime project](https://covid19-crime.com/) at the [University of Leeds](https://www.leeds.ac.uk/). I am also a Visiting Research Fellow for the [Policy Evaluation and Research Unit](https://www.mmuperu.co.uk/) at [Manchester Metropolitan University](https://www.mmu.ac.uk/).
+I am a postdoctoral researcher at the [Netherlands Institute for the Study of Crime and Law Enforcement](https://nscr.nl/). I am also a Visiting Research Fellow for the [Policy Evaluation and Research Unit](https://www.mmuperu.co.uk/) at [Manchester Metropolitan University](https://www.mmu.ac.uk/).
 
-My research focuses on describing and explaining the geographic patterning of crime. I am interested in data visualisation, mapping and promoting the use of open software in social science.
+My research focuses on the spatial and temporal patterning of crime and police demand. I am also interested in data visualisation, mapping and promoting the use of open software in social science.
 
 This website provides an overview of my ongoing work, but for a complete summary please check my [CV](https://www.samlangton.info/files/Langton_CV_2020.pdf).
