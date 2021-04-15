@@ -24,7 +24,7 @@ tags:
 - data bias
 - reporting
 - simulation
-title: The accuracy of crime statistics. assessing the impact of police data bias on geographic crime analysis
+title: The accuracy of crime statistics. Assessing the impact of police data bias on geographic crime analysis
 url_preprint: https://osf.io/preprints/socarxiv/myfhp/
 url_code: https://github.com/davidbuilgil/crime_simulation2
 url_pdf: https://link.springer.com/article/10.1007/s11292-021-09457-y
