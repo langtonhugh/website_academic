@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>text mining | Samuel Langton</title>
-    <link>/tag/text-mining/</link>
-      <atom:link href="/tag/text-mining/index.xml" rel="self" type="application/rss+xml" />
-    <description>text mining</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Thu, 28 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <title>greater manchester | Samuel Langton</title>
+    <link>/tag/greater-manchester/</link>
+      <atom:link href="/tag/greater-manchester/index.xml" rel="self" type="application/rss+xml" />
+    <description>greater manchester</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
-      <title>text mining</title>
-      <link>/tag/text-mining/</link>
+      <title>greater manchester</title>
+      <link>/tag/greater-manchester/</link>
     </image>
-    
-    <item>
-      <title>Policing and mental ill-health. Using big data to assess the scale and severity of, and the frontline resources committed to, mental ill-health related calls-for-service</title>
-      <link>/publication/pmih_preprint/</link>
-      <pubDate>Thu, 28 Jan 2021 00:00:00 +0000</pubDate>
-      <guid>/publication/pmih_preprint/</guid>
-      <description></description>
-    </item>
     
     <item>
       <title>Paper summary: police demand and persons with mental ill-health</title>
