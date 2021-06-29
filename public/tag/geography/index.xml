@@ -5,7 +5,7 @@
     <link>/tag/geography/</link>
       <atom:link href="/tag/geography/index.xml" rel="self" type="application/rss+xml" />
     <description>geography</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 25 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 25 Jun 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
       <title>geography</title>
@@ -15,7 +15,7 @@
     <item>
       <title>Small area variation in crime effects of COVID-19 policies in England and Wales</title>
       <link>/publication/covid_smallarea_preprint/</link>
-      <pubDate>Sun, 25 Apr 2021 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 25 Jun 2021 00:00:00 +0000</pubDate>
       <guid>/publication/covid_smallarea_preprint/</guid>
       <description></description>
     </item>
@@ -34,6 +34,7 @@
       <pubDate>Mon, 04 Jan 2021 00:00:00 +0000</pubDate>
       <guid>/post/street_segments_1/</guid>
       <description>
+&lt;script src=&#34;/rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;In recent years, a consensus has begun to emerge over the suitability of street segments for visualising and analysing the geographic patterning of crime. A number of studies have argued / demonstrated that these so-called ‘micro’ places are not only &lt;a href=&#34;https://books.google.co.uk/books?hl=en&amp;amp;lr=&amp;amp;id=ROZoAgAAQBAJ&amp;amp;oi=fnd&amp;amp;pg=PP1&amp;amp;dq=weisburd+street+segments&amp;amp;ots=OkrI6wjGXS&amp;amp;sig=nDXmxB3UAgNe4e5kDa4oa2-RGII&amp;amp;redir_esc=y#v=onepage&amp;amp;q=weisburd%20street%20segments&amp;amp;f=false&#34;&gt;theoretically meaningful&lt;/a&gt; behavioural spaces, but that &lt;a href=&#34;https://link.springer.com/article/10.1007/s10940-015-9276-3&#34;&gt;most action&lt;/a&gt; occurs among street segments. This makes them particularly useful units of analysis for studying criminal behaviour and designing crime-reducing interventions.&lt;/p&gt;

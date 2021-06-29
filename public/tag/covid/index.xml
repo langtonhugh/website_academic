@@ -5,7 +5,7 @@
     <link>/tag/covid/</link>
       <atom:link href="/tag/covid/index.xml" rel="self" type="application/rss+xml" />
     <description>covid</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 25 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 25 Jun 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
       <title>covid</title>
@@ -15,7 +15,7 @@
     <item>
       <title>Small area variation in crime effects of COVID-19 policies in England and Wales</title>
       <link>/publication/covid_smallarea_preprint/</link>
-      <pubDate>Sun, 25 Apr 2021 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 25 Jun 2021 00:00:00 +0000</pubDate>
       <guid>/publication/covid_smallarea_preprint/</guid>
       <description></description>
     </item>
@@ -50,6 +50,7 @@
       <pubDate>Mon, 06 Jul 2020 00:00:00 +0000</pubDate>
       <guid>/post/update_lockdown/</guid>
       <description>
+&lt;script src=&#34;/rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;&lt;font size=4.9&gt;&lt;/p&gt;
@@ -90,6 +91,7 @@
       <pubDate>Fri, 12 Jun 2020 00:00:00 +0000</pubDate>
       <guid>/post/lockdown_conversation/</guid>
       <description>
+&lt;script src=&#34;/rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;Understanding what has happened to crime during lockdown is challenging. We are in uncharted territory and it’s proving hard to draw definitive conclusions from the latest police recorded crime data. But a few trends, like a spike in antisocial behaviour and an increase in drug offences, are beginning to emerge.&lt;/p&gt;

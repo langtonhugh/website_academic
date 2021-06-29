@@ -5,7 +5,7 @@
     <link>/</link>
       <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <description>Samuel Langton</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 25 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 25 Jun 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
       <title>Samuel Langton</title>
@@ -15,7 +15,7 @@
     <item>
       <title>Small area variation in crime effects of COVID-19 policies in England and Wales</title>
       <link>/publication/covid_smallarea_preprint/</link>
-      <pubDate>Sun, 25 Apr 2021 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 25 Jun 2021 00:00:00 +0000</pubDate>
       <guid>/publication/covid_smallarea_preprint/</guid>
       <description></description>
     </item>
@@ -58,6 +58,7 @@
       <pubDate>Mon, 04 Jan 2021 00:00:00 +0000</pubDate>
       <guid>/post/street_segments_1/</guid>
       <description>
+&lt;script src=&#34;/rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;In recent years, a consensus has begun to emerge over the suitability of street segments for visualising and analysing the geographic patterning of crime. A number of studies have argued / demonstrated that these so-called ‘micro’ places are not only &lt;a href=&#34;https://books.google.co.uk/books?hl=en&amp;amp;lr=&amp;amp;id=ROZoAgAAQBAJ&amp;amp;oi=fnd&amp;amp;pg=PP1&amp;amp;dq=weisburd+street+segments&amp;amp;ots=OkrI6wjGXS&amp;amp;sig=nDXmxB3UAgNe4e5kDa4oa2-RGII&amp;amp;redir_esc=y#v=onepage&amp;amp;q=weisburd%20street%20segments&amp;amp;f=false&#34;&gt;theoretically meaningful&lt;/a&gt; behavioural spaces, but that &lt;a href=&#34;https://link.springer.com/article/10.1007/s10940-015-9276-3&#34;&gt;most action&lt;/a&gt; occurs among street segments. This makes them particularly useful units of analysis for studying criminal behaviour and designing crime-reducing interventions.&lt;/p&gt;
@@ -303,6 +304,7 @@
       <pubDate>Mon, 06 Jul 2020 00:00:00 +0000</pubDate>
       <guid>/post/update_lockdown/</guid>
       <description>
+&lt;script src=&#34;/rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;&lt;font size=4.9&gt;&lt;/p&gt;
@@ -398,6 +400,7 @@
       <pubDate>Fri, 12 Jun 2020 00:00:00 +0000</pubDate>
       <guid>/post/lockdown_conversation/</guid>
       <description>
+&lt;script src=&#34;/rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;Understanding what has happened to crime during lockdown is challenging. We are in uncharted territory and it’s proving hard to draw definitive conclusions from the latest police recorded crime data. But a few trends, like a spike in antisocial behaviour and an increase in drug offences, are beginning to emerge.&lt;/p&gt;
@@ -443,6 +446,7 @@
       <pubDate>Thu, 07 Nov 2019 00:00:00 +0000</pubDate>
       <guid>/post/maps_conversation/</guid>
       <description>
+&lt;script src=&#34;/rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;From reporting &lt;a href=&#34;https://www.bbc.co.uk/news/election/2017/results&#34;&gt;election results&lt;/a&gt; to issuing &lt;a href=&#34;https://www.bbc.co.uk/weather/2643743&#34;&gt;weather forecasts&lt;/a&gt;, maps offer a powerful, accessible and visually appealing way to convey complex information. Yet even the most beautiful maps can introduce some degree of misrepresentation.&lt;/p&gt;
@@ -491,11 +495,30 @@
     </item>
     
     <item>
+      <title>Privacy Policy</title>
+      <link>/privacy/</link>
+      <pubDate>Thu, 28 Jun 2018 00:00:00 +0100</pubDate>
+      <guid>/privacy/</guid>
+      <description>&lt;p&gt;&amp;hellip;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Terms</title>
+      <link>/terms/</link>
+      <pubDate>Thu, 28 Jun 2018 00:00:00 +0100</pubDate>
+      <guid>/terms/</guid>
+      <description>&lt;p&gt;&amp;hellip;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>When crime drops, the demands on the police don’t necessarily fall</title>
       <link>/post/crimedrop_conversation/</link>
       <pubDate>Thu, 06 Jul 2017 00:00:00 +0000</pubDate>
       <guid>/post/crimedrop_conversation/</guid>
       <description>
+&lt;script src=&#34;/rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;On a day-to-day basis, the exposure citizens have to the police is often fleeting, with officers passing by in a blur as they respond to emergency calls. Official crime figures can be disputed, but &lt;a href=&#34;https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/445662/rec-crime-2003-2015.ods&#34;&gt;the long-term trend&lt;/a&gt; appears to be that levels of crime in England and Wales are heading downward. Yet it is a myth to think that an apparent drop in crime relieves some of the pressures placed on police forces.&lt;/p&gt;
@@ -541,6 +564,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>/post/pmih_paper/</guid>
       <description>
+&lt;script src=&#34;/rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;There is a common misconception that police spend most of their time responding with ‘blues and twos’ to crime reports. A extraordinary amount of demand for police services has little or nothing to do with crime. A recent study from Philadelphia demonstrated that of the 1.07 million calls for police service made during 2019, only 40% actually related to crime. The rest related to quality of life (e.g. loud music), community (e.g. missing persons) and medical/public health incidents (e.g. checks on well-being), amongst other things.&lt;/p&gt;
