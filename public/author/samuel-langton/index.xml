@@ -5,12 +5,20 @@
     <link>/author/samuel-langton/</link>
       <atom:link href="/author/samuel-langton/index.xml" rel="self" type="application/rss+xml" />
     <description>Samuel Langton</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 25 Jun 2021 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 30 Jul 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
       <title>Samuel Langton</title>
       <link>/author/samuel-langton/</link>
     </image>
+    
+    <item>
+      <title>Policing and mental ill-health. Using big data to assess the scale and severity of, and the frontline resources committed to, mental ill-health related calls-for-service</title>
+      <link>/publication/pmih_preprint/</link>
+      <pubDate>Fri, 30 Jul 2021 00:00:00 +0000</pubDate>
+      <guid>/publication/pmih_preprint/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Small area variation in crime effects of COVID-19 policies in England and Wales</title>
@@ -41,14 +49,6 @@
       <link>/publication/akmedoid_jcss/</link>
       <pubDate>Tue, 02 Feb 2021 00:00:00 +0000</pubDate>
       <guid>/publication/akmedoid_jcss/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Policing and mental ill-health. Using big data to assess the scale and severity of, and the frontline resources committed to, mental ill-health related calls-for-service</title>
-      <link>/publication/pmih_preprint/</link>
-      <pubDate>Thu, 28 Jan 2021 00:00:00 +0000</pubDate>
-      <guid>/publication/pmih_preprint/</guid>
       <description></description>
     </item>
     
