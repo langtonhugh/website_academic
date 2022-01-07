@@ -7,7 +7,7 @@
     <description>R</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 05 Dec 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_2.png</url>
+      <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_3.png</url>
       <title>R</title>
       <link>/tag/r/</link>
     </image>
@@ -67,6 +67,12 @@
       <pubDate>Sat, 27 Jun 2020 00:00:00 +0000</pubDate>
       <guid>/project/r-teaching/</guid>
       <description>&lt;p&gt;I have taught a number of courses using R and RStudio, including the development of teaching material both on my own and with colleagues.&lt;/p&gt;
+&lt;h2 id=&#34;royal-statistical-society-conference&#34;&gt;Royal Statistical Society conference&lt;/h2&gt;
+&lt;p&gt;Led an introductory session to the tidyverse at the Royal Statistical Society (RSS) 2021 conference, along with colleagues from the University of Manchester. Material is available on 
+&lt;a href=&#34;https://github.com/langtonhugh/rss_r&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;nsc-r&#34;&gt;NSC-R&lt;/h2&gt;
+&lt;p&gt;Co-organise a series of R training workshops at the NSCR. You can read more about our activities on the corresponding 
+&lt;a href=&#34;https://nscrweb.netlify.app/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;website&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;data-visualisation-in-r-using-crime-data&#34;&gt;Data visualisation in R using crime data&lt;/h2&gt;
 &lt;p&gt;1-day workshop on data visualisation and mapping at the 
 &lt;a href=&#34;https://www.cmi.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cathie Marsh Institute&lt;/a&gt; (University of Manchester) in collaboration with the 
@@ -90,7 +96,7 @@
 &lt;a href=&#34;https://rcatlord.github.io/GSinR/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;website&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;cluster-analysis-in-r&#34;&gt;Cluster analysis in R&lt;/h2&gt;
 &lt;p&gt;1-day workshop introducing cluster analysis in R at the 
-&lt;a href=&#34;https://www.cmi.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cathie Marsh Institute&lt;/a&gt; (University of Manchester), co-taught with a colleage. Please get in contact for material.&lt;/p&gt;
+&lt;a href=&#34;https://www.cmi.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cathie Marsh Institute&lt;/a&gt; (University of Manchester), co-taught with a colleague. Please get in contact for material.&lt;/p&gt;
 &lt;h2 id=&#34;r-for-social-scientists&#34;&gt;R for social scientists&lt;/h2&gt;
 &lt;p&gt;I am a qualified instructor for 
 &lt;a href=&#34;https://carpentries.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data and Software Carpentries&lt;/a&gt;, and supported colleagues in teaching the 

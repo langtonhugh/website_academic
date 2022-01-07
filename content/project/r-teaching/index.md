@@ -34,6 +34,14 @@ slides: example
 
 I have taught a number of courses using R and RStudio, including the development of teaching material both on my own and with colleagues.
 
+## Royal Statistical Society conference
+
+Led an introductory session to the tidyverse at the Royal Statistical Society (RSS) 2021 conference, along with colleagues from the University of Manchester. Material is available on [GitHub](https://github.com/langtonhugh/rss_r).
+
+## NSC-R 
+
+Co-organise a series of R training workshops at the NSCR. You can read more about our activities on the corresponding [website](https://nscrweb.netlify.app/). 
+
 ## Data visualisation in R using crime data
 
 1-day workshop on data visualisation and mapping at the [Cathie Marsh Institute](https://www.cmi.manchester.ac.uk/) (University of Manchester) in collaboration with the [UK Data Service](https://ukdataservice.ac.uk/). Material can be found on the [UK Data Service website](https://ukdataservice.ac.uk/news-and-events/eventsitem/?id=5552).
@@ -55,7 +63,7 @@ The course was subsequently updated and re-ran online with the [UK Data Service]
 
 ## Cluster analysis in R
 
-1-day workshop introducing cluster analysis in R at the [Cathie Marsh Institute](https://www.cmi.manchester.ac.uk/) (University of Manchester), co-taught with a colleage. Please get in contact for material.
+1-day workshop introducing cluster analysis in R at the [Cathie Marsh Institute](https://www.cmi.manchester.ac.uk/) (University of Manchester), co-taught with a colleague. Please get in contact for material.
 
 ## R for social scientists
 
