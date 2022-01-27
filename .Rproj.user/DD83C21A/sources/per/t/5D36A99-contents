@@ -1,0 +1,306 @@
+---
+title: "Misrepresentation in maps: mini-survey results from the Ministry of Defence"
+output:
+  html_document
+tags:
+- mapping
+- deprivation
+- visualisation
+- R
+editor_options: 
+  chunk_output_type: console
+date: '2022-01-27'
+subtitle: "<font size=3>  Co-authored with Reka Solymosi.  <font size=4.9>"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, message = F, warning = F)
+```
+
+A couple of years ago, [Reka Solymosi](https://rekadata.net/) and I began a side-project on different ways of visualising spatial data. We were (well, still are) interested in how people interpret maps, and how these interpretations might differ depending the type of map being used, even when the underlying data is the same. We were recently invited by the UK's [Ministry of Defence](https://www.gov.uk/government/organisations/ministry-of-defence) to share our research experience in this area. As part of the presentation, we conducted a short survey of the MOD attendees to test how well people make estimates about spatial data when looking at different types of visualisation. This post provides a bit of background to the topic and reports on the findings from our survey. The maps, survey data and code to reproduce everything is [openly available](https://github.com/langtonhugh/spatial_viz).
+
+## Background
+
+Thanks to various pieces of [clever research](https://eagereyes.org/blog/2016/a-reanalysis-of-a-study-about-square-pie-charts-from-2009) and [fantastic books](http://www.thefunctionalart.com/p/reviews.html), we know that people can misinterpret data visualisations. Maps are no different. One reason why people can misinterpret maps is due to the size of the areas being visualised. Never have I seen more spatial visualisations flying around than during the COVID-19 pandemic: people were desperate to compare how different countries, regions or neighbourhoods were fairing, and maps are an accessible and beautiful way to convey this information. But, countries, regions and neighbourhoods can vary considerably in size. Take this map of England below. It was published by Public Health England and subsequently [reported by the BBC](https://www.bbc.com/news/uk-55086621) in November 2020. It shows the different lockdown tiers which were set to come into place before Christmas that year.
+
+```{r, echo=FALSE, fig.align = "center", out.width="1000px", fig.alt="Two maps showing before and after lockdown tiers across local authorities in England. The local authorities comprising London are small and difficult to see clearly."}
+knitr::include_graphics("/img/phe.png", error = FALSE)
+```
+
+The problem with maps like this is that the areas being mapped (local authorities) are not uniform in size or shape. Densely populated local authorities, such as those that comprise London, are almost invisible, while less urbanised areas, which are geographically large, dominate the visual. It's a rare occasion where London _not_ being the focus of attention is probably not a good thing, considering the number of people residing in these lockdown tiers. The makers of the map were probably well-intentioned: after all, they are using the real, raw boundaries of local authorities -- but that doesn't guarantee that the map will convey the underlying data clearly. In this particular case, it is reasonably likely that there isn't much variation going on between these small, compact units -- but of course, we cannot be certain by examining this map in isolation, and let's be honest, not everyone is going to read the text accompanying a beautiful map.
+
+## Alternative mapping methods
+
+While the government and media reporting of the pandemic gave us plenty of the above mapping examples, the issue is by no means uncommon, or particularly new. Just a few years earlier, maps were widely used to report on the result of the EU referendum in the UK (e.g. [BBC](https://www.bbc.com/news/uk-politics-36616028)). Largely due to the different voting behaviour between densely populated, urban London and the rest of the country, maps which visualised the result using raw local authority boundaries could be highly misleading. Geographically vast, leave-voting areas dominate the map, rendering the remain-strong London almost invisible. This also makes it more difficult for people to spot spatial patterns, such as like-for-like areas being geographically proximal to one another.
+
+This is where alternative forms of map can be useful. By deliberately distorting raw boundaries, or by assigning geographic areas to uniform shapes, we can actually improve the accuracy with which people interpret the data underlying a map. Back in 2019, in [a paper together with Reka](https://journals.sagepub.com/doi/abs/10.1177/2399808319873923), we examined whether alternative types of map could more accurately convey the clustering of EU referendum remain voters in London compared to the original local authority boundaries (a pre-print of this paper is also freely available [here](https://osf.io/t6agd/download)). We did this using a sample of ~800 Reddit users. We found that people were _more likely_ to interpret information about the geographic patterning of the referendum result accurately when looking at two alternative types of map, balanced cartograms and hexograms, compared to the raw boundaries. But, other alternatives (hex and square grids) made people _less likely_ to accurately interpret the same information, compared to the raw boundaries. So, not all alternatives worked, but our findings made it clear that (1) mapping raw boundaries can be an inappropriate way of conveying spatial information, and (2) alternative mapping methods can (but not always) convey geographic clustering _better_ than raw boundaries. There were of course caveats to our study (e.g., generalisability), so we'd encourage you to read the full thing too!
+
+```{r, echo=FALSE, fig.align = "center", out.width="1000px", fig.cap="Proportion of remain voters in England at the local authority level, visualised using different mapping techniques. Source: Langton & Solymosi (2019).", fig.alt = "Five maps visualising EU referendum results across local authorities in England using different methods: original boundaries, hexogram, hex grid and square grid. It shows how mapping out the raw boundaries can render small areas almost invisible, whereas the alternative maps make each areas equal in size."}
+knitr::include_graphics("/img/eu_figure.png", error = FALSE)
+```
+
+## MOD extension
+
+Following our study, and an [awesome training video](https://methods.sagepub.com/video/minimizing-misrepresentation-in-spatial-data-visualizations) that Reka made in collaboration with SAGE, we were contacted by a scientific adviser at the UK's Ministry of Defence to share our musings and findings on this topic to MOD personnel. While we didn't know the precise role and background of the attendees, we knew that many had a military background, and had expertise in analytics and scientific research. You can find the slides for this on [Reka's website](https://rekadata.net/talks/mod_presentation.html#1). We took this opportunity to conduct another mini-survey using different data, with a slightly different focus, and of course, a very different sample of respondents.
+
+## Data
+
+The broad motivation behind the mini-survey was comparable: Do people make **worse** estimates about the underlying data when observing the **original boundaries** of a map, in comparison to **alternative methods** (e.g. hex maps)? To study this, we took the example of neighbourhood deprivation in England. This is a salient example of the issue associated with mapping small areas. Neighbourhoods in England--defined as Lower Super Output Areas--are designed to be uniform by population size (~1500 residents). But, deprived areas are much more likely to be densely populated, and thus geographically small, compared to wealthier neighbourhoods, which are often sparsely populated and therefore geographically large. As a result, even regions containing lots of deprived neighbourhoods might not, at first glance and with limited information, appear particularly deprived.
+
+Based on our previous study, we boldly thought: hey, using alternative mapping techniques we can _better convey the underlying data_ compared to the original neighbourhood boundaries. To test this, we obtained data on neighbourhood deprivation across three local authorities: Birmingham, Hartelpool and Burnley. As measured using the [Index of Multiple Deprivation](https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/835115/IoD2019_Statistical_Release.pdf) in 2019, these are some of the most deprived local authorities in England. For each region, we mapped out neighbourhood deprivation using three different mapping techniques: the raw boundaries, a hex grid (using the [geogrid](https://github.com/jbaileyh/geogrid) R package) and a dorling cartogram (using the [cartogram](https://cran.r-project.org/web/packages/cartogram/cartogram.pdf) package) scaled by resident population. Here's Birmingham using these techniques. For simplification, we recoded the typical IMD score which runs from 1 (most deprived) to 10 (least deprived) to 1-5 (e.g., 1 and 2 were recorded to 1, and so on).
+
+```{r, echo=FALSE, fig.align = "center", out.width="1000px", fig.alt="Three maps of neighbourhood deprivation in Birmingham, each visualised using different methods, namely, the original boundaries, a hex grid and a dorling cartogram."}
+knitr::include_graphics("/img/example_birm.png", error = FALSE)
+```
+
+Nine maps (three regions, each visualised three different ways) were shown to the MOD participants one after the other. To try and mitigate against respondents using the previous answer as a guide, the same regions were never shown consecutively. For each map, respondents were asked to estimate the percentage of residents living in the _most deprived_ neighbourhood (1 - dark blue). Of course, we knew the answer to this already, because we had the underlying data, but the respondents were asked to make this assessment with limited information. So, for each map, we would end up with a range of different estimates from respondents, which could then be compared to the true figure. The larger the degree of error between the estimates and the true number, the 'worse' the map was communicating the underlying data.
+
+Here, it's worth noting that when we were discussing the survey findings during the MOD presentation, after it had been completed, a number of respondents questioned whether the colour of the first category was 'dark blue', but rather, a shade of purple. We return to this later. Aside from making me question my ability to distinguish different shades of blue-purple, it brought up another interesting discussion about visualisation and surveys more generally. We've shared a screenshot of the first page of the survey below.
+
+```{r, echo=FALSE, fig.align = "center", out.width="1000px", fig.cap= "A screenshot from the first page of the survey. The survey was created is MS Forms.", fig.alt="A screenshot from the survey in MS Forms. It shows the first question from the survey and an example map, for which respondents must estimate the proportion of residents living in the most deprived neighbourhood."}
+knitr::include_graphics("/img/survey_screenshot.png", error = FALSE)
+```
+
+## Results
+
+Respondents had around 24 hours to complete the survey. In total, we had 70 responses.^[It's worth noting that, for the results presented in the MOD meeting, respondents only had around 8 hours. This gave us enough time to throw the R code together before the presentation. So, for the presentation we had 45 usable responses. The results between that the those presented here are very similar.] Two respondents were dropped because they were tests. Two additional people were dropped for missing questions, and two more were dropped because they contained text answers. This gave us 64 completed surveys for analyses. You can re-create all the maps and analyses reported here using the code on the corresponding [GitHub repository](https://github.com/langtonhugh/spatial_viz).
+
+In the graphic below, we plot the distribution of respondents' estimates for each region, and each map type. The dotted line represents the **true value** (reality). Of course, this true value is identical for each region, irrespective of the map type. A number of things emerge from this visual. Let's start with the distribution of estimates when people were observing the original boundaries. In all three study regions, people tended to _underestimate_ the percentage of residents living in the most deprived category. This is exactly what we would expect: the most deprived neighbourhoods are geographically small, occupying a smaller proportion of the map, so with no other information available, people underestimate.
+
+Hex maps, on the other hand, which assign each neighbourhood polygon to a grid of hexagons, appear to improve the accuracy of people's estimates. Generally speaking, respondents got closer to the true figure when viewing the hex map compared to the original boundaries. Particularly with Burnley and Hartlepool, there is a noticeable peak in the distribution close to the true value. This is quite expected: the hexagons, which are uniformly sized and shaped, reflect the similarly uniform residential size of neighbourhoods. In this way, they are quite similar to [waffle charts](https://r-charts.com/part-whole/waffle-chart-ggplot2/) but arranged to reflect the geography of the study region. That said, we know from our [previous study](https://journals.sagepub.com/doi/abs/10.1177/2399808319873923) using the EU referendum data, and a visual inspection of the maps used here, that hex grids can massively distort the spatial distribution of polygons. So, while the hex maps used here have some clear benefits when it comes to interpreting aggregate information, the spatial patterning itself might be lost along the way. Interestingly, there is no such peak in respondent estimates around the true figure for the Birmingham hex map. This might be a result of the sheer number of neighbourhoods compared to Burnley and Hartlepool, or because there was less variation in the size of neighbourhoods nested within the city
+
+```{r, out.width="1000px", fig.alt = "Nine different density plots showing the distribution of respondents' estimates, one for each map in the survey."}
+# Load packages.
+library(readxl)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(janitor)
+library(forcats)
+library(stringr)
+library(ggplot2)
+
+# Setwd (temp fix).
+setwd("C:/Users/langt/Documents/GitHub/website_academic/static")
+
+# Load  survey data.
+survey_df <- read_xlsx("data/Uncertainty_and_Misrepresentation_in_spatial_data_(1-70).xlsx")
+
+# Initial clean.
+survey_clean_df <- survey_df %>% 
+  rename(hartlepool_original_1 = `Column`,
+         birmingham_dorling_2  = `2`,
+         burnley_hex_3         = `3`,
+         hartlepool_dorling_4  = `4`,
+         burnley_original_5    = `5`,
+         birmingham_hex_6      = `Question`,
+         hartlepool_hex_7      = `6`,
+         burnley_dorling_8     = `7`,
+         birmingham_original_9 = `8`) %>% 
+  clean_names() %>% 
+  rename(ID = id) %>%  # sorry, this stops me from having to edit things later.
+  filter(ID != 5,      # sam test
+         ID != 6,      # nat test
+         ID != 13,     # useful but gave text answers
+         ID != 19) %>% # useful but gave text answers
+  select(-name, -email, -start_time, -completion_time) %>% 
+  mutate(across(where(is.character), str_remove_all, pattern = fixed("%")),
+         across(2:10, as.numeric),
+         across(2:10, round, 0)) %>% 
+  drop_na(birmingham_original_9) %>% # sum(is.na(survey_clean_df)) confirms that this dumps ppl who missed questions.
+  pivot_longer(cols = -ID, names_to = "la_map_question", values_to = "estimate") %>% 
+  mutate(la = if_else(str_detect(la_map_question, "hartlepool"), "hartlepool", la_map_question),
+         la = if_else(str_detect(la_map_question, "birmingham"), "birmingham", la),
+         la = if_else(str_detect(la_map_question, "burnley")   , "burnley"   , la)) #%>% 
+# filter(estimate != 0) # assume misunderstood or test. Important to discuss.
+
+# How many complete resonses?
+# length(unique(survey_clean_df$ID)) # 64
+
+# Load in the correct answers.
+residents_df <- read_csv("data/residents_imd_df.csv")
+
+# Subset what we need and mimic other data frame for a rowbind.
+residents_clean_df <- residents_df %>% 
+  filter(IMD19rank_new5 == 1) %>% 
+  select(LA11_name, prop_pop) %>% 
+  rename(local_authority = LA11_name,
+         real_estimate = prop_pop) 
+
+# residents_clean_df
+
+birm_pop <- residents_clean_df$real_estimate[1]
+burn_pop <- residents_clean_df$real_estimate[2]
+hart_pop <- residents_clean_df$real_estimate[3]
+
+# Create matchable data frame if needed.
+pops_df <- tibble(la_map_question = unique(survey_clean_df$la_map_question)) %>% 
+  mutate(real_estimate = if_else(str_detect(la_map_question, "birmingham"), birm_pop, 0),        # 0 is a temp filler.
+         real_estimate = if_else(str_detect(la_map_question, "burnley")   , burn_pop, real_estimate),
+         real_estimate = if_else(str_detect(la_map_question, "hartlepool"), hart_pop, real_estimate),
+         ID = 999, # this just tells us it's the real one!
+         la = if_else(str_detect(la_map_question, "hartlepool"), "hartlepool", la_map_question),
+         la = if_else(str_detect(la_map_question, "birmingham"), "birmingham", la),
+         la = if_else(str_detect(la_map_question, "burnley")   , "burnley"   , la)) %>% 
+  select(ID, la_map_question, real_estimate, la)
+
+# Check.
+# max(survey_clean_df$ID) # No real one in there.
+
+# Calculate mean estimate of the survey respondents.
+pops_survey_df <- survey_clean_df %>% 
+  group_by(la_map_question, la) %>% 
+  summarise(estimate = mean(estimate)) %>% 
+  ungroup() %>% 
+  select(la_map_question, la, estimate) %>% 
+  left_join(pops_df) %>% 
+  select(-ID) %>% 
+  mutate(diff_estimate   = estimate-real_estimate)
+
+# For the graph.
+real_estimates_df <- pops_survey_df %>% 
+  distinct(la_map_question, la, real_estimate)
+
+# Create factor ordering for later.
+lmq_fac_vec <- c("birmingham_original_9",
+                 "burnley_original_5",
+                 "hartlepool_original_1",
+                 "birmingham_hex_6",
+                 "burnley_hex_3",
+                 "hartlepool_hex_7",
+                 "birmingham_dorling_2",
+                 "burnley_dorling_8",
+                 "hartlepool_dorling_4")
+
+
+# Bind rows and reorder factor for the plot.
+# See also below. A bit repetitive but I tried lots of different ways of doing
+# basically the same thing...
+survey_clean_pops_df <- survey_clean_df %>% 
+  rename(real_estimate = estimate) %>% # confusing tbh.
+  bind_rows(pops_df) %>% 
+  mutate(la_map_question = fct_relevel(la_map_question, lmq_fac_vec))
+
+# Find the mean of estimates in its own df.
+mean_estimates_df <- survey_clean_pops_df %>% 
+  filter(ID != 999) %>% 
+  group_by(la_map_question, la) %>% 
+  summarise(mean_estimates = mean(real_estimate)) %>% 
+  arrange(la_map_question)
+
+# Join to simplify ggplot code.
+estimates_df <- real_estimates_df %>% 
+  arrange(la_map_question) %>%
+  left_join(mean_estimates_df) %>% 
+  mutate(la_map_question = fct_relevel(la_map_question, lmq_fac_vec))
+
+# How many are we going to plot? Take off one because it's the 'real' ID of 999!
+# length(unique(survey_clean_pops_df$ID)) # 65-1=64
+
+# Plot. Note we do remove the real estimate first.
+ggplot() +
+  geom_density(data = filter(survey_clean_pops_df, ID != 999), aes(x = real_estimate, fill = la, colour = la)) +
+  geom_vline  (data = estimates_df, aes(xintercept = real_estimate, group = la_map_question), linetype = "dotted") +
+  # geom_vline  (data = estimates_df, aes(xintercept = mean_estimates, group = la_map_question), linetype = "dotted") +
+  # geom_rect   (data = estimates_df, aes(xmin = mean_estimates, xmax = real_estimate,
+  #                                       ymin = 0, ymax = 0.15), alpha = 0.2) +
+  facet_wrap(~la_map_question, nrow = 3, scales = "fixed") +
+  scale_fill_viridis_d() +
+  scale_colour_viridis_d() +
+  labs(x = "Distribution of respondent estimates. Dotted line represents the true figure", y = NULL, caption = "Headers: region, map type, question number") +
+  theme_bw() +
+  theme(legend.position = "none",
+        strip.background = element_rect(fill = "transparent"),
+        plot.caption = element_text(size = 5))
+
+# Join with individual data.
+ind_pops_diff_df <- survey_clean_pops_df %>% 
+  rename(estimate = real_estimate) %>% # confusing again.
+  left_join(pops_df, by = c("la_map_question", "la") ) %>% 
+  mutate(ind_diff_estimate = estimate-real_estimate,
+         la_map_question = fct_relevel(la_map_question,
+                                       "birmingham_original_9",
+                                       "burnley_original_5",
+                                       "hartlepool_original_1",
+                                       "birmingham_hex_6",
+                                       "burnley_hex_3",
+                                       "hartlepool_hex_7",
+                                       "birmingham_dorling_2",
+                                       "burnley_dorling_8",
+                                       "hartlepool_dorling_4")) %>% 
+  filter(ID.x != 999)
+
+# max(ind_pops_diff_df$ID.x) # no 999
+# length(unique(ind_pops_diff_df$ID.x)) # 64
+
+# Plot estimated points.
+# ggplot() +
+#   geom_vline(xintercept = 0, linetype = "dotted") +
+#   geom_jitter(data = ind_pops_diff_df, mapping = aes(x = ind_diff_estimate,
+#                                                      y = la_map_question,
+#                                                      fill = la),
+#               alpha = 0.5, height = 0.3, pch = 21)  +
+#   geom_errorbar(data = pops_survey_df,
+#                 mapping = aes(x = diff_estimate, xmin = 0, ymin = la_map_question,
+#                               ymax = la_map_question),
+#                 size = 10) +
+#   geom_segment(data = pops_survey_df,
+#                mapping = aes(x = 0, xend = diff_estimate,
+#                              yend = la_map_question, y = la_map_question),
+#                size = 1) +
+#   scale_x_continuous(limits = c(-60, 60)) +
+#   scale_fill_viridis_d() +
+#   labs(x = "Difference between respondent estimates and reality",
+#        y = NULL) +
+#   theme_bw() +
+#   theme(legend.position = "none") +
+#   annotate(geom = "text", x = 60, y = 2, label = "O r i g i n a l", angle = -90) +
+#   annotate(geom = "text", x = 60, y = 5, label = "H e x"     , angle = -90) +
+#   annotate(geom = "text", x = 60, y = 8, label = "D o r l i n g" , angle = -90)
+
+```
+
+When observing the dorling maps, people often slightly _overestimated_ the percentage of people residing in the most deprived neighbourhood. It's not immediately clear why this is the case (at least, not to me), but this overestimation was pretty common across all three regions. Even though Lower Super Output Areas are designed to be fairly similar in residential size, there is still some variability, which is reflected in the differently sized circles representing each neighbourhood. Interestingly, this was the only map type which actually conveyed data about residential size. But, without any additional information or clarification (e.g., an extra legend), the dorling maps appear to have misled respondents fairly consistently across regions.
+
+The plot below visualises the same data slightly differently. Here, we plot the difference between each respondents' estimate and the true figure, jittered slightly along the y-axis to avoid overlap between points. A boxplot summarises the overall spread. This does a reasonable job at demonstrating the degree of error in respondents' estimates. But, it also shows the considerable spread in responses -- making this estimate is not easy, and respondents clearly sometimes make completely erroneous guesses, possibly due to the survey design. In this particular case, the spread is minimised (overall) when using hex maps with a relatively small number of areas, as is the case with Hartlepool and Burnley.
+
+```{r, eval = T, out.width="1000px", fig.alt = "Nine stacked boxplots, one for each map in the survey, showing the spread of error in respondents' estimates (i.e., the difference between the estimated value and the true value."}
+ggplot() +
+  geom_vline(xintercept = 0, linetype = "dotted") +
+  geom_boxplot(data = ind_pops_diff_df, aes(y = la_map_question, x = ind_diff_estimate,
+                                              fill = la), alpha = 0.5,
+               outlier.shape = NA) + # removes the raw points. We show these with jitter.
+  geom_jitter(data = ind_pops_diff_df, mapping = aes(x = ind_diff_estimate,
+                                                     y = la_map_question,
+                                                     fill = la),
+              alpha = 0.5, height = 0.3, pch = 21)  +
+  # geom_errorbar(data = pops_survey_df,
+  #               mapping = aes(x = diff_estimate, xmin = 0, ymin = la_map_question,
+  #                             ymax = la_map_question),
+  #               size = 10) +
+  # geom_segment(data = pops_survey_df,
+  #              mapping = aes(x = 0, xend = diff_estimate,
+  #                            yend = la_map_question, y = la_map_question),
+  #              size = 1) +
+  # scale_x_continuous(limits = c(-60, 60)) +
+  scale_fill_viridis_d() +
+  labs(x = "Differences between respondent estimates and the true figure",
+       y = NULL, caption = "y-axis labels: region, map type, question number") +
+  theme_bw() +
+  theme(legend.position = "none",
+        plot.caption = element_text(size = 5)) +
+  annotate(geom = "text", x = 60, y = 2, label = "O r i g i n a l", angle = -90) +
+  annotate(geom = "text", x = 60, y = 5, label = "H e x"     , angle = -90) +
+  annotate(geom = "text", x = 60, y = 8, label = "D o r l i n g" , angle = -90)
+
+```
+
+## Discussion
+
+The findings from our mini-survey of MOD participants raise a number of interesting points -- but also plenty of further questions. First, we found pretty good evidence to suggest that, in the absence of detailed information, visualising raw boundaries can misrepresent the data underlying a map. Here, respondents tended to _underestimate_ the proportion of residents living in highly deprived neighbourhoods when observing a map of the raw boundaries. This is precisely what we would expect due to their small geographic size in comparison to wealthier neighbourhoods. Instead, by assigning neighbourhoods to a hex grid, which are uniform in size and shape, respondents were able to make fairly accurate estimates. But, this benefit comes at a cost, namely, the distortion of spatial patterning. The dorling cartogram introduced the opposite effect as the original boundaries, with people tending to slightly _overestimate_ the overall proportion. So, alternative methods are not always 'better' but are certainly worth considering. Ultimately, it just depends on the aim of the research, and the message you want to convey with the visualisation.
+
+Conducting the mini-survey itself brought up an interesting learning point on survey design for these kinds of questions. As we noted earlier, many respondents questioned the description of the 'most deprived' category as 'dark blue'. We used a colourblind friendly palette (viridis), but clearly, referring to colours by name in isolation is problematic. Different people will interpret the same colours differently, even with colourblind friendly palettes like viridis. You can try this out for yourself online using the [viridis documentation](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html). Fortunately, because we referred to the category by both colour and number, I think we largely avoided total confusion, otherwise we'd expect a clear bi-modal distribution in answers, or many 'zero' answers. Nevertheless, for a full-scale survey with a robust design and a generalisable sample, we would want to pilot the survey thoroughly beforehand to weed-out issues like this early on.
+
+Speaking of full-scale surveys: of course, mini-surveys like this are fun and interesting, and as noted, make useful learning experiences, but there is a huge 'generalisability' question over the results. We don't know much about our MOD sample, so we cannot even generalise to the organisation itself. Any future work which aspires to generalisation might want to consider what populations are interesting and useful, and which map types (and for what purposes) are most relevant for that population. If anyone has pointers, suggestions or feedback, please do get in touch!
+
+
