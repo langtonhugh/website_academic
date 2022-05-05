@@ -1,0 +1,88 @@
+---
+name: Samuel
+surname: Langton
+position: "Postdoc researcher"
+address: "De Boelelaan 1077, 1081HV, Amsterdam"
+www: www.samlangton.info
+email: "slangton@nscr.nl"
+twitter: sh_langton
+github: langtonhugh
+date: "`r format(Sys.time(), '%B %Y')`"
+output: vitae::hyndman
+headcolor: 080007
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(vitae)
+```
+
+# Education
+
+```{r}
+library(tibble)
+tribble(
+  ~ Degree, ~ Year, ~ Institution, ~ Where,
+  "PhD Sociology", "2016-2021", "Manchester Metropolitan University", "Manchester, England",
+  "MSc Sociology and Social Research", "2014-2016", "Utrecht University", "Utrecht, Netherlands",
+  "BSc Social Policy with Government", "2009-2012", "London School of Economics", "London, England"
+) %>% 
+  detailed_entries(Degree, Year, Institution, Where)
+```
+
+# Research employment
+
+```{r}
+packages_used <- tibble::tribble(
+  ~ package, ~ date, ~ language, ~ timezone, ~ details,
+  "vitae", Sys.Date(), "R", Sys.timezone(), c("Making my CV with vitae.", "Multiple why entries."),
+  "rmarkdown", Sys.Date()-10, "R", Sys.timezone(), "Writing reproducible, dynamic reports using R."
+)
+packages_used %>%
+  detailed_entries(what = package, when = date, with = language, where = timezone, why = details)
+
+```
+
+```{r}
+tribble(
+  ~Year, ~Pos, ~Desc, ~Extra,
+  "2021-now", "Postdoc Researcher"  , "Netherlands Institute for the Study of Crime and Law Enforcment", "blah blah blah",
+  "2020-2021", "Research Fellow", "University of Leeds", "blah blah blah",
+  "2019-2020", "Research Associate", "Manchester Metropolitan Crime and Well-being Big Data Centre", "blah blah blah",
+  "2016-2018", "Research Assistant", "Manchester Metropolitan Crime and Well-being Big Data Centre", "blah blah blah"
+) %>%
+  brief_entries(
+    what = Pos,
+    when = Year,
+    with = Desc,
+    why = Extra
+  )
+```
+
+# Peer-reviewed journal articles
+
+```{r}
+library(dplyr)
+knitr::write_bib(c("vitae", "tibble"), "packages.bib")
+
+bibliography_entries("packages.bib") %>%
+  arrange(desc(author$family), issued)
+```
+
+# Books & chapters
+
+# Other publications
+
+# Invited presentations
+
+# Presentations
+
+# Teaching
+
+# Reviewer
+
+# Other employment
+
+# Software experience
+
+
