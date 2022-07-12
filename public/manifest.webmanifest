@@ -2,8 +2,8 @@
   "name": "Samuel Langton",
   "short_name": "Samuel Langton",
   "lang": "en-us",
-  "theme_color": "#2962ff",
-  "background_color": "#2962ff",
+  "theme_color": "#FE1DCE",
+  "background_color": "#FE1DCE",
   "icons": [{
     "src": "/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_192x192_fill_lanczos_center_3.png",
     "sizes": "192x192",

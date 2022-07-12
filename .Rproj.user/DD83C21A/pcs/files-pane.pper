@@ -1,9 +1,9 @@
 {
-    "path" : "~/GitHub/website_academic/content/post",
-    "sortOrder" : [
+    "path": "~/GitHub/website_academic/content/post",
+    "sortOrder": [
         {
-            "ascending" : true,
-            "columnIndex" : 2
+            "columnIndex": 2,
+            "ascending": true
         }
     ]
 }

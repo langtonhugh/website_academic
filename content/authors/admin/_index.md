@@ -4,7 +4,7 @@ authors:
 bio: My research focuses on the spatial and temporal patterning of crime and police demand. I am also interested in data visualisation, mapping and promoting the use of open software in social science.
 education:
   courses:
-  - course: PhD in Criminology
+  - course: PhD in Sociology
     institution: Manchester Metropolitan University, UK
     year: 2020
   - course: MSc in Sociology and Social Research
@@ -22,7 +22,7 @@ interests:
 - R, QGIS, GeoDa
 organizations:
 - name: Netherlands Institute for the Study of Crime and Law Enforcement
-  url: "https://nscr.nl/"
+ # url: "https://nscr.nl/"
 role: Postdoctoral researcher
 social:
 - icon: envelope
@@ -39,6 +39,7 @@ social:
   link: https://github.com/langtonhugh
 superuser: true
 title: Samuel Langton
+
 user_groups:
 - Researchers
 - Visitors

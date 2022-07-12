@@ -17,12 +17,12 @@ publication_short: ""
 publication_types:
 - "0"
 publishDate: "2021-10-08T00:00:00Z"
-summary: Pre-registration protocol for a scoping review on the spatial and temporal patterning of emergency reactive police demand.
+summary: Preregistration protocol for a scoping review on the spatial and temporal patterning of emergency reactive police demand.
 tags:
 - policing
 - literature review
 - scoping review
 - preregistration
-title: Protocol. A systematic scoping review on the spatial and temporal patterning of emergency demand for police services
+title: Preregistration. A systematic scoping review on the spatial and temporal patterning of emergency demand for police services
 url_pdf: https://osf.io/qwrb3/
 ---

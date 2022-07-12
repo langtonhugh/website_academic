@@ -5,12 +5,20 @@
     <link>/tag/demand/</link>
       <atom:link href="/tag/demand/index.xml" rel="self" type="application/rss+xml" />
     <description>demand</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 30 Jul 2021 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jun 2022 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_3.png</url>
       <title>demand</title>
       <link>/tag/demand/</link>
     </image>
+    
+    <item>
+      <title>Preregistration. Scale and composition of emergency reactive police demand in Amsterdam, Netherlands.</title>
+      <link>/publication/demand_prereg/</link>
+      <pubDate>Wed, 01 Jun 2022 00:00:00 +0000</pubDate>
+      <guid>/publication/demand_prereg/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Policing and mental ill-health. Using big data to assess the scale and severity of, and the frontline resources committed to, mental ill-health related calls-for-service</title>

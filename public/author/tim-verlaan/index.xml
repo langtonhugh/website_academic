@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tim Verlaan | Samuel Langton</title>
+    <link>/author/tim-verlaan/</link>
+      <atom:link href="/author/tim-verlaan/index.xml" rel="self" type="application/rss+xml" />
+    <description>Tim Verlaan</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jun 2022 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_3.png</url>
+      <title>Tim Verlaan</title>
+      <link>/author/tim-verlaan/</link>
+    </image>
+    
+    <item>
+      <title>Preregistration. Scale and composition of emergency reactive police demand in Amsterdam, Netherlands.</title>
+      <link>/publication/demand_prereg/</link>
+      <pubDate>Wed, 01 Jun 2022 00:00:00 +0000</pubDate>
+      <guid>/publication/demand_prereg/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
