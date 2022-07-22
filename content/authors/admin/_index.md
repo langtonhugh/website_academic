@@ -49,4 +49,4 @@ I am a postdoctoral researcher at the [Netherlands Institute for the Study of Cr
 
 My research focuses on the spatial and temporal patterning of crime and police demand. I am also interested in data visualisation, mapping and promoting the use of open software in social science.
 
-This website provides an overview of my ongoing work, but for a complete summary please check my [CV](https://www.samlangton.info/files/Langton_CV_2020.pdf).
+This website provides an overview of my ongoing work, but for a complete summary please check my [CV](https://www.samlangton.info/files/sam_langton_cv.pdf).
