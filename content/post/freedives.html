@@ -1,0 +1,122 @@
+---
+title: "Visualsing dive data"
+output: html_document
+tags:
+- xml
+- visualisation
+- r
+date: '2023-03-19'
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>Intro.</p>
+<p><img src="https://raw.githubusercontent.com/langtonhugh/freedives/main/img/photo_credited.png" /><!-- --></p>
+<p>Load in multiple files.</p>
+<pre class="r"><code># Load packages.
+library(XML)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(lubridate)
+library(ggplot2)
+
+# List files.
+dive_files &lt;- paste(&quot;data/2023/&quot;, list.files(&quot;data/2023/&quot;, pattern = glob2rx(&quot;*.xml&quot;),  recursive=TRUE), sep = &quot;&quot;)
+
+# Load data.
+dive_xml_list &lt;- lapply(dive_files, xmlParse)
+
+# Parse into a list of df.
+dive_df_list &lt;- lapply(dive_xml_list, xmlToList)
+</code></pre>
+<p>Parse the XML data.</p>
+<pre class="r"><code># Function pull out relevant information.
+pull_fun &lt;- function(x){
+tibble(
+    mode  = x[[&quot;Mode&quot;]],
+    date  = x[[&quot;StartTime&quot;]],
+    depth = as.numeric(lapply(x[[&quot;DiveSamples&quot;]], function(y){y$Depth})),
+    time  = as.numeric(lapply(x[[&quot;DiveSamples&quot;]], function(y){y$Time})),
+    max_depth   = as.numeric(x[[&quot;MaxDepth&quot;]]),
+    depth_minus = depth*-1,
+    max_depth_minus = max_depth*-1,
+    duration  = as.numeric(x[[&quot;Duration&quot;]]),
+    temp  = as.numeric(lapply(x[[&quot;DiveSamples&quot;]], function(y)y$Temperature))
+  ) %&gt;% 
+    mutate(date = str_replace_all(date, &quot;T&quot;, &quot; &quot;),
+           date_lub = ymd_hms(date),
+           date_lub_min = round_date(date_lub, &quot;minute&quot;),
+           date_day = round_date(date_lub, &quot;day&quot;))
+}
+
+# Run function through list.
+dive_info_list &lt;- lapply(dive_df_list, pull_fun)
+
+# Bind together.
+dive_info_df &lt;- bind_rows(dive_info_list, .id = &quot;dive_id&quot;)
+
+# Remove SCUBA dives, and likely safety-buddy dives.
+dive_info_clean_df &lt;- dive_info_df %&gt;%
+  filter(mode == 3, max_depth &gt; 8) %&gt;% 
+  mutate(dive_id = as.numeric(dive_id))</code></pre>
+<p>Dive profile plot.</p>
+<pre class="r"><code># Plot dives profile.
+dive_info_clean_df %&gt;% 
+  ggplot(data = .) +
+  geom_line(mapping = aes(x = time, y = depth_minus, group = dive_id, colour = depth_minus),
+            size = 1, alpha = 1) +
+  scale_colour_viridis_c() +
+  scale_x_continuous(breaks = c(0, 15, 30, 45, 60, 75, 90, 105)) +
+  theme_bw() +
+  geom_hline(yintercept = 0, linetype = &quot;dotted&quot;) +
+  labs(y = &quot;Depth (metres)&quot;, x = &quot;Time (seconds)&quot;) +
+  theme(legend.position = &quot;none&quot;) </code></pre>
+<p><img src="https://raw.githubusercontent.com/langtonhugh/freedives/main/visuals/dive_profile.png" /><!-- --></p>
+<p>Create chronological id.</p>
+<pre class="r"><code># Create chronological id and join.
+dive_info_clean_df &lt;- dive_info_clean_df %&gt;% 
+  distinct(date_lub) %&gt;% 
+  mutate(chrono_id = 1:nrow(.)) %&gt;% 
+  right_join(dive_info_clean_df)</code></pre>
+<pre class="r"><code># Add incremental steps to the max_depths.
+dive_sequence_df &lt;- dive_info_clean_df %&gt;% 
+  mutate(depth_sequence = sapply(dive_info_clean_df$max_depth, function(x)seq(0, x, by = 0.5))) %&gt;%
+  select(chrono_id, depth_sequence) %&gt;% 
+  mutate(depth_sequence = as.character(depth_sequence),
+         depth_sequence = str_sub(depth_sequence, 3, -2)) %&gt;% 
+  separate_rows(depth_sequence, sep = &quot;,&quot;) %&gt;% 
+  mutate(depth_sequence = -1*as.numeric(trimws(depth_sequence)))</code></pre>
+<pre class="r"><code># Plot the sequence graph.
+max_depth_chrono_df &lt;- dive_sequence_df %&gt;% 
+  group_by(chrono_id) %&gt;% 
+  summarise(max_depth_minus = min(depth_sequence))
+
+ggplot() +
+  geom_line(data = dive_sequence_df, mapping = aes(x = chrono_id, y = depth_sequence, group = chrono_id,
+                          colour = depth_sequence), size = 2) +
+  geom_point(data = max_depth_chrono_df,
+             mapping = aes(x = chrono_id, y = max_depth_minus, 
+                           colour = max_depth_minus), size = 3) +
+  geom_hline(yintercept = 0, linetype = &quot;dotted&quot;) +
+  scale_colour_viridis_c() +
+  theme_bw() +
+  labs(x = &quot;Dive number (chronological)&quot;, y = &quot;Depth (metres)&quot;) +
+  theme(legend.position = &quot;none&quot;)  </code></pre>
+<p><img src="https://raw.githubusercontent.com/langtonhugh/freedives/main/visuals/improved_chronology.png" /><!-- --></p>
+<p>Other data handling and plot.</p>
+<pre class="r"><code># Distribution handling and plot.
+dive_info_clean_df %&gt;% 
+  select(dive_id, duration, max_depth, temp) %&gt;% 
+  distinct() %&gt;% 
+  rename(`Duration (seconds)` = duration,
+         `Max. depth (metres)`  = max_depth,
+         `Temperature (C)` = temp) %&gt;% 
+  pivot_longer(cols = -dive_id, names_to = &quot;stat&quot;) %&gt;% 
+  ggplot(data = .) +
+  geom_density(mapping = aes(x = value), fill = &quot;grey20&quot;, colour = &quot;grey20&quot;) +
+  facet_wrap(~stat, scales = &quot;free&quot;) +
+  theme_bw() +
+  labs(x = NULL, y = NULL)</code></pre>
+<p><img src="https://raw.githubusercontent.com/langtonhugh/freedives/main/visuals/enviro_density.png" /><!-- --></p>
