@@ -152,7 +152,7 @@ tribble(
 ```{r}
 tribble(
   ~ date, ~ job, ~ details,
-  "2021-now", "Instructor and co-organiser, NSC-R workshop series", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
+  "2021-now", "Instructor and co-organiser, internal R workshops & Data Carpentry sessions", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
   "2020", "Lead instructor, A gentle introduction to QGIS", "Open Data Manchester webinar series (online).",
   "2020", "Lead instructor, Introduction to QGIS", "Cathie Marsh Institute for Social Research, University of Manchester, Manchester, UK.",
   "2020", "Lead instructor, Data visualisation in R using crime data", "UK Data Service and Cathie Marsh Institute for Social Research, University of Manchester, Manchester, UK.",

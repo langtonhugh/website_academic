@@ -1,0 +1,26 @@
+{
+    "id": "8E3D28F6",
+    "path": "~/GitHub/website_academic/content/post/lockdown_conversation.Rmd",
+    "project_path": "content/post/lockdown_conversation.Rmd",
+    "type": "r_markdown",
+    "hash": "3571217793",
+    "contents": "",
+    "dirty": false,
+    "created": 1660500285445.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "chunk_output_type": "console",
+        "cursorPosition": "6,7",
+        "scrollLine": "0",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1594024831,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1594024831,
+    "read_only": false,
+    "read_only_alternatives": []
+}

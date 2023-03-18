@@ -1,0 +1,21 @@
+---
+title: 'Outdoor swimming map'
+output: html_document
+editor_options: 
+  chunk_output_type: console
+  tags:
+- swim
+- maps
+- leaflet
+date: '2022-01-01'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = T, echo = F, warning = F, message = F)
+```
+
+Example of the outdoor swimming map for Amsterdam.
+
+```{r out.height="900px"}
+knitr::include_url("file:///C:/Users/langt/Documents/GitHub/swim_nl/zwem_nl_web.html")
+```
