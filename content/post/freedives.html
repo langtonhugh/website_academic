@@ -1,5 +1,5 @@
 ---
-title: "Visualsing dive data"
+title: "Visualising freedive data in R"
 output: html_document
 tags:
 - xml
@@ -11,27 +11,43 @@ date: '2023-03-19'
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
-<p>Intro.</p>
-<p><img src="https://raw.githubusercontent.com/langtonhugh/freedives/main/img/photo_credited.png" /><!-- --></p>
-<p>Load in multiple files.</p>
+<p>Towards the end of 2021, I finally plucked up the courage to take a <a href="https://www.padi.com/education/freediving">freediving</a> course. At the time, I had never even tried Scuba diving, but a love of swimming and a childish love of trying to swim pool lengths underwater, combined with several <a href="https://www.youtube.com/watch?v=2-8g03IUY2k">inspiring videos</a>, was more than enough for me to give it a try. Since then, my diving has been limited to swimming pools in Amsterdam and very cold, dark Dutch lakes, together with a local dive group. But this year, I finally managed to get to Dahab, Egypt, to help prepare for the depth component of my <a href="https://www.aidainternational.org/Education/AIDAFreedivingCourses#aida3">AIDA3</a>.</p>
+<div class="figure"><span style="display:block;" id="fig:photo"></span>
+<img src="https://raw.githubusercontent.com/langtonhugh/freedives/main/img/photo_credited.png" alt="On the ascent in Dahab. Photo taken by Pete Botman."  />
+<p class="caption">
+Figure 1: On the ascent in Dahab. Photo taken by Pete Botman.
+</p>
+</div>
+<p>Freediving is pretty wholesome, and the tech-free component is part of what I enjoy so much, especially compared to things like Scuba. But before going to Dahab, I finally succumbed to buying a freedive watch. The watch measures and records basic information about your dive, including important safety information such as your depth and surface interval times. The inevitable problem is that the watch is fairly clumsy when it comes to viewing historical dives. I had all this awesome information on my dives locked away behind a black and white screen and a few buttons. I found the <a href="https://www.suunto.com/en-nl/Support/software-support/dm5/">Suunto desktop software</a> pretty outdated and restrictive. Opening it up gave me very <em>Microsoft Flight Simulator 95</em> vibes for some reason (great vibes, but not what I am looking for here).</p>
+<p>So, I set about exploring whether the data could be pulled off the watch and summarised using R. The ultimate aim might be to create an app in which people can drag-and-drop their own data. But, let’s not carried away quite yet.</p>
+<p>First thing’s first, if you want to replicate what I show below yourself, you can find everything on an open <a href="https://github.com/langtonhugh/freedives">GitHub repository</a>. If you run the code on your own data, please let me know how you found it, and what I could add to improve things. This very much an initial exploration.</p>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<p>Without spoiling anything, the first thing you’ll need to do is load in a few packages. Nothing unusual here (mainly <code>tidyverse</code>-based packages). The exception is <code>XML</code> which we need to load in the data.</p>
 <pre class="r"><code># Load packages.
 library(XML)
 library(dplyr)
 library(tidyr)
 library(stringr)
 library(lubridate)
-library(ggplot2)
-
-# List files.
-dive_files &lt;- paste(&quot;data/2023/&quot;, list.files(&quot;data/2023/&quot;, pattern = glob2rx(&quot;*.xml&quot;),  recursive=TRUE), sep = &quot;&quot;)
-
-# Load data.
+library(ggplot2)</code></pre>
+</div>
+<div id="loading-and-parsing" class="section level2">
+<h2>Loading and parsing</h2>
+<p>Each dive is archived into its own XML document. This means even just for this year, I have 102 individual XML files. This is rather annoying but easily resolved by pasting together the working directories of all of these files based on their extension (i.e., .xml). If you use the corresponding GitHub repository, and work within the project file, all of this will run nice and smoothly. Nested within <code>paste()</code> is the <code>list.files()</code> function which simply produces a character vector for all the XML files in the specified folder. You can use this approach for any file type you want.</p>
+<pre class="r"><code># List files.
+dive_files &lt;- paste(&quot;data/2023/&quot;, list.files(&quot;data/2023/&quot;, pattern = glob2rx(&quot;*.xml&quot;),  recursive=TRUE), sep = &quot;&quot;)</code></pre>
+<p>Now that we have all the working directories stored within the <code>dive_files</code> list object, we can run the <code>xmlParse()</code> function through the whole thing. This produces a list of XML documents, which we then further parse using <code>xmlToList()</code>. The output <code>dive_list</code> is a list of lists, but bear with me: we extract the useful information in one beautiful swoop in the next step.</p>
+<pre class="r"><code># Load data.
 dive_xml_list &lt;- lapply(dive_files, xmlParse)
 
-# Parse into a list of df.
-dive_df_list &lt;- lapply(dive_xml_list, xmlToList)
-</code></pre>
-<p>Parse the XML data.</p>
+# Parse into a list of lists.
+dive_list &lt;- lapply(dive_xml_list, xmlToList)</code></pre>
+</div>
+<div id="the-pull-function" class="section level2">
+<h2>The pull function</h2>
+<p>This step is basically the only challenging part of the process. I would love someone with more XML experience than me to improve this, if possible. Basically, we run a function which, for each dive record (i.e., list within the list), creates a <code>tibble</code> containing the bits of information that we need, such as the date of the dive, the depth of dives, duration and temperature.</p>
+<p>The one thing that makes this odd, and involving <em>yet more lists</em>, is that the watch measures depth and temperature at a specified time intervals (sampling rate) of two seconds. Nevertheless, we can pull these out using <code>lapply()</code> and then convert to a numeric vector within this <code>tibble()</code> function. We also do some trivial extras, like convert the depth readings to a negative number.</p>
 <pre class="r"><code># Function pull out relevant information.
 pull_fun &lt;- function(x){
 tibble(
@@ -50,14 +66,473 @@ tibble(
            date_lub_min = round_date(date_lub, &quot;minute&quot;),
            date_day = round_date(date_lub, &quot;day&quot;))
 }
-
-# Run function through list.
-dive_info_list &lt;- lapply(dive_df_list, pull_fun)
+</code></pre>
+<p>Now for the magic: running this function through the list(s), and sticking it all together into a single <code>tibble</code>.</p>
+<pre class="r"><code># Run function through list.
+dive_df_list &lt;- lapply(dive_list, pull_fun)
 
 # Bind together.
-dive_info_df &lt;- bind_rows(dive_info_list, .id = &quot;dive_id&quot;)
-
-# Remove SCUBA dives, and likely safety-buddy dives.
+dive_info_df &lt;- bind_rows(dive_df_list, .id = &quot;dive_id&quot;)</code></pre>
+<p>In case you are not running this as we go along, the output looks like our ol’ familiar data frames with rows and columns. This is just the first ten rows.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+dive_id
+</th>
+<th style="text-align:right;">
+mode
+</th>
+<th style="text-align:left;">
+date
+</th>
+<th style="text-align:right;">
+depth
+</th>
+<th style="text-align:right;">
+time
+</th>
+<th style="text-align:right;">
+max_depth
+</th>
+<th style="text-align:right;">
+depth_minus
+</th>
+<th style="text-align:right;">
+max_depth_minus
+</th>
+<th style="text-align:right;">
+duration
+</th>
+<th style="text-align:right;">
+temp
+</th>
+<th style="text-align:left;">
+date_lub
+</th>
+<th style="text-align:left;">
+date_lub_min
+</th>
+<th style="text-align:left;">
+date_day
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+2023-01-15 11:18:09
+</td>
+<td style="text-align:right;">
+1.58
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2.01
+</td>
+<td style="text-align:right;">
+-1.58
+</td>
+<td style="text-align:right;">
+-2.01
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+6.999994
+</td>
+<td style="text-align:left;">
+2023-01-15 11:18:09
+</td>
+<td style="text-align:left;">
+2023-01-15 11:18:00
+</td>
+<td style="text-align:left;">
+2023-01-15
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+2023-01-15 11:18:09
+</td>
+<td style="text-align:right;">
+1.92
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2.01
+</td>
+<td style="text-align:right;">
+-1.92
+</td>
+<td style="text-align:right;">
+-2.01
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+6.999994
+</td>
+<td style="text-align:left;">
+2023-01-15 11:18:09
+</td>
+<td style="text-align:left;">
+2023-01-15 11:18:00
+</td>
+<td style="text-align:left;">
+2023-01-15
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+2023-01-15 11:18:09
+</td>
+<td style="text-align:right;">
+1.70
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2.01
+</td>
+<td style="text-align:right;">
+-1.70
+</td>
+<td style="text-align:right;">
+-2.01
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+6.999994
+</td>
+<td style="text-align:left;">
+2023-01-15 11:18:09
+</td>
+<td style="text-align:left;">
+2023-01-15 11:18:00
+</td>
+<td style="text-align:left;">
+2023-01-15
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+2023-01-15 11:18:09
+</td>
+<td style="text-align:right;">
+0.92
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+2.01
+</td>
+<td style="text-align:right;">
+-0.92
+</td>
+<td style="text-align:right;">
+-2.01
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+6.999994
+</td>
+<td style="text-align:left;">
+2023-01-15 11:18:09
+</td>
+<td style="text-align:left;">
+2023-01-15 11:18:00
+</td>
+<td style="text-align:left;">
+2023-01-15
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+2023-01-15 11:23:29
+</td>
+<td style="text-align:right;">
+1.22
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2.57
+</td>
+<td style="text-align:right;">
+-1.22
+</td>
+<td style="text-align:right;">
+-2.57
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+6.999994
+</td>
+<td style="text-align:left;">
+2023-01-15 11:23:29
+</td>
+<td style="text-align:left;">
+2023-01-15 11:23:00
+</td>
+<td style="text-align:left;">
+2023-01-15
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+2023-01-15 11:23:29
+</td>
+<td style="text-align:right;">
+2.27
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2.57
+</td>
+<td style="text-align:right;">
+-2.27
+</td>
+<td style="text-align:right;">
+-2.57
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+6.999994
+</td>
+<td style="text-align:left;">
+2023-01-15 11:23:29
+</td>
+<td style="text-align:left;">
+2023-01-15 11:23:00
+</td>
+<td style="text-align:left;">
+2023-01-15
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+2023-01-15 11:23:29
+</td>
+<td style="text-align:right;">
+2.54
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2.57
+</td>
+<td style="text-align:right;">
+-2.54
+</td>
+<td style="text-align:right;">
+-2.57
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+6.999994
+</td>
+<td style="text-align:left;">
+2023-01-15 11:23:29
+</td>
+<td style="text-align:left;">
+2023-01-15 11:23:00
+</td>
+<td style="text-align:left;">
+2023-01-15
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+2023-01-15 11:23:29
+</td>
+<td style="text-align:right;">
+1.31
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+2.57
+</td>
+<td style="text-align:right;">
+-1.31
+</td>
+<td style="text-align:right;">
+-2.57
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+6.999994
+</td>
+<td style="text-align:left;">
+2023-01-15 11:23:29
+</td>
+<td style="text-align:left;">
+2023-01-15 11:23:00
+</td>
+<td style="text-align:left;">
+2023-01-15
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+2023-01-15 11:27:32
+</td>
+<td style="text-align:right;">
+1.90
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+7.32
+</td>
+<td style="text-align:right;">
+-1.90
+</td>
+<td style="text-align:right;">
+-7.32
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+6.999994
+</td>
+<td style="text-align:left;">
+2023-01-15 11:27:32
+</td>
+<td style="text-align:left;">
+2023-01-15 11:28:00
+</td>
+<td style="text-align:left;">
+2023-01-15
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+2023-01-15 11:27:32
+</td>
+<td style="text-align:right;">
+2.80
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+7.32
+</td>
+<td style="text-align:right;">
+-2.80
+</td>
+<td style="text-align:right;">
+-7.32
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+6.999994
+</td>
+<td style="text-align:left;">
+2023-01-15 11:27:32
+</td>
+<td style="text-align:left;">
+2023-01-15 11:28:00
+</td>
+<td style="text-align:left;">
+2023-01-15
+</td>
+</tr>
+</tbody>
+</table>
+<p>As you can imagine, not all of these 102 dives were ‘proper’ dives. I know for sure that two of them are Scuba dives, and many of them will be dives for which I was a <a href="https://www.deeperblue.com/safety-for-freediving/">safety buddy</a>. The Scuba dives are easily identifiable by the ‘mode’. To filter out safety dives, I have simply subsetted the data for dives which were shallower than eight metres. This is completely arbitrary: some of my safety dives will have been a little deeper, and some of my ‘proper dive’ attempts will have been shallower, but you can choose whatever threshold you’d like.</p>
+<pre class="r"><code># Remove SCUBA dives, and likely safety-buddy dives.
 dive_info_clean_df &lt;- dive_info_df %&gt;%
   filter(mode == 3, max_depth &gt; 8) %&gt;% 
   mutate(dive_id = as.numeric(dive_id))</code></pre>
@@ -120,3 +595,4 @@ dive_info_clean_df %&gt;%
   theme_bw() +
   labs(x = NULL, y = NULL)</code></pre>
 <p><img src="https://raw.githubusercontent.com/langtonhugh/freedives/main/visuals/enviro_density.png" /><!-- --></p>
+</div>

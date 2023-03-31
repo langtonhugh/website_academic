@@ -3,7 +3,7 @@
     "path": "~/GitHub/website_academic/content/post/freedives.Rmd",
     "project_path": "content/post/freedives.Rmd",
     "type": "r_markdown",
-    "hash": "0",
+    "hash": "2492204639",
     "contents": "",
     "dirty": false,
     "created": 1679161192383.0,
@@ -11,17 +11,18 @@
     "relative_order": 1,
     "properties": {
         "content_preview_inline": "false",
-        "cursorPosition": "154,14",
-        "scrollLine": "143",
+        "cursorPosition": "187,29",
+        "scrollLine": "178",
         "source_window_id": "",
-        "Source": "Source"
+        "Source": "Source",
+        "last_setup_crc32": "AC5C0414e2ce2a82"
     },
     "folds": "",
-    "lastKnownWriteTime": 1679163020,
+    "lastKnownWriteTime": 1680292824,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1679163020525,
+    "last_content_update": 1680292824068,
     "read_only": false,
     "read_only_alternatives": []
 }
