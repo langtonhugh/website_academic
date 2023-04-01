@@ -18,9 +18,8 @@ date: '2023-03-19'
 Figure 1: On the ascent in Dahab. Photo taken by Pete Botman.
 </p>
 </div>
-<p>Freediving is pretty wholesome, and the tech-free component is part of what I enjoy so much, especially compared to things like Scuba. But before going to Dahab, I finally succumbed to buying a freedive watch. The watch measures and records basic information about your dive, including important safety information such as your depth and surface interval times. The inevitable problem is that the watch is fairly clumsy when it comes to viewing historical dives. I had all this awesome information on my dives locked away behind a black and white screen and a few buttons. I found the <a href="https://www.suunto.com/en-nl/Support/software-support/dm5/">Suunto desktop software</a> pretty outdated and restrictive. Opening it up gave me very <em>Microsoft Flight Simulator 95</em> vibes for some reason (great vibes, but not what I am looking for here).</p>
-<p>So, I set about exploring whether the data could be pulled off the watch and summarised using R. The ultimate aim might be to create an app in which people can drag-and-drop their own data. But, let’s not carried away quite yet.</p>
-<p>First thing’s first, if you want to replicate what I show below yourself, you can find everything on an open <a href="https://github.com/langtonhugh/freedives">GitHub repository</a>. If you run the code on your own data, please let me know how you found it, and what I could add to improve things. This very much an initial exploration.</p>
+<p>Freediving is pretty wholesome, and the tech-free component is part of what I enjoy so much, especially compared to Scuba. But before going to Dahab, I finally succumbed to buying a freedive watch. The watch measures and records basic information about your dive, including important safety information such as your depth and surface interval times. The inevitable problem is that the watch is fairly clumsy when it comes to viewing historical dives. I had all this awesome information on my dives locked away behind a black and white screen and a few buttons. I found the <a href="https://www.suunto.com/en-nl/Support/software-support/dm5/">Suunto desktop software</a> pretty outdated and restrictive. Opening it up gave me very <em>Microsoft Flight Simulator 95</em> vibes for some reason (great vibes, but not what I am looking for here).</p>
+<p>So, I set about exploring whether the data could be pulled off the watch and summarised using R. The ultimate aim might be to create an app in which people can drag-and-drop their own data. But, let’s not carried away quite yet. For now, if you want to replicate what I show below, you can find everything on an open <a href="https://github.com/langtonhugh/freedives">GitHub repository</a>. If you run the code on your own data, please let me know how you found it, and what I could add to improve things. This is very much an initial exploration.</p>
 <div id="setup" class="section level2">
 <h2>Setup</h2>
 <p>Without spoiling anything, the first thing you’ll need to do is load in a few packages. Nothing unusual here (mainly <code>tidyverse</code>-based packages). The exception is <code>XML</code> which we need to load in the data.</p>
@@ -34,7 +33,7 @@ library(ggplot2)</code></pre>
 </div>
 <div id="loading-and-parsing" class="section level2">
 <h2>Loading and parsing</h2>
-<p>Each dive is archived into its own XML document. This means even just for this year, I have 102 individual XML files. This is rather annoying but easily resolved by pasting together the working directories of all of these files based on their extension (i.e., .xml). If you use the corresponding GitHub repository, and work within the project file, all of this will run nice and smoothly. Nested within <code>paste()</code> is the <code>list.files()</code> function which simply produces a character vector for all the XML files in the specified folder. You can use this approach for any file type you want.</p>
+<p>Each dive is archived into its own XML document. This means that even just for this year, I have 102 individual XML files. This is rather annoying but easily resolved by pasting together the working directories of all of these files based on their extension (i.e., .xml). If you use the corresponding GitHub repository, and work within the project file, all of this will run nice and smoothly. Nested within <code>paste()</code> is the <code>list.files()</code> function which simply produces a character vector for all the XML files in the specified folder. You can use this approach for any file type you want.</p>
 <pre class="r"><code># List files.
 dive_files &lt;- paste(&quot;data/2023/&quot;, list.files(&quot;data/2023/&quot;, pattern = glob2rx(&quot;*.xml&quot;),  recursive=TRUE), sep = &quot;&quot;)</code></pre>
 <p>Now that we have all the working directories stored within the <code>dive_files</code> list object, we can run the <code>xmlParse()</code> function through the whole thing. This produces a list of XML documents, which we then further parse using <code>xmlToList()</code>. The output <code>dive_list</code> is a list of lists, but bear with me: we extract the useful information in one beautiful swoop in the next step.</p>
@@ -46,8 +45,8 @@ dive_list &lt;- lapply(dive_xml_list, xmlToList)</code></pre>
 </div>
 <div id="the-pull-function" class="section level2">
 <h2>The pull function</h2>
-<p>This step is basically the only challenging part of the process. I would love someone with more XML experience than me to improve this, if possible. Basically, we run a function which, for each dive record (i.e., list within the list), creates a <code>tibble</code> containing the bits of information that we need, such as the date of the dive, the depth of dives, duration and temperature.</p>
-<p>The one thing that makes this odd, and involving <em>yet more lists</em>, is that the watch measures depth and temperature at a specified time intervals (sampling rate) of two seconds. Nevertheless, we can pull these out using <code>lapply()</code> and then convert to a numeric vector within this <code>tibble()</code> function. We also do some trivial extras, like convert the depth readings to a negative number.</p>
+<p>This step is basically the only challenging part of the process. I would love someone with more XML experience than me to improve this, if possible. At the moment, I run a function which, for each dive record, creates a <code>tibble</code> containing the bits of information that we need, such as the date of the dive, the depth of dives, duration and temperature.</p>
+<p>The one thing that makes this odd, and involving <em>yet more lists</em>, is that the watch measures depth and temperature at a specified time intervals (sampling rate) of two seconds. Nevertheless, we can pull these out using <code>lapply()</code> and then convert to a numeric vector within this <code>tibble()</code> function. We also do some trivial extras, like convert the depth readings to a negative number. This function is the key to extracting your dive data in a usable format.</p>
 <pre class="r"><code># Function pull out relevant information.
 pull_fun &lt;- function(x){
 tibble(
@@ -536,7 +535,10 @@ date_day
 dive_info_clean_df &lt;- dive_info_df %&gt;%
   filter(mode == 3, max_depth &gt; 8) %&gt;% 
   mutate(dive_id = as.numeric(dive_id))</code></pre>
-<p>Dive profile plot.</p>
+</div>
+<div id="dive-profile" class="section level2">
+<h2>Dive profile</h2>
+<p>Now the fun begins. The main graphic is a ‘dive profile’ visual for which we plot the depth on the Y-axis and the duration on the X-axis using <code>ggplot2</code>. In this plot, I colour the line according to the depth, which is measures at the two second sampling rate.</p>
 <pre class="r"><code># Plot dives profile.
 dive_info_clean_df %&gt;% 
   ggplot(data = .) +
@@ -549,12 +551,29 @@ dive_info_clean_df %&gt;%
   labs(y = &quot;Depth (metres)&quot;, x = &quot;Time (seconds)&quot;) +
   theme(legend.position = &quot;none&quot;) </code></pre>
 <p><img src="https://raw.githubusercontent.com/langtonhugh/freedives/main/visuals/dive_profile.png" /><!-- --></p>
-<p>Create chronological id.</p>
-<pre class="r"><code># Create chronological id and join.
+<p>Most of these dives will have been following a vertical rope for safety, as per the photo above. One downside of the dive profile graphic is that at first glance it might imply that the dives are covering distance along the X-axis. But, I think it is still a cool visual representation of the dives. We can easily differentiate outliers by both time (such as a hang at around 12 metres) and my two deepest dives (both are ~25 metres). Any other ideas, let me know. One thing I’d like to fix is the colouring by depth: at high resolution, we can see the segments for the sampling rate. I’d rather it was a smooth gradient colour. But, we go some way to remedy this later.</p>
+</div>
+<div id="chronology" class="section level2">
+<h2>Chronology</h2>
+<p>To explore progression over time (which for this data, is only 2023), I create a chronological id variable based on the dates. The order of the dives is interesting, but not so much the date itself. Maybe there’s a nicer way of doing this, but it certianly made the plot later easier. The idea is to later plot max depth progression in chronological order.</p>
+<pre class="r"><code># Create chronological id and join back with the main data.
 dive_info_clean_df &lt;- dive_info_clean_df %&gt;% 
   distinct(date_lub) %&gt;% 
   mutate(chrono_id = 1:nrow(.)) %&gt;% 
   right_join(dive_info_clean_df)</code></pre>
+<p>We can then visualise, by each dive, the max depth using an (unside down) lollipop graphic.</p>
+<pre class="r"><code># Basic chronology plot.
+dive_info_clean_df %&gt;% 
+  distinct(chrono_id, max_depth_minus, .keep_all = TRUE) %&gt;%
+  ggplot(data = .) +
+  geom_segment(mapping = aes(x = chrono_id, xend = chrono_id,
+                             y = 0, yend = max_depth_minus)) +
+  geom_point  (mapping = aes(x = chrono_id, y = max_depth_minus)) +
+  geom_hline(yintercept = 0, linetype = &quot;dotted&quot;) +
+  theme_bw() +
+  labs(x = &quot;Dive number (chronological)&quot;, y = &quot;Depth (metres)&quot;) </code></pre>
+<p><img src="https://raw.githubusercontent.com/langtonhugh/freedives/main/visuals/basic_chronology.png" /><!-- --></p>
+<p>This might prove useful in its own right, but it lacks the colour which perfectly (for me) represents the depth. The deeper you go, the darker it gets.</p>
 <pre class="r"><code># Add incremental steps to the max_depths.
 dive_sequence_df &lt;- dive_info_clean_df %&gt;% 
   mutate(depth_sequence = sapply(dive_info_clean_df$max_depth, function(x)seq(0, x, by = 0.5))) %&gt;%
@@ -563,6 +582,7 @@ dive_sequence_df &lt;- dive_info_clean_df %&gt;%
          depth_sequence = str_sub(depth_sequence, 3, -2)) %&gt;% 
   separate_rows(depth_sequence, sep = &quot;,&quot;) %&gt;% 
   mutate(depth_sequence = -1*as.numeric(trimws(depth_sequence)))</code></pre>
+<p>Now we can reproduce the chronology plot but colour the line according to the sequence.</p>
 <pre class="r"><code># Plot the sequence graph.
 max_depth_chrono_df &lt;- dive_sequence_df %&gt;% 
   group_by(chrono_id) %&gt;% 
@@ -580,7 +600,7 @@ ggplot() +
   labs(x = &quot;Dive number (chronological)&quot;, y = &quot;Depth (metres)&quot;) +
   theme(legend.position = &quot;none&quot;)  </code></pre>
 <p><img src="https://raw.githubusercontent.com/langtonhugh/freedives/main/visuals/improved_chronology.png" /><!-- --></p>
-<p>Other data handling and plot.</p>
+<p>Finally, we can summarise the distribution of max depth, along with the temperature of the water and duration of each dive.</p>
 <pre class="r"><code># Distribution handling and plot.
 dive_info_clean_df %&gt;% 
   select(dive_id, duration, max_depth, temp) %&gt;% 
