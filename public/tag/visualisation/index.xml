@@ -5,12 +5,632 @@
     <link>/tag/visualisation/</link>
       <atom:link href="/tag/visualisation/index.xml" rel="self" type="application/rss+xml" />
     <description>visualisation</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Thu, 27 Jan 2022 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 08 Apr 2023 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_3.png</url>
       <title>visualisation</title>
       <link>/tag/visualisation/</link>
     </image>
+    
+    <item>
+      <title>Wrangling freedive watch data in R</title>
+      <link>/post/freedives/</link>
+      <pubDate>Sat, 08 Apr 2023 00:00:00 +0000</pubDate>
+      <guid>/post/freedives/</guid>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;Towards the end of 2021, I finally plucked up the courage to take a &lt;a href=&#34;https://www.padi.com/education/freediving&#34;&gt;freediving&lt;/a&gt; course. At the time, I had never even tried Scuba diving, but a love of swimming and a childish love of trying to swim pool lengths underwater, combined with several &lt;a href=&#34;https://www.youtube.com/watch?v=2-8g03IUY2k&#34;&gt;inspiring videos&lt;/a&gt;, was enough for me to give it a try. Since then, my diving has been limited to swimming pools in Amsterdam and very cold, dark Dutch lakes, together with a local dive group. But this year, I finally managed to get to Dahab, Egypt, to help prepare for the depth component of my &lt;a href=&#34;https://www.aidainternational.org/Education/AIDAFreedivingCourses#aida3&#34;&gt;AIDA3&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:photo&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;https://raw.githubusercontent.com/langtonhugh/freedives/main/img/photo_credited.png&#34; alt=&#34;On the ascent in Dahab. Photo taken by Pete Botman.&#34;  /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: On the ascent in Dahab. Photo taken by Pete Botman.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Freediving is pretty wholesome, and the gear-free component is part of what I enjoy so much, especially compared to Scuba. But before going to Dahab, I finally succumbed to buying a freedive watch (a Suunto D4F). The watch measures and records basic information about your dive, including important safety information such as your depth and surface interval times. The inevitable problem is that the watch is fairly clumsy when it comes to viewing historical dives. I had all this awesome information on my dives locked away behind a black and white screen and a few buttons. I found the &lt;a href=&#34;https://www.suunto.com/en-nl/Support/software-support/dm5/&#34;&gt;Suunto desktop software&lt;/a&gt; pretty outdated and restrictive. Opening it up gave me very &lt;em&gt;Windows 95&lt;/em&gt; vibes (great vibes, but not what I am looking for here).&lt;/p&gt;
+&lt;p&gt;So, I set about exploring whether the data could be pulled off the watch and summarised using R. The ultimate aim might be to create an app in which people can drag-and-drop their own data. But, let’s not carried away. For now, if you want to replicate what I show below, you can find everything on an open &lt;a href=&#34;https://github.com/langtonhugh/freedives&#34;&gt;GitHub repository&lt;/a&gt;. If you run the code on your own data, please let me know how you found it, and what I could add to improve things. This is very much an initial exploration.&lt;/p&gt;
+&lt;div id=&#34;setup&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Setup&lt;/h2&gt;
+&lt;p&gt;The first thing you’ll need to do is load in a few packages. Nothing unusual here (mainly &lt;code&gt;tidyverse&lt;/code&gt;-based packages). The exception is &lt;code&gt;XML&lt;/code&gt; which we need to load in the data.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Load packages.
+library(XML)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(lubridate)
+library(ggplot2)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;loading-and-parsing&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Loading and parsing&lt;/h2&gt;
+&lt;p&gt;Each dive is archived into its own XML file. This means that even just for this year, I have 102 individual XML files. This is rather annoying but easily resolved by pasting together the working directories of all of these files based on their extension (i.e., .xml). If you use the corresponding GitHub repository, and work within the project file, all of this will run nice and smoothly. Nested within &lt;code&gt;paste()&lt;/code&gt; is the &lt;code&gt;list.files()&lt;/code&gt; function which simply produces a character vector for all the XML files in the specified folder. You can use this approach for any file type you want.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# List files.
+dive_files &amp;lt;- paste(&amp;quot;data/2023/&amp;quot;, list.files(&amp;quot;data/2023/&amp;quot;, pattern = glob2rx(&amp;quot;*.xml&amp;quot;),  recursive=TRUE), sep = &amp;quot;&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now that we have all the working directories stored within the &lt;code&gt;dive_files&lt;/code&gt; list object, we can run the &lt;code&gt;xmlParse()&lt;/code&gt; function through the whole thing. This produces a list of XML documents, which we then further parse using &lt;code&gt;xmlToList()&lt;/code&gt;. The output &lt;code&gt;dive_list&lt;/code&gt; is a list of lists, but bear with me: we extract the useful information in one beautiful swoop in the next step.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Load data.
+dive_xml_list &amp;lt;- lapply(dive_files, xmlParse)
+
+# Parse into a list of lists.
+dive_list &amp;lt;- lapply(dive_xml_list, xmlToList)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-pull-function&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The pull function&lt;/h2&gt;
+&lt;p&gt;This step is basically the only challenging part of the process. I would love someone with more experience in wrangling XML files to improve this. At the moment, I run a function which, for each dive record, creates a &lt;code&gt;tibble&lt;/code&gt; containing the bits of information that we need, such as the date of the dive, the depth of dives, duration and temperature.&lt;/p&gt;
+&lt;p&gt;The one thing that makes this odd, and involving &lt;em&gt;yet more lists&lt;/em&gt;, is that the watch measures depth and temperature at specified time intervals (a sampling rate) of two-seconds. Nevertheless, we can pull these out using &lt;code&gt;lapply()&lt;/code&gt; and then convert to a numeric vector within this &lt;code&gt;tibble()&lt;/code&gt; function. We also do some trivial extras, like convert the depth readings to a negative number. This function is the key to extracting your dive data in a usable &lt;em&gt;tidy&lt;/em&gt; format.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Function to pull out relevant information.
+pull_fun &amp;lt;- function(x){
+tibble(
+    mode  = x[[&amp;quot;Mode&amp;quot;]],
+    date  = x[[&amp;quot;StartTime&amp;quot;]],
+    depth = as.numeric(lapply(x[[&amp;quot;DiveSamples&amp;quot;]], function(y){y$Depth})),
+    time  = as.numeric(lapply(x[[&amp;quot;DiveSamples&amp;quot;]], function(y){y$Time})),
+    max_depth   = as.numeric(x[[&amp;quot;MaxDepth&amp;quot;]]),
+    depth_minus = depth*-1,
+    max_depth_minus = max_depth*-1,
+    duration  = as.numeric(x[[&amp;quot;Duration&amp;quot;]]),
+    temp  = as.numeric(lapply(x[[&amp;quot;DiveSamples&amp;quot;]], function(y)y$Temperature))
+  ) %&amp;gt;% 
+    mutate(date = str_replace_all(date, &amp;quot;T&amp;quot;, &amp;quot; &amp;quot;),
+           date_lub = ymd_hms(date),
+           date_lub_min = round_date(date_lub, &amp;quot;minute&amp;quot;),
+           date_day = round_date(date_lub, &amp;quot;day&amp;quot;))
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now for the magic: running this function through the list(s), and sticking it all together into a single &lt;code&gt;tibble&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Run function through list.
+dive_df_list &amp;lt;- lapply(dive_list, pull_fun)
+
+# Bind together.
+dive_info_df &amp;lt;- bind_rows(dive_df_list, .id = &amp;quot;dive_id&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In case you are not running this as we go along, the output looks like our ol’ familiar data frames with rows and columns. The data frame is in long format: we have two-second samples nested within each dive id. This is just the first ten rows.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+dive_id
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+mode
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+date
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+depth
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+time
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+max_depth
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+depth_minus
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+max_depth_minus
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+duration
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+temp
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+date_lub
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+date_lub_min
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+date_day
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-15 11:18:09
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.58
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-1.58
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-2.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.999994
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-15 11:18:09
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-15 11:18:00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-15
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-15 11:18:09
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.92
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-1.92
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-2.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.999994
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-15 11:18:09
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-15 11:18:00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-15
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-15 11:18:09
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.70
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-1.70
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-2.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.999994
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-15 11:18:09
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-15 11:18:00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-15
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-15 11:18:09
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.92
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-0.92
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-2.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.999994
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-15 11:18:09
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-15 11:18:00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-15
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20 11:21:21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.43
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-2.43
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-8.15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+46
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24.999994
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20 11:21:21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20 11:21:00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20 11:21:21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.86
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-3.86
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-8.15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+46
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24.999994
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20 11:21:21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20 11:21:00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20 11:21:21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.89
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-4.89
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-8.15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+46
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24.999994
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20 11:21:21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20 11:21:00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20 11:21:21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.83
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-5.83
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-8.15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+46
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24.999994
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20 11:21:21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20 11:21:00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20 11:21:21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.07
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-7.07
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-8.15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+46
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24.999994
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20 11:21:21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20 11:21:00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20 11:21:21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-8.15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-8.15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+46
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24.999994
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20 11:21:21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20 11:21:00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2023-01-20
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;One thing I noticed here is that the maximum depth is often not recorded in one of the two-second samples. For example, in first dive (which was probably just a practice &lt;a href=&#34;https://www.youtube.com/watch?v=5oyfvvz51Fc&#34;&gt;duck dive&lt;/a&gt;), the max depth is 2.01 metres but none of the four samples include this depth measurement. I can only guess that the sampling rate is more frequent, but that the watch only saves the two-second intervals and the max depth.&lt;/p&gt;
+&lt;p&gt;Anyway, as we can already see, not all of these 102 dives were ‘proper’ dives. I know for sure that two of them are Scuba dives, and many of them will be dives for which I was a &lt;a href=&#34;https://www.deeperblue.com/safety-for-freediving/&#34;&gt;safety buddy&lt;/a&gt;. The Scuba dives are easily identifiable by the ‘mode’. To filter out safety dives, I have simply subsetted the data for dives which were shallower than eight metres. This is completely arbitrary: some of my safety dives will have been deeper, and some of my ‘proper dive’ attempts will have been shallower, but you can choose whatever threshold you’d like.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Remove SCUBA dives, and likely safety-buddy dives.
+dive_info_clean_df &amp;lt;- dive_info_df %&amp;gt;%
+  filter(mode == 3, max_depth &amp;gt; 8) %&amp;gt;% 
+  mutate(dive_id = as.numeric(dive_id))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;dive-profile&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Dive profile&lt;/h2&gt;
+&lt;p&gt;With the data in tidy format, things get easier and more fun. The main graphic I wanted to create is a ‘dive profile’ visual for which we plot the depth on the Y-axis and the duration on the X-axis using &lt;code&gt;ggplot2&lt;/code&gt;. In this plot, I colour the line according to the depth, which is measures at the two-second sampling rate.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Plot dives profile.
+dive_info_clean_df %&amp;gt;% 
+  ggplot(data = .) +
+  geom_line(mapping = aes(x = time, y = depth_minus, group = dive_id, colour = depth_minus),
+            size = 1, alpha = 1) +
+  scale_colour_viridis_c() +
+  scale_x_continuous(breaks = c(0, 15, 30, 45, 60, 75, 90, 105)) +
+  theme_bw() +
+  geom_hline(yintercept = 0, linetype = &amp;quot;dotted&amp;quot;) +
+  labs(y = &amp;quot;Depth (metres)&amp;quot;, x = &amp;quot;Time (seconds)&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/langtonhugh/freedives/main/visuals/dive_profile.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;Most of these dives will have been following a vertical rope for safety, as per the photo above. One downside of the dive profile graphic is that at first glance it might imply that the dives are covering distance along the X-axis. But, I think with the proper labeling it is a suitable visual representation of the dives. We can easily differentiate outliers by both time (such as a hang at around 12 metres) and my two deepest dives (both are ~25 metres). Any other ideas, let me know. One thing I’d like to fix is the colouring by depth: at high resolution, we can see the segments for the sampling rate. I’d rather it was a smooth gradient colour. But, we go some way to remedy this later.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;chronology&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Chronology&lt;/h2&gt;
+&lt;p&gt;To explore progression over time (which for this data, is only 2023), I create a chronological id variable based on the dates. The order of the dives is interesting, but not so much the date itself. Maybe there’s a nicer way of doing this, but it certainly made the plot later easier. The idea is to later plot max depth progression in chronological order.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Create chronological id and join back with the main data.
+dive_info_clean_df &amp;lt;- dive_info_clean_df %&amp;gt;% 
+  distinct(date_lub) %&amp;gt;% 
+  mutate(chrono_id = 1:nrow(.)) %&amp;gt;% 
+  right_join(dive_info_clean_df)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can then visualise, by each dive, the max depth using an (upside down) lollipop graphic.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Basic chronology plot.
+dive_info_clean_df %&amp;gt;% 
+  distinct(chrono_id, max_depth_minus, .keep_all = TRUE) %&amp;gt;%
+  ggplot(data = .) +
+  geom_segment(mapping = aes(x = chrono_id, xend = chrono_id,
+                             y = 0, yend = max_depth_minus)) +
+  geom_point  (mapping = aes(x = chrono_id, y = max_depth_minus)) +
+  geom_hline(yintercept = 0, linetype = &amp;quot;dotted&amp;quot;) +
+  theme_bw() +
+  labs(x = &amp;quot;Dive number (chronological)&amp;quot;, y = &amp;quot;Depth (metres)&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/langtonhugh/freedives/main/visuals/basic_chronology.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;This might prove useful in its own right, but it lacks the colour which perfectly (for me) represents the depth. The deeper you go, the darker it gets. I came up with a rather messy way of adding incremental depth measurements between zero metres (i.e., the surface) and the max depth (the turn on the line). I do this using the &lt;code&gt;seq()&lt;/code&gt; function, specifying a sequence of 0.5 metres. This is nested within &lt;code&gt;sapply()&lt;/code&gt; so that we generate the sequence for each dive record. The output is a list, so I then convert the sequence to a character, remove the &lt;code&gt;c(&lt;/code&gt; and &lt;code&gt;)&lt;/code&gt; sandwiching the sequence, and pivot to long format by splitting rows by the comma. The final step is to make each value negative again.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Add incremental steps to the max_depths.
+dive_sequence_df &amp;lt;- dive_info_clean_df %&amp;gt;% 
+  mutate(depth_sequence = sapply(dive_info_clean_df$max_depth, function(x)seq(0, x, by = 0.5))) %&amp;gt;%
+  select(chrono_id, depth_sequence) %&amp;gt;% 
+  mutate(depth_sequence = as.character(depth_sequence),
+         depth_sequence = str_sub(depth_sequence, 3, -2)) %&amp;gt;% 
+  separate_rows(depth_sequence, sep = &amp;quot;,&amp;quot;) %&amp;gt;% 
+  mutate(depth_sequence = -1*as.numeric(trimws(depth_sequence)))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can reproduce the chronology plot but colour the line according to the sequence, with a minor addition to the basic &lt;code&gt;ggplot2&lt;/code&gt; code chunk. You’ll notice that I create a mini data frame beforehand which contains only the chrono id and the max depth measure. This lets me add (coloured) points to the end of each line, but perhaps there’s some smarter &lt;code&gt;ggplot2&lt;/code&gt; code that would avoid the pre-step.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Identify the max depth for each chrono id.
+max_depth_chrono_df &amp;lt;- dive_sequence_df %&amp;gt;% 
+  group_by(chrono_id) %&amp;gt;% 
+  summarise(max_depth_minus = min(depth_sequence))
+
+# Plot the sequence graph again.
+ggplot() +
+  geom_line(data = dive_sequence_df, mapping = aes(x = chrono_id, y = depth_sequence, group = chrono_id,
+                          colour = depth_sequence), size = 2) +
+  geom_point(data = max_depth_chrono_df,
+             mapping = aes(x = chrono_id, y = max_depth_minus, 
+                           colour = max_depth_minus), size = 3) +
+  geom_hline(yintercept = 0, linetype = &amp;quot;dotted&amp;quot;) +
+  scale_colour_viridis_c() +
+  theme_bw() +
+  labs(x = &amp;quot;Dive number (chronological)&amp;quot;, y = &amp;quot;Depth (metres)&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)  &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/langtonhugh/freedives/main/visuals/improved_chronology.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;Finally, we can summarise the distribution of max depth, along with the temperature of the water and duration of each dive. This step is pretty straightforward. The &lt;code&gt;pivot_longer()&lt;/code&gt; means that we can &lt;code&gt;facet_wrap()&lt;/code&gt; rather than create each plot individually.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Distribution handling and plot.
+dive_info_clean_df %&amp;gt;% 
+  select(dive_id, duration, max_depth, temp) %&amp;gt;% 
+  distinct() %&amp;gt;% 
+  rename(`Duration (seconds)` = duration,
+         `Max. depth (metres)`  = max_depth,
+         `Temperature (C)` = temp) %&amp;gt;% 
+  pivot_longer(cols = -dive_id, names_to = &amp;quot;stat&amp;quot;) %&amp;gt;% 
+  ggplot(data = .) +
+  geom_density(mapping = aes(x = value), fill = &amp;quot;grey20&amp;quot;, colour = &amp;quot;grey20&amp;quot;) +
+  facet_wrap(~stat, scales = &amp;quot;free&amp;quot;) +
+  theme_bw() +
+  labs(x = NULL, y = NULL)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/langtonhugh/freedives/main/visuals/enviro_density.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;Well, that’s pretty much it for now! It’s a start. The code should work pretty seamlessly for anyone with a Suunto D4F, but the drag-and-drop dashboard might be a long way off yet. This is partly because I don’t know to what extent this code will run on dive logs from different brands and model of watch. If you get it running using your own data (irrespective of the watch model) let me know!&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Misrepresentation in maps: mini-survey results from the Ministry of Defence</title>

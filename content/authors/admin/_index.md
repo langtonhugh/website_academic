@@ -1,7 +1,7 @@
 ---
 authors:
 - admin
-bio: My research focuses on the spatial and temporal patterning of crime and police demand. I am also interested in data visualisation, mapping and promoting the use of open software in social science.
+bio: My research focuses on the spatial and temporal patterning of crime and police demand. I am also interested in promoting the use of open software in social science.
 education:
   courses:
   - course: PhD in Sociology
@@ -18,7 +18,7 @@ interests:
 - Geography of crime
 - Crime science
 - Police demand
-- Data visualisation
+- Open science
 - R, QGIS, GeoDa
 organizations:
 - name: Netherlands Institute for the Study of Crime and Law Enforcement
@@ -47,6 +47,6 @@ user_groups:
 
 I am a postdoctoral researcher at the [Netherlands Institute for the Study of Crime and Law Enforcement](https://nscr.nl/). I am also a Visiting Research Fellow for the [Policy Evaluation and Research Unit](https://www.mmuperu.co.uk/) at [Manchester Metropolitan University](https://www.mmu.ac.uk/).
 
-My research focuses on the spatial and temporal patterning of crime and police demand. I am also interested in data visualisation, mapping and promoting the use of open software in social science.
+My research focuses on the spatial and temporal patterning of crime and police demand. I am also interested in promoting the use of open software in social science.
 
 This website provides an overview of my ongoing work, but for a complete summary please check my [CV](https://www.samlangton.info/files/sam_langton_cv.pdf).
