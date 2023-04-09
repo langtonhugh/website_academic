@@ -98,6 +98,7 @@ In case you are not running this as we go along, the output looks like our ol' f
 ```{r, echo=FALSE}
 library(dplyr)
 readr::read_csv("https://raw.githubusercontent.com/langtonhugh/freedives/main/output/dive_info.csv") %>%
+  arrange(dive_id) %>% 
   slice(1:10) %>% 
   kableExtra::kable()
 ```
