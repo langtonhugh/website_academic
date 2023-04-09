@@ -13,12 +13,12 @@ date: '2023-04-08'
 
 <p>Towards the end of 2021, I finally plucked up the courage to take a <a href="https://www.padi.com/education/freediving">freediving</a> course. At the time, I had never even tried Scuba diving, but a love of swimming and a childish love of trying to swim pool lengths underwater, combined with several <a href="https://www.youtube.com/watch?v=2-8g03IUY2k">inspiring videos</a>, was enough for me to give it a try. Since then, my diving has been limited to swimming pools in Amsterdam and very cold, dark Dutch lakes, together with a local dive group. But this year, I finally managed to get to Dahab, Egypt, to help prepare for the depth component of my <a href="https://www.aidainternational.org/Education/AIDAFreedivingCourses#aida3">AIDA3</a>.</p>
 <div class="figure"><span style="display:block;" id="fig:photo"></span>
-<img src="https://raw.githubusercontent.com/langtonhugh/freedives/main/img/photo_credited.png" alt="On the ascent in Dahab. Photo taken by Pete Botman."  />
+<img src="https://raw.githubusercontent.com/langtonhugh/freedives/main/img/photo_credited.png" alt="On the ascent in Dahab. Photo taken by Pete Botman. Credit also to Pete for lending me his Amsterdam-themed fins!"  />
 <p class="caption">
-Figure 1: On the ascent in Dahab. Photo taken by Pete Botman.
+Figure 1: On the ascent in Dahab. Photo taken by Pete Botman. Credit also to Pete for lending me his Amsterdam-themed fins!
 </p>
 </div>
-<p>Freediving is pretty wholesome, and the gear-free component is part of what I enjoy so much, especially compared to Scuba. But before going to Dahab, I finally succumbed to buying a freedive watch (a Suunto D4F). The watch measures and records basic information about your dive, including important safety information such as your depth and surface interval times. The inevitable problem is that the watch is fairly clumsy when it comes to viewing historical dives. I had all this awesome information on my dives locked away behind a black and white screen and a few buttons. I found the <a href="https://www.suunto.com/en-nl/Support/software-support/dm5/">Suunto desktop software</a> pretty outdated and restrictive. Opening it up gave me very <em>Windows 95</em> vibes (great vibes, but not what I am looking for here).</p>
+<p>Freediving is pretty wholesome, and the gear-free component is part of what I enjoy so much, especially compared to Scuba. But before going to Dahab, I finally succumbed to buying a freedive watch (a Suunto D4F). The watch measures and records basic information about your dive, including important safety information such as your surface interval times. The inevitable problem is that the watch is fairly clumsy when it comes to viewing historical dives. I had all this awesome information on my dives locked away behind a black and white screen and a few buttons. I found the <a href="https://www.suunto.com/en-nl/Support/software-support/dm5/">Suunto desktop software</a> pretty outdated and restrictive. Opening it up gave me very <em>Windows 95</em> vibes (great vibes, but not what I am looking for here).</p>
 <p>So, I set about exploring whether the data could be pulled off the watch and summarised using R. The ultimate aim might be to create an app in which people can drag-and-drop their own data. But, let’s not carried away. For now, if you want to replicate what I show below, you can find everything on an open <a href="https://github.com/langtonhugh/freedives">GitHub repository</a>. If you run the code on your own data, please let me know how you found it, and what I could add to improve things. This is very much an initial exploration.</p>
 <div id="setup" class="section level2">
 <h2>Setup</h2>
@@ -161,28 +161,28 @@ date_day
 </tr>
 <tr>
 <td style="text-align:right;">
-1
+2
 </td>
 <td style="text-align:right;">
 3
 </td>
 <td style="text-align:left;">
-2023-01-15 11:18:09
+2023-01-15 11:23:29
 </td>
 <td style="text-align:right;">
-1.92
+1.22
 </td>
 <td style="text-align:right;">
-2
+0
 </td>
 <td style="text-align:right;">
-2.01
+2.57
 </td>
 <td style="text-align:right;">
--1.92
+-1.22
 </td>
 <td style="text-align:right;">
--2.01
+-2.57
 </td>
 <td style="text-align:right;">
 7
@@ -191,10 +191,10 @@ date_day
 6.999994
 </td>
 <td style="text-align:left;">
-2023-01-15 11:18:09
+2023-01-15 11:23:29
 </td>
 <td style="text-align:left;">
-2023-01-15 11:18:00
+2023-01-15 11:23:00
 </td>
 <td style="text-align:left;">
 2023-01-15
@@ -202,40 +202,81 @@ date_day
 </tr>
 <tr>
 <td style="text-align:right;">
-1
+3
 </td>
 <td style="text-align:right;">
 3
 </td>
 <td style="text-align:left;">
-2023-01-15 11:18:09
+2023-01-15 11:27:32
 </td>
 <td style="text-align:right;">
-1.70
+1.90
 </td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+7.32
+</td>
+<td style="text-align:right;">
+-1.90
+</td>
+<td style="text-align:right;">
+-7.32
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+6.999994
+</td>
+<td style="text-align:left;">
+2023-01-15 11:27:32
+</td>
+<td style="text-align:left;">
+2023-01-15 11:28:00
+</td>
+<td style="text-align:left;">
+2023-01-15
+</td>
+</tr>
+<tr>
 <td style="text-align:right;">
 4
 </td>
 <td style="text-align:right;">
-2.01
+3
+</td>
+<td style="text-align:left;">
+2023-01-15 11:31:16
 </td>
 <td style="text-align:right;">
--1.70
+1.63
 </td>
 <td style="text-align:right;">
--2.01
+0
 </td>
 <td style="text-align:right;">
-7
+6.00
+</td>
+<td style="text-align:right;">
+-1.63
+</td>
+<td style="text-align:right;">
+-6.00
+</td>
+<td style="text-align:right;">
+27
 </td>
 <td style="text-align:right;">
 6.999994
 </td>
 <td style="text-align:left;">
-2023-01-15 11:18:09
+2023-01-15 11:31:16
 </td>
 <td style="text-align:left;">
-2023-01-15 11:18:00
+2023-01-15 11:31:00
 </td>
 <td style="text-align:left;">
 2023-01-15
@@ -243,43 +284,207 @@ date_day
 </tr>
 <tr>
 <td style="text-align:right;">
-1
+5
 </td>
 <td style="text-align:right;">
 3
 </td>
 <td style="text-align:left;">
-2023-01-15 11:18:09
+2023-01-15 11:40:38
 </td>
 <td style="text-align:right;">
-0.92
+1.69
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+7.42
+</td>
+<td style="text-align:right;">
+-1.69
+</td>
+<td style="text-align:right;">
+-7.42
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+6.999994
+</td>
+<td style="text-align:left;">
+2023-01-15 11:40:38
+</td>
+<td style="text-align:left;">
+2023-01-15 11:41:00
+</td>
+<td style="text-align:left;">
+2023-01-15
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+2023-01-15 12:03:12
+</td>
+<td style="text-align:right;">
+1.74
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+6.16
+</td>
+<td style="text-align:right;">
+-1.74
+</td>
+<td style="text-align:right;">
+-6.16
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+6.999994
+</td>
+<td style="text-align:left;">
+2023-01-15 12:03:12
+</td>
+<td style="text-align:left;">
+2023-01-15 12:03:00
+</td>
+<td style="text-align:left;">
+2023-01-16
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+2023-01-15 12:11:40
+</td>
+<td style="text-align:right;">
+1.49
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.71
+</td>
+<td style="text-align:right;">
+-1.49
+</td>
+<td style="text-align:right;">
+-1.71
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+6.999994
+</td>
+<td style="text-align:left;">
+2023-01-15 12:11:40
+</td>
+<td style="text-align:left;">
+2023-01-15 12:12:00
+</td>
+<td style="text-align:left;">
+2023-01-16
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+2023-01-20 11:11:23
+</td>
+<td style="text-align:right;">
+2.17
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+4.44
+</td>
+<td style="text-align:right;">
+-2.17
+</td>
+<td style="text-align:right;">
+-4.44
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+24.999994
+</td>
+<td style="text-align:left;">
+2023-01-20 11:11:23
+</td>
+<td style="text-align:left;">
+2023-01-20 11:11:00
+</td>
+<td style="text-align:left;">
+2023-01-20
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+2023-01-20 11:13:10
+</td>
+<td style="text-align:right;">
+1.28
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.78
+</td>
+<td style="text-align:right;">
+-1.28
+</td>
+<td style="text-align:right;">
+-1.78
 </td>
 <td style="text-align:right;">
 6
 </td>
 <td style="text-align:right;">
-2.01
-</td>
-<td style="text-align:right;">
--0.92
-</td>
-<td style="text-align:right;">
--2.01
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-6.999994
+24.999994
 </td>
 <td style="text-align:left;">
-2023-01-15 11:18:09
+2023-01-20 11:13:10
 </td>
 <td style="text-align:left;">
-2023-01-15 11:18:00
+2023-01-20 11:13:00
 </td>
 <td style="text-align:left;">
-2023-01-15
+2023-01-20
 </td>
 </tr>
 <tr>
@@ -303,211 +508,6 @@ date_day
 </td>
 <td style="text-align:right;">
 -2.43
-</td>
-<td style="text-align:right;">
--8.15
-</td>
-<td style="text-align:right;">
-46
-</td>
-<td style="text-align:right;">
-24.999994
-</td>
-<td style="text-align:left;">
-2023-01-20 11:21:21
-</td>
-<td style="text-align:left;">
-2023-01-20 11:21:00
-</td>
-<td style="text-align:left;">
-2023-01-20
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-2023-01-20 11:21:21
-</td>
-<td style="text-align:right;">
-3.86
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-8.15
-</td>
-<td style="text-align:right;">
--3.86
-</td>
-<td style="text-align:right;">
--8.15
-</td>
-<td style="text-align:right;">
-46
-</td>
-<td style="text-align:right;">
-24.999994
-</td>
-<td style="text-align:left;">
-2023-01-20 11:21:21
-</td>
-<td style="text-align:left;">
-2023-01-20 11:21:00
-</td>
-<td style="text-align:left;">
-2023-01-20
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-2023-01-20 11:21:21
-</td>
-<td style="text-align:right;">
-4.89
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-8.15
-</td>
-<td style="text-align:right;">
--4.89
-</td>
-<td style="text-align:right;">
--8.15
-</td>
-<td style="text-align:right;">
-46
-</td>
-<td style="text-align:right;">
-24.999994
-</td>
-<td style="text-align:left;">
-2023-01-20 11:21:21
-</td>
-<td style="text-align:left;">
-2023-01-20 11:21:00
-</td>
-<td style="text-align:left;">
-2023-01-20
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-2023-01-20 11:21:21
-</td>
-<td style="text-align:right;">
-5.83
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-8.15
-</td>
-<td style="text-align:right;">
--5.83
-</td>
-<td style="text-align:right;">
--8.15
-</td>
-<td style="text-align:right;">
-46
-</td>
-<td style="text-align:right;">
-24.999994
-</td>
-<td style="text-align:left;">
-2023-01-20 11:21:21
-</td>
-<td style="text-align:left;">
-2023-01-20 11:21:00
-</td>
-<td style="text-align:left;">
-2023-01-20
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-2023-01-20 11:21:21
-</td>
-<td style="text-align:right;">
-7.07
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
-8.15
-</td>
-<td style="text-align:right;">
--7.07
-</td>
-<td style="text-align:right;">
--8.15
-</td>
-<td style="text-align:right;">
-46
-</td>
-<td style="text-align:right;">
-24.999994
-</td>
-<td style="text-align:left;">
-2023-01-20 11:21:21
-</td>
-<td style="text-align:left;">
-2023-01-20 11:21:00
-</td>
-<td style="text-align:left;">
-2023-01-20
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-2023-01-20 11:21:21
-</td>
-<td style="text-align:right;">
-8.15
-</td>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-8.15
-</td>
-<td style="text-align:right;">
--8.15
 </td>
 <td style="text-align:right;">
 -8.15
@@ -552,7 +552,7 @@ dive_info_clean_df %&gt;%
   labs(y = &quot;Depth (metres)&quot;, x = &quot;Time (seconds)&quot;) +
   theme(legend.position = &quot;none&quot;) </code></pre>
 <p><img src="https://raw.githubusercontent.com/langtonhugh/freedives/main/visuals/dive_profile.png" /><!-- --></p>
-<p>Most of these dives will have been following a vertical rope for safety, as per the photo above. One downside of the dive profile graphic is that at first glance it might imply that the dives are covering distance along the X-axis. But, I think with the proper labeling it is a suitable visual representation of the dives. We can easily differentiate outliers by both time (such as a hang at around 12 metres) and my two deepest dives (both are ~25 metres). Any other ideas, let me know. One thing I’d like to fix is the colouring by depth: at high resolution, we can see the segments for the sampling rate. I’d rather it was a smooth gradient colour. But, we go some way to remedy this later.</p>
+<p>Most of these dives will have been following a vertical rope for safety, as per the photo above. One downside of the dive profile graphic is that at first glance it might imply that the dives are covering distance along the X-axis. But, I think with the proper labeling it is a nice visual representation of the dives. We can easily differentiate outliers by both time (such as a hang at around 12 metres) and my two deepest dives (both are ~25 metres). Any other ideas, let me know. One thing I’d like to fix is the colouring by depth: at high resolution, we can see the segments for the sampling rate. I’d rather it was a smooth gradient colour. But, we go some way to remedy this later.</p>
 </div>
 <div id="chronology" class="section level2">
 <h2>Chronology</h2>
