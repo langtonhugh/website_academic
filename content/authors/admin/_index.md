@@ -4,7 +4,7 @@ authors:
 bio: My research focuses on the spatial and temporal patterning of crime and police demand. I am also interested in promoting the use of open software in social science.
 education:
   courses:
-  - course: PhD in Sociology
+  - course: PhD in Criminology
     institution: Manchester Metropolitan University, UK
     year: 2020
   - course: MSc in Sociology and Social Research

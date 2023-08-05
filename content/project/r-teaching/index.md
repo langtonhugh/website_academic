@@ -30,13 +30,13 @@ slides: example
 
 I have taught a number of courses using R and RStudio, including the development of teaching material both on my own and with colleagues.
 
+## NSCR
+
+Co-organise an (ongoing) series of R training workshops at the [NSCR](https://nscr.nl/). You can read more about our activities on the corresponding [website](https://nscrweb.netlify.app/). This includes leading a two-day Data Carpenties workshop, the material for which is available on [GitHub](https://github.com/langtonhugh/nscr_carpentries).
+
 ## Royal Statistical Society conference
 
-Led an introductory session to the tidyverse at the Royal Statistical Society (RSS) 2021 conference, along with colleagues from the University of Manchester. Material is available on [GitHub](https://github.com/langtonhugh/rss_r).
-
-## NSC-R 
-
-Co-organise a series of R training workshops at the NSCR. You can read more about our activities on the corresponding [website](https://nscrweb.netlify.app/). 
+Led an introductory session to the `tidyverse` at the Royal Statistical Society (RSS) 2021 conference, along with colleagues from the University of Manchester. Material is available on [GitHub](https://github.com/langtonhugh/rss_r).
 
 ## Data visualisation in R using crime data
 
@@ -67,4 +67,4 @@ I am a qualified instructor for [Data and Software Carpentries](https://carpentr
 
 ## A Beginner’s Guide to Statistics for Criminology and Criminal Justice Using R
 
-Co-authored a textbook introducing R for criminology students. Currently in press with Springer.
+Co-authored a textbook introducing R for criminology students, published by Springer. Available from [Springer's website](https://link.springer.com/book/10.1007/978-3-030-50625-4).

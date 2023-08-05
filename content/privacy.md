@@ -7,7 +7,9 @@ header:
   caption: ""
   image: ""
 share: false
-title: Privacy Policy
+title: Privacy Policy & Credits
 ---
+
+All images are courtesy of Unsplash and are credited in the site files.
 
 ...

@@ -19,12 +19,16 @@ library(tibble)
 library(dplyr)
 ```
 
+<!-- # Summary -->
+
+<!-- This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary.  -->
+
 # Education
 
 ```{r}
 tribble(
   ~ Degree, ~ Year, ~ Institution, #~ add,
-  "PhD Sociology", "2016-2020", "Manchester Metropolitan University, Manchester, UK.",
+  "PhD Criminology", "2016-2020", "Manchester Metropolitan University, Manchester, UK.",
   "MSc Sociology and Social Research", "2014-2016", "Utrecht University, Utrecht, Netherlands.",
   "BSc Social Policy with Government", "2009-2012", "London School of Economics, London, UK.",
 ) %>% 
@@ -76,7 +80,7 @@ _If you do not have free access to any of these articles, please email me and I 
 ```{r}
 # knitr::write_bib("papers.bib")
 
-bibliography_entries("papers.bib", )
+bibliography_entries("papers.bib")
 ```
 
 # Books & book chapters
@@ -111,28 +115,45 @@ bibliography_entries("others.bib")
 ```{r}
 tribble(
   ~ date, ~ title, ~ where,
+  # ECCA 2023
+    "2023", "The spatio-temporal relationship between bars and violence", "Environmental Criminology and Crime Analysis, Stockholm, Sweden.",
+  # ECCA 2022
   "2022", "Demand for emergency police services in the Netherlands", "Environmental Criminology and Crime Analysis, Harrogate, UK.",
+  # NVC 2022
   "2022", "Demand for emergency (police) services in the Netherlands using open data", "Nederlandse Vereniging voor Criminologie, Leiden, Netherlands.",
+  # Politie 2021
   "2021", "Police demand and supply in the Netherlands: an evidence-based approach of police deployment", "Onderzoek bij, voor en door de Politie (online).",
+  # ESC 2021
   "2021", "Demand for emergency (police) services in the Netherlands using open data", "European Society of Criminology conference (online).",
+  # Seminar 2021
     "2021", "Open Science for Crime and Open Science for Crime and
 Policing Research", "University of Manchester seminar on bias in police records (online).",
+  # Seminar 2020
   "2020", "Six Months In: Pandemic Crime Trends in England and Wales", "COVID-19 and crime research seminar, hosted by University of Leeds and University College London (online).",
   "2019", "Demonstrating the theoretical and empirical distinctions between offenders and crimes", "European Society of Criminology conference, Ghent, Belgium.",
+  # GISRUK 2019
   "2019", "Improving interpretation through cartograms, hexograms and regular grids", "GISRUK annual proceedings, Newcastle, UK.",
+  # ESC 2019
   "2019", "Offender residential concentrations: a longitudinal study in the United Kingdom", "European Society of Criminology conference, Sarajevo, Bosnia and Herzegovina.",
+  # GISRUK 2018
   "2018", "Rapid change in ethnic composition – part of a wider Brexit picture?", "GISRUK annual proceedings, Leicester, UK.",
+  # ESC 2017
   "2017", "Neighbourhood trajectories: a longitudinal study of offender residence concentrations", "European Society of Criminology conference, Cardiff, UK.",
+  # Amsterdam 2016
   "2016", "Residential burglary target selection: an analysis at the property-level using Google Street View", "Postgrad session at Spatial Behaviour and Crime symposium, Royal Netherlands Academy of Sciences, Amsterdam, Netherlands."
 ) %>% 
   brief_entries(title, date, where)
 ```
+
+\newpage
 
 # Invited presentations
 
 ```{r}
 tribble(
   ~ date, ~ title, ~ where,
+  # Den Haag eenheid
+   "2023", "Demand for police in the Netherlands", "The Hague regional police force, the Netherlands.", 
   # mod
   "2022", "How decisions about spatial data visualisation affect map legibility", "Ministry of Defence, UK (online).",  
   # wmp
@@ -152,15 +173,25 @@ tribble(
 ```{r}
 tribble(
   ~ date, ~ job, ~ details,
+  # NSC-R workshops
   "2021-now", "Instructor and co-organiser, internal R workshops & Data Carpentry sessions", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
+  # QGIS Open Data Manchester
   "2020", "Lead instructor, A gentle introduction to QGIS", "Open Data Manchester webinar series (online).",
+  # QGIS UofM
   "2020", "Lead instructor, Introduction to QGIS", "Cathie Marsh Institute for Social Research, University of Manchester, Manchester, UK.",
+  # UK data service R
   "2020", "Lead instructor, Data visualisation in R using crime data", "UK Data Service and Cathie Marsh Institute for Social Research, University of Manchester, Manchester, UK.",
+  # WMP RR
   "2019", "Lead instructor, R for police forces", "West Midlands Police HQ, Birmingham, UK.",
+  # ESC 2019 R
   "2019", "Instructor and co-organiser, Intro to R for criminologists", "European Society of Criminology conference, Ghent, Belgium.",
+  # Methods@Manchester summer school
   "2018-2020", "Co-instructor, Getting started in R: an introduction to data analysis and visualisation", "Methods@Manchester Summer School, University of Manchester, Manchester, UK.",
+  # Cluster R UofM
   "2019", "Instructor, Introduction to cluster analysis using R", "Cathie Marsh Institute for Social Research, University of Manchester,  Manchester, UK.",
+  # Carpentries instructor
   "2018", "Instructor qualification", "Data and Software Carpentry",
+  # MMU R
   "2018", "Lead instructor, Introduction to R", "Researcher Development Programme for Postgrads and Staff, Manchester Metropolitan University, Manchester, UK."
 ) %>% 
   brief_entries(job, date, details)
@@ -171,15 +202,16 @@ tribble(
 ```{r}
 tribble(
   ~ date, ~ job, ~ details,
+    "2023-now", "Natascha de Leeuw doctoral thesis (caretaker), Demand and supply for policing in the Netherlands", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
   "2021-now", "Tim Verlaan doctoral thesis, Demand and supply for policing in the Netherlands", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
-    "2022-now", "Aisling Connolly research internship, Temporal analysis of risky facilities and police demand", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands."
+    "2022-2023", "Aisling Connolly research internship, Temporal analysis of risky facilities and police demand", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands."
 ) %>% 
   brief_entries(job, date, details)
 ```
 
 # Reviewer
 
-Journal article reviewer for _Crime Science_, _Police Practice and Research_, _Applied Geography_, _Environment and Planning B: Urban Analytics and City Science_, _Urban Design International_, and _Journal of Housing and the Built Environment_.
+Peer-reviewed papers for _European Journal of Criminology_, _Crime Science_, _Police Practice and Research_, _Applied Geography_, _Environment and Planning B: Urban Analytics and City Science_, _Urban Design International_, _Journal of Housing and the Built Environment_ and the UK Home Office.
 
 # Other employment
 
@@ -195,8 +227,12 @@ tribble(
 
 # Software experience
 
-R/RStudio, QGIS, GeoDa, Atlas.ti.
+R/RStudio, QGIS, Atlas.ti, GeoDa.
+
+# Languages
+
+English (native), Dutch (B1-).
 
 # Other interests
 
-Cycling, jogging, outdoor swimming, freediving, playing bass guitar and learning piano.
+Running, outdoor swimming, freediving, playing bass guitar and learning piano.
