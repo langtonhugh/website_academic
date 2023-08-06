@@ -202,7 +202,7 @@ tribble(
 ```{r}
 tribble(
   ~ date, ~ job, ~ details,
-    "2023-now", "Natascha de Leeuw doctoral thesis (caretaker), Demand and supply for policing in the Netherlands", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
+    "2023-now", "Natascha de Leeuw doctoral thesis (caretaker), Van aangifte tot opheldering en vervolging", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
   "2021-now", "Tim Verlaan doctoral thesis, Demand and supply for policing in the Netherlands", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
     "2022-2023", "Aisling Connolly research internship, Temporal analysis of risky facilities and police demand", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands."
 ) %>% 
