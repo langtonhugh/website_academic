@@ -7,7 +7,7 @@ tags:
 - GIS
 - visualisation
 - teaching
-date: "2020-06-27T00:00:00Z"
+date: "2023-12-01T00:00:00Z"
 
 # Optional external URL for project (replaces project detail page).
 external_link: ""
@@ -18,6 +18,9 @@ image:
 ---
 
 ## Introduction to QGIS
+
+I will be teaching a 1-day introductory course in April 2024 aimed at criminology doctoral students from universities across the Netherlands. Material to follow shortly.
+
 
 Developed and taught a 1-day introductory course at the [Cathie Marsh Institute](https://www.cmi.manchester.ac.uk/) (University of Manchester). Material is available on [GitHub](https://github.com/langtonhugh/qgis_intro).
 

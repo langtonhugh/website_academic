@@ -218,7 +218,7 @@ tribble(
 
 # Reviewer
 
-Peer-reviewed papers for _European Journal of Criminology_, _Crime Science_, _Police Practice and Research_, _Applied Geography_, _Environment and Planning B: Urban Analytics and City Science_, _Urban Design International_, _Journal of Housing and the Built Environment_ and the UK Home Office.
+Peer-reviewed papers for _European Journal of Criminology_, _Crime Science_, _Police Practice and Research_, _Applied Geography_, _Environment and Planning B: Urban Analytics and City Science_, _Journal of Housing and the Built Environment_,  _International Criminal Justice Review_, and the UK Home Office.
 
 # Other employment
 

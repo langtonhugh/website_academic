@@ -5,7 +5,7 @@
     <link>/tag/rstudio/</link>
       <atom:link href="/tag/rstudio/index.xml" rel="self" type="application/rss+xml" />
     <description>RStudio</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 27 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 01 Dec 2023 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_3.png</url>
       <title>RStudio</title>
@@ -15,14 +15,16 @@
     <item>
       <title>R</title>
       <link>/project/r-teaching/</link>
-      <pubDate>Sat, 27 Jun 2020 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 01 Dec 2023 00:00:00 +0000</pubDate>
       <guid>/project/r-teaching/</guid>
       <description>&lt;p&gt;I have taught a number of courses using R and RStudio, including the development of teaching material both on my own and with colleagues.&lt;/p&gt;
 &lt;h2 id=&#34;nscr&#34;&gt;NSCR&lt;/h2&gt;
 &lt;p&gt;Co-organise an (ongoing) series of R training workshops at the 
-&lt;a href=&#34;https://nscr.nl/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;NSCR&lt;/a&gt;. You can read more about our activities on the corresponding 
-&lt;a href=&#34;https://nscrweb.netlify.app/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;website&lt;/a&gt;. This includes leading a two-day Data Carpenties workshop, the material for which is available on 
-&lt;a href=&#34;https://github.com/langtonhugh/nscr_carpentries&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;a href=&#34;https://nscr.nl/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;NSCR&lt;/a&gt;. This includes leading a two-day Data Carpenties workshop, the material for which is available on 
+&lt;a href=&#34;https://github.com/langtonhugh/nscr_carpentries&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;. I am also co-chairing a reading group for 
+&lt;a href=&#34;https://avehtari.github.io/ROS-Examples/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Regression and Other Stories&lt;/a&gt; for which there is a corresponding 
+&lt;a href=&#34;https://github.com/langtonhugh/regression_book_nscr&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;open repository&lt;/a&gt;. You can read more about our activities on 
+&lt;a href=&#34;https://nscrweb.netlify.app/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;our website&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;royal-statistical-society-conference&#34;&gt;Royal Statistical Society conference&lt;/h2&gt;
 &lt;p&gt;Led an introductory session to the &lt;code&gt;tidyverse&lt;/code&gt; at the Royal Statistical Society (RSS) 2021 conference, along with colleagues from the University of Manchester. Material is available on 
 &lt;a href=&#34;https://github.com/langtonhugh/rss_r&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;

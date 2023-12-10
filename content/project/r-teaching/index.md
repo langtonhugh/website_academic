@@ -5,7 +5,7 @@ tags:
 - R
 - RStudio
 - teaching
-date: "2020-06-27T00:00:00Z"
+date: "2023-12-01T00:00:00Z"
 
 # Optional external URL for project (replaces project detail page).
 external_link: ""
@@ -32,7 +32,7 @@ I have taught a number of courses using R and RStudio, including the development
 
 ## NSCR
 
-Co-organise an (ongoing) series of R training workshops at the [NSCR](https://nscr.nl/). You can read more about our activities on the corresponding [website](https://nscrweb.netlify.app/). This includes leading a two-day Data Carpenties workshop, the material for which is available on [GitHub](https://github.com/langtonhugh/nscr_carpentries).
+Co-organise an (ongoing) series of R training workshops at the [NSCR](https://nscr.nl/). This includes leading a two-day Data Carpenties workshop, the material for which is available on [GitHub](https://github.com/langtonhugh/nscr_carpentries). I am also co-chairing a reading group for [Regression and Other Stories](https://avehtari.github.io/ROS-Examples/) for which there is a corresponding [open repository](https://github.com/langtonhugh/regression_book_nscr). You can read more about our activities on [our website](https://nscrweb.netlify.app/).
 
 ## Royal Statistical Society conference
 

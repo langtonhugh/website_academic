@@ -5,12 +5,62 @@
     <link>/tag/r/</link>
       <atom:link href="/tag/r/index.xml" rel="self" type="application/rss+xml" />
     <description>r</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 08 Apr 2023 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 01 Dec 2023 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_3.png</url>
       <title>r</title>
       <link>/tag/r/</link>
     </image>
+    
+    <item>
+      <title>R</title>
+      <link>/project/r-teaching/</link>
+      <pubDate>Fri, 01 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>/project/r-teaching/</guid>
+      <description>&lt;p&gt;I have taught a number of courses using R and RStudio, including the development of teaching material both on my own and with colleagues.&lt;/p&gt;
+&lt;h2 id=&#34;nscr&#34;&gt;NSCR&lt;/h2&gt;
+&lt;p&gt;Co-organise an (ongoing) series of R training workshops at the 
+&lt;a href=&#34;https://nscr.nl/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;NSCR&lt;/a&gt;. This includes leading a two-day Data Carpenties workshop, the material for which is available on 
+&lt;a href=&#34;https://github.com/langtonhugh/nscr_carpentries&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;. I am also co-chairing a reading group for 
+&lt;a href=&#34;https://avehtari.github.io/ROS-Examples/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Regression and Other Stories&lt;/a&gt; for which there is a corresponding 
+&lt;a href=&#34;https://github.com/langtonhugh/regression_book_nscr&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;open repository&lt;/a&gt;. You can read more about our activities on 
+&lt;a href=&#34;https://nscrweb.netlify.app/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;our website&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;royal-statistical-society-conference&#34;&gt;Royal Statistical Society conference&lt;/h2&gt;
+&lt;p&gt;Led an introductory session to the &lt;code&gt;tidyverse&lt;/code&gt; at the Royal Statistical Society (RSS) 2021 conference, along with colleagues from the University of Manchester. Material is available on 
+&lt;a href=&#34;https://github.com/langtonhugh/rss_r&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;data-visualisation-in-r-using-crime-data&#34;&gt;Data visualisation in R using crime data&lt;/h2&gt;
+&lt;p&gt;1-day workshop on data visualisation and mapping at the 
+&lt;a href=&#34;https://www.cmi.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cathie Marsh Institute&lt;/a&gt; (University of Manchester) in collaboration with the 
+&lt;a href=&#34;https://ukdataservice.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;UK Data Service&lt;/a&gt;. Material can be found on the 
+&lt;a href=&#34;https://ukdataservice.ac.uk/news-and-events/eventsitem/?id=5552&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;UK Data Service website&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The course was subsequently updated and re-ran online with the 
+&lt;a href=&#34;https://ukdataservice.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;UK Data Service&lt;/a&gt; and 
+&lt;a href=&#34;https://www.methods.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Methods@Manchester&lt;/a&gt;. All material is available on 
+&lt;a href=&#34;https://github.com/langtonhugh/data_viz_R_workshop&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;r-for-police-forces&#34;&gt;R for police forces&lt;/h2&gt;
+&lt;p&gt;1-day workshop on data wrangling and visualisation for West Midlands Police Force. Please get in contact for material.&lt;/p&gt;
+&lt;h2 id=&#34;r-for-criminologists&#34;&gt;R for criminologists&lt;/h2&gt;
+&lt;p&gt;1-day workshop on data wrangling, visualisation and mapping hosted at the 
+&lt;a href=&#34;https://www.esc-eurocrim.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;European Society of Criminology&lt;/a&gt; with colleagues from the 
+&lt;a href=&#34;http://www.space-place-crime.eu/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Space Place and Crime working group&lt;/a&gt;. Material is available on 
+&lt;a href=&#34;https://github.com/langtonhugh/ESC2019&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt; and 
+&lt;a href=&#34;https://rpubs.com/spaceplacecrime&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;rpubs&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;getting-started-in-r---an-introduction-to-data-analysis-and-visualisation&#34;&gt;Getting Started in R - an introduction to data analysis and visualisation&lt;/h2&gt;
+&lt;p&gt;4-day comprehensive introductory course at the 
+&lt;a href=&#34;https://www.methods.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Methods@Manchester&lt;/a&gt; summer school, co-taught with colleagues. Material is available as a 
+&lt;a href=&#34;https://rcatlord.github.io/GSinR/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;website&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;cluster-analysis-in-r&#34;&gt;Cluster analysis in R&lt;/h2&gt;
+&lt;p&gt;1-day workshop introducing cluster analysis in R at the 
+&lt;a href=&#34;https://www.cmi.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cathie Marsh Institute&lt;/a&gt; (University of Manchester), co-taught with a colleague. Please get in contact for material.&lt;/p&gt;
+&lt;h2 id=&#34;r-for-social-scientists&#34;&gt;R for social scientists&lt;/h2&gt;
+&lt;p&gt;I am a qualified instructor for 
+&lt;a href=&#34;https://carpentries.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data and Software Carpentries&lt;/a&gt;, and supported colleagues in teaching the 
+&lt;a href=&#34;https://datacarpentry.org/r-socialsci/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;social science workshop&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;a-beginners-guide-to-statistics-for-criminology-and-criminal-justice-using-r&#34;&gt;A Beginner’s Guide to Statistics for Criminology and Criminal Justice Using R&lt;/h2&gt;
+&lt;p&gt;Co-authored a textbook introducing R for criminology students, published by Springer. Available from 
+&lt;a href=&#34;https://link.springer.com/book/10.1007/978-3-030-50625-4&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Springer&amp;rsquo;s website&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Wrangling freedive watch data in R</title>
@@ -747,54 +797,6 @@ Figure 2: A screenshot from the first page of the survey. The survey was created
 &lt;p&gt;Halford, E., Dixon, A., Farrell, G., Malleson, N., &amp;amp; Tilley, N. (2020). Crime and coronavirus: social distancing, lockdown, and the mobility elasticity of crime. Crime Science, 9(1), 1-12.&lt;/p&gt;
 &lt;p&gt;Stickle, B., &amp;amp; Felson, M. (2020). Crime Rates in a Pandemic: the Largest Criminological Experiment in History. American Journal of Criminal Justice, 1-12.&lt;/p&gt;
 &lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>R</title>
-      <link>/project/r-teaching/</link>
-      <pubDate>Sat, 27 Jun 2020 00:00:00 +0000</pubDate>
-      <guid>/project/r-teaching/</guid>
-      <description>&lt;p&gt;I have taught a number of courses using R and RStudio, including the development of teaching material both on my own and with colleagues.&lt;/p&gt;
-&lt;h2 id=&#34;nscr&#34;&gt;NSCR&lt;/h2&gt;
-&lt;p&gt;Co-organise an (ongoing) series of R training workshops at the 
-&lt;a href=&#34;https://nscr.nl/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;NSCR&lt;/a&gt;. You can read more about our activities on the corresponding 
-&lt;a href=&#34;https://nscrweb.netlify.app/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;website&lt;/a&gt;. This includes leading a two-day Data Carpenties workshop, the material for which is available on 
-&lt;a href=&#34;https://github.com/langtonhugh/nscr_carpentries&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;royal-statistical-society-conference&#34;&gt;Royal Statistical Society conference&lt;/h2&gt;
-&lt;p&gt;Led an introductory session to the &lt;code&gt;tidyverse&lt;/code&gt; at the Royal Statistical Society (RSS) 2021 conference, along with colleagues from the University of Manchester. Material is available on 
-&lt;a href=&#34;https://github.com/langtonhugh/rss_r&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;data-visualisation-in-r-using-crime-data&#34;&gt;Data visualisation in R using crime data&lt;/h2&gt;
-&lt;p&gt;1-day workshop on data visualisation and mapping at the 
-&lt;a href=&#34;https://www.cmi.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cathie Marsh Institute&lt;/a&gt; (University of Manchester) in collaboration with the 
-&lt;a href=&#34;https://ukdataservice.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;UK Data Service&lt;/a&gt;. Material can be found on the 
-&lt;a href=&#34;https://ukdataservice.ac.uk/news-and-events/eventsitem/?id=5552&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;UK Data Service website&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;The course was subsequently updated and re-ran online with the 
-&lt;a href=&#34;https://ukdataservice.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;UK Data Service&lt;/a&gt; and 
-&lt;a href=&#34;https://www.methods.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Methods@Manchester&lt;/a&gt;. All material is available on 
-&lt;a href=&#34;https://github.com/langtonhugh/data_viz_R_workshop&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;r-for-police-forces&#34;&gt;R for police forces&lt;/h2&gt;
-&lt;p&gt;1-day workshop on data wrangling and visualisation for West Midlands Police Force. Please get in contact for material.&lt;/p&gt;
-&lt;h2 id=&#34;r-for-criminologists&#34;&gt;R for criminologists&lt;/h2&gt;
-&lt;p&gt;1-day workshop on data wrangling, visualisation and mapping hosted at the 
-&lt;a href=&#34;https://www.esc-eurocrim.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;European Society of Criminology&lt;/a&gt; with colleagues from the 
-&lt;a href=&#34;http://www.space-place-crime.eu/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Space Place and Crime working group&lt;/a&gt;. Material is available on 
-&lt;a href=&#34;https://github.com/langtonhugh/ESC2019&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GitHub&lt;/a&gt; and 
-&lt;a href=&#34;https://rpubs.com/spaceplacecrime&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;rpubs&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;getting-started-in-r---an-introduction-to-data-analysis-and-visualisation&#34;&gt;Getting Started in R - an introduction to data analysis and visualisation&lt;/h2&gt;
-&lt;p&gt;4-day comprehensive introductory course at the 
-&lt;a href=&#34;https://www.methods.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Methods@Manchester&lt;/a&gt; summer school, co-taught with colleagues. Material is available as a 
-&lt;a href=&#34;https://rcatlord.github.io/GSinR/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;website&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;cluster-analysis-in-r&#34;&gt;Cluster analysis in R&lt;/h2&gt;
-&lt;p&gt;1-day workshop introducing cluster analysis in R at the 
-&lt;a href=&#34;https://www.cmi.manchester.ac.uk/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Cathie Marsh Institute&lt;/a&gt; (University of Manchester), co-taught with a colleague. Please get in contact for material.&lt;/p&gt;
-&lt;h2 id=&#34;r-for-social-scientists&#34;&gt;R for social scientists&lt;/h2&gt;
-&lt;p&gt;I am a qualified instructor for 
-&lt;a href=&#34;https://carpentries.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Data and Software Carpentries&lt;/a&gt;, and supported colleagues in teaching the 
-&lt;a href=&#34;https://datacarpentry.org/r-socialsci/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;social science workshop&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;a-beginners-guide-to-statistics-for-criminology-and-criminal-justice-using-r&#34;&gt;A Beginner’s Guide to Statistics for Criminology and Criminal Justice Using R&lt;/h2&gt;
-&lt;p&gt;Co-authored a textbook introducing R for criminology students, published by Springer. Available from 
-&lt;a href=&#34;https://link.springer.com/book/10.1007/978-3-030-50625-4&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Springer&amp;rsquo;s website&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     

@@ -73,6 +73,13 @@ research_pos %>%
   brief_entries(what = pos, when = date, with = instit) # , why = details
 ```
 
+<!-- # Peer-reviewed journal articles (in progress) -->
+
+<!-- ```{r} -->
+<!-- # knitr::write_bib("papers.bib") -->
+<!-- bibliography_entries("in_progress_papers.bib") -->
+<!-- ``` -->
+
 # Peer-reviewed journal articles
 
 _If you do not have free access to any of these articles, please email me and I will send you a copy._ \linebreak
@@ -211,7 +218,7 @@ tribble(
 
 # Reviewer
 
-Peer-reviewed papers for _European Journal of Criminology_, _Crime Science_, _Police Practice and Research_, _Applied Geography_, _Environment and Planning B: Urban Analytics and City Science_, _Urban Design International_, _Journal of Housing and the Built Environment_ and the UK Home Office.
+Peer-reviewed papers for _European Journal of Criminology_, _Crime Science_, _Police Practice and Research_, _Applied Geography_, _Environment and Planning B: Urban Analytics and City Science_, _Journal of Housing and the Built Environment_,  _International Criminal Justice Review_, and the UK Home Office.
 
 # Other employment
 
