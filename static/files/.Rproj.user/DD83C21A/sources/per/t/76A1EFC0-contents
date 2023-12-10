@@ -73,6 +73,13 @@ research_pos %>%
   brief_entries(what = pos, when = date, with = instit) # , why = details
 ```
 
+<!-- # Peer-reviewed journal articles (in progress) -->
+
+<!-- ```{r} -->
+<!-- # knitr::write_bib("papers.bib") -->
+<!-- bibliography_entries("in_progress_papers.bib") -->
+<!-- ``` -->
+
 # Peer-reviewed journal articles
 
 _If you do not have free access to any of these articles, please email me and I will send you a copy._ \linebreak
@@ -231,7 +238,7 @@ R/RStudio, QGIS, Atlas.ti, GeoDa.
 
 # Languages
 
-English (native), Dutch (B1-).
+English (native), Dutch (A2-B1).
 
 # Other interests
 
