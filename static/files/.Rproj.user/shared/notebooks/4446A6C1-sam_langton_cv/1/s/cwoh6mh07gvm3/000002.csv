@@ -1,9 +1,0 @@
-"0","packages_used <- tibble::tribble("
-"0","  ~ package, ~ date, ~ language, ~ timezone, ~ details,"
-"0","  ""vitae"", Sys.Date(), ""R"", Sys.timezone(), c(""Making my CV with vitae."", ""Multiple why entries.""),"
-"0","  ""rmarkdown"", Sys.Date()-10, ""R"", Sys.timezone(), ""Writing reproducible, dynamic reports using R."""
-"0",")"
-"0","packages_used %>%"
-"0","  detailed_entries(what = package, when = date, with = language, where = timezone, why = details)"
-"2","Error in (function (srcref)  : unimplemented type (29) in 'eval'
-"

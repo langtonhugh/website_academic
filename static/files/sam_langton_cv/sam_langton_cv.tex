@@ -1,0 +1,540 @@
+%% Template for a CV
+%% Author: Rob J Hyndman
+
+\documentclass[10pt,a4paper,]{article}
+\usepackage[scaled=0.86]{DejaVuSansMono}
+\usepackage[sfdefault,lf,t]{carlito}
+
+% Change color to blue
+\usepackage{color,xcolor}
+\definecolor{headcolor}{HTML}{171817}
+
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\PassOptionsToPackage{hyphens}{url} % url is loaded by hyperref
+\usepackage[unicode=true,hidelinks]{hyperref}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{geometry}
+\geometry{left=1.75cm,right=1.75cm,top=2.2cm,bottom=2cm}
+
+\usepackage{longtable,booktabs}
+% Fix footnotes in tables (requires footnote package)
+\IfFileExists{footnote.sty}{\usepackage{footnote}\makesavenoteenv{long table}}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+\date{december 2023}
+
+
+\usepackage{paralist,ragged2e,datetime}
+\usepackage[hyphens]{url}
+\usepackage{fancyhdr,enumitem,pifont}
+\usepackage[compact,small,sf,bf]{titlesec}
+
+\RaggedRight
+\sloppy
+
+% Header and footer
+\pagestyle{fancy}
+\makeatletter
+\lhead{\sf\textcolor[gray]{0.4}{Curriculum Vitae: \@name}}
+\rhead{\sf\textcolor[gray]{0.4}{\thepage}}
+\cfoot{}
+\def\headrule{{\color[gray]{0.4}\hrule\@height\headrulewidth\@width\headwidth \vskip-\headrulewidth}}
+\makeatother
+
+% Header box
+\usepackage{tabularx}
+
+\makeatletter
+\def\name#1{\def\@name{#1}}
+\def\info#1{\def\@info{#1}}
+\makeatother
+\newcommand{\shadebox}[3][.9]{\fcolorbox[gray]{0}{#1}{\parbox{#2}{#3}}}
+
+\usepackage{calc}
+\newlength{\headerboxwidth}
+\setlength{\headerboxwidth}{\textwidth}
+%\addtolength{\headerboxwidth}{0.2cm}
+\makeatletter
+\def\maketitle{
+\thispagestyle{plain}
+\vspace*{-1.4cm}
+\shadebox[0.9]{\headerboxwidth}{\sf\color{headcolor}\hfil
+\hbox to 0.98\textwidth{\begin{tabular}{l}
+\\[-0.3cm]
+\LARGE\textbf{\@name}
+\\[0.1cm]\large Postdoc researcher\\[0.6cm]
+\normalsize\textbf{Curriculum Vitae}\\
+\normalsize december 2023
+\end{tabular}
+\hfill\hbox{\fontsize{9}{12}\sf
+\begin{tabular}{@{}rl@{}}
+\@info
+\end{tabular}}}\hfil
+}
+\vspace*{0.2cm}}
+\makeatother
+
+% Section headings
+\titlelabel{}
+\titlespacing{\section}{0pt}{1.5ex}{0.5ex}
+\titleformat*{\section}{\color{headcolor}\large\sf\bfseries}
+\titleformat*{\subsection}{\color{headcolor}\sf\bfseries}
+\titlespacing{\subsection}{0pt}{1ex}{0.5ex}
+
+% Miscellaneous dimensions
+\setlength{\parskip}{0ex}
+\setlength{\parindent}{0em}
+\setlength{\headheight}{15pt}
+\setlength{\tabcolsep}{0.15cm}
+\clubpenalty = 10000
+\widowpenalty = 10000
+\setlist{itemsep=1pt}
+\setdescription{labelwidth=1.2cm,leftmargin=1.5cm,labelindent=1.5cm,font=\rm}
+
+% Make nicer bullets
+\renewcommand{\labelitemi}{\ding{228}}
+
+\usepackage{booktabs,fontawesome5}
+%\usepackage[t1,scale=0.86]{sourcecodepro}
+
+\name{Samuel Langton}
+\def\imagetop#1{\vtop{\null\hbox{#1}}}
+\info{%
+ %
+\faIcon{home} & \href{http://www.samlangton.info}{www.samlangton.info}\\% %
+%
+%
+\faIcon{envelope} & \href{mailto:slangton@nscr.nl}{\nolinkurl{slangton@nscr.nl}}\\%
+\faIcon{twitter} & \href{https://twitter.com/sh\_langton}{@sh\_langton}\\%
+\faIcon{github} & \href{https://github.com/langtonhugh}{langtonhugh}\\%
+%
+%
+%
+%
+}
+
+
+%\usepackage{inconsolata}
+
+
+\setlength\LTleft{0pt}
+\setlength\LTright{0pt}
+
+% Pandoc CSL macros
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+
+\def\endfirstpage{\newpage}
+
+\begin{document}
+\maketitle
+
+
+\hypertarget{education}{%
+\section{Education}\label{education}}
+
+\begin{longtable}{@{\extracolsep{\fill}}ll}
+2016-2020 & \parbox[t]{0.85\textwidth}{%
+\textbf{PhD Criminology}\\[-0.1cm]{\footnotesize Manchester Metropolitan University, Manchester, UK.}}\\[0.4cm]
+2014-2016 & \parbox[t]{0.85\textwidth}{%
+\textbf{MSc Sociology and Social Research}\\[-0.1cm]{\footnotesize Utrecht University, Utrecht, Netherlands.}}\\[0.4cm]
+2009-2012 & \parbox[t]{0.85\textwidth}{%
+\textbf{BSc Social Policy with Government}\\[-0.1cm]{\footnotesize London School of Economics, London, UK.}}\\[0.4cm]
+\end{longtable}
+
+\hypertarget{research-employment}{%
+\section{Research employment}\label{research-employment}}
+
+\begin{longtable}{@{\extracolsep{\fill}}ll}
+2021-now & \parbox[t]{0.85\textwidth}{%
+\textbf{Postdoc Researcher}\\[-0.1cm]{\footnotesize Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.}}\\[0.4cm]
+2020-2021 & \parbox[t]{0.85\textwidth}{%
+\textbf{Research Fellow}\\[-0.1cm]{\footnotesize University of Leeds, Leeds, UK.}}\\[0.4cm]
+2019-2020 & \parbox[t]{0.85\textwidth}{%
+\textbf{Research Associate}\\[-0.1cm]{\footnotesize Manchester Metropolitan University, Manchester, UK.}}\\[0.4cm]
+2017-2018 & \parbox[t]{0.85\textwidth}{%
+\textbf{Research Assistant (part-time)}\\[-0.1cm]{\footnotesize Manchester Metropolitan University, Manchester, UK.}}\\[0.4cm]
+\end{longtable}
+
+\hypertarget{visiting-positions}{%
+\section{Visiting positions}\label{visiting-positions}}
+
+\begin{longtable}{@{\extracolsep{\fill}}ll}
+2020-now & \parbox[t]{0.85\textwidth}{%
+\textbf{Visiting Research Fellow}\\[-0.1cm]{\footnotesize Policy Evaluation and Research Unit, Manchester Metropolitan University, Manchester, UK.}}\\[0.4cm]
+\end{longtable}
+
+\hypertarget{peer-reviewed-journal-articles}{%
+\section{Peer-reviewed journal
+articles}\label{peer-reviewed-journal-articles}}
+
+\emph{If you do not have free access to any of these articles, please
+email me and I will send you a copy.} \linebreak
+
+\hypertarget{refs-018106d21508b671268fb512e33aaec1}{}
+\begin{CSLReferences}{0}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-langton2023amsterdam}{}}%
+\CSLLeftMargin{1. }%
+\CSLRightInline{Langton, S., Verlaan, T., \& Ruiter, S. (2023).
+Operationalizing deployment time in police calls for service.
+\emph{Crime Science}.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-langton2022demand}{}}%
+\CSLLeftMargin{2. }%
+\CSLRightInline{Langton, S., Ruiter, S., \& Verlaan, T. (2022).
+Describing the scale and composition of calls for police service: A
+replication and extension using open data. \emph{Police Practice and
+Research}.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-langton2021policing}{}}%
+\CSLLeftMargin{3. }%
+\CSLRightInline{Langton, S., Bannister, J., Ellison, M., Haleem, M. S.,
+\& Krzemieniewska-Nandwani, K. (2021). Policing and mental ill-health:
+Using big data to assess the scale and severity of, and the frontline
+resources committed to, mental ill-health-related calls-for-service.
+\emph{Policing: A Journal of Policy and Practice}, \emph{15}(3),
+1963--1976.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-langton2021cartograms}{}}%
+\CSLLeftMargin{4. }%
+\CSLRightInline{Langton, S., \& Solymosi, R. (2021). Cartograms,
+hexograms and regular grids: Minimising misrepresentation in spatial
+data visualisations. \emph{Environment and Planning B: Urban Analytics
+and City Science}, \emph{48}(2), 348--357.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-langton2021small}{}}%
+\CSLLeftMargin{5. }%
+\CSLRightInline{Langton, S., Dixon, A., \& Farrell, G. (2021). Small
+area variation in crime effects of COVID-19 policies in England and
+Wales. \emph{Journal of Criminal Justice}, \emph{75}, 101830.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-langton2021six}{}}%
+\CSLLeftMargin{6. }%
+\CSLRightInline{Langton, S., Dixon, A., \& Farrell, G. (2021). Six
+months in: pandemic crime trends in England and Wales. \emph{Crime
+Science}, \emph{10}(1), 1--16.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-buil2021accuracy}{}}%
+\CSLLeftMargin{7. }%
+\CSLRightInline{Buil-Gil, D., Moretti, A., \& Langton, S. (2021). The
+accuracy of crime statistics: Assessing the impact of police data bias
+on geographic crime analysis. \emph{Journal of Experimental
+Criminology}, 1--27.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-adepeju2021anchored}{}}%
+\CSLLeftMargin{8. }%
+\CSLRightInline{Adepeju, M., Langton, S., \& Bannister, J. (2021).
+Anchored k-medoids: A novel adaptation of k-medoids further refined to
+measure long-term instability in the exposure to crime. \emph{Journal of
+Computational Social Science}, \emph{4}(2), 655--680.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-adepeju2020akmedoids}{}}%
+\CSLLeftMargin{9. }%
+\CSLRightInline{Adepeju, M., Langton, S., \& Bannister, J. (2020).
+Akmedoids R package for generating directionally-homogeneous clusters of
+longitudinal data sets. \emph{Journal of Open Source Software},
+\emph{5}(56), 2379--2379.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-langton2017residential}{}}%
+\CSLLeftMargin{10. }%
+\CSLRightInline{Langton, S., \& Steenbeek, W. (2017). Residential
+burglary target selection: An analysis at the property-level using
+Google Street View. \emph{Applied Geography}, \emph{86}, 292--299.}
+
+\end{CSLReferences}
+
+\hypertarget{books-book-chapters}{%
+\section{Books \& book chapters}\label{books-book-chapters}}
+
+\hypertarget{refs-43bb75d62a426e63f146b3c7247610e1}{}
+\begin{CSLReferences}{0}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-verlaan2023data}{}}%
+\CSLLeftMargin{1. }%
+\CSLRightInline{Verlaan, T., \& Langton, S. (2023). On the use of
+inferential statistics on administrative police data. In L. Huey \& D.
+Buil-Gil (Eds.), \emph{The crime data handbook}. Bristol: Policy Press.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-langton2020open}{}}%
+\CSLLeftMargin{2. }%
+\CSLRightInline{Langton, S., \& Solymosi, R. (2023). Open street map for
+crime and place. In E. Groff \& C. Haberman (Eds.), \emph{Understanding
+crime and place: A methods handbook}. Temple University Press.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-wooditch2021beginner}{}}%
+\CSLLeftMargin{3. }%
+\CSLRightInline{Wooditch, A., Johnson, N. J., Solymosi, R., Medina, J.
+J., \& Langton, S. (2021). \emph{A Beginner's Guide to Statistics for
+Criminology and Criminal Justice Using R}. Springer.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-buil2020gis}{}}%
+\CSLLeftMargin{4. }%
+\CSLRightInline{Buil-Gil, D., \& Langton, S. (2020). GIS and geovisual
+analysis. In P. Atkinson, S. Delamont, A. Cernat, J. W. Sakshaug, \& R.
+A. Williams (Eds.), \emph{SAGE research methods foundations}. Sage
+Publications Ltd.}
+
+\end{CSLReferences}
+
+\hypertarget{preregistrations}{%
+\section{Preregistrations}\label{preregistrations}}
+
+\hypertarget{refs-ce11f0318060747a43ec297f7d71c55d}{}
+\begin{CSLReferences}{0}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-barsprereg}{}}%
+\CSLLeftMargin{1. }%
+\CSLRightInline{Langton, S., Ruiter, S., Connolly, A., \& Menges, V.
+(2023). \emph{The spatio-temporal relationship between bars and
+violence.} \url{https://osf.io/ex7ga.}}
+
+\leavevmode\vadjust pre{\hypertarget{ref-demandpreg}{}}%
+\CSLLeftMargin{2. }%
+\CSLRightInline{Langton, S., Verlaan, T., \& Ruiter, S. (2022).
+\emph{Scale and composition of emergency reactive police demand in
+Amsterdam, Netherlands.} \url{https://osf.io/qgwv6/.}}
+
+\leavevmode\vadjust pre{\hypertarget{ref-scopingprereg}{}}%
+\CSLLeftMargin{3. }%
+\CSLRightInline{Langton, S., Ruiter, S., \& Schoonmade, L. (2021).
+\emph{Protocol -- A systematic scoping review on the spatial and
+temporal patterning of emergency demand for police services.}
+\url{https://osf.io/qwrb3/.}}
+
+\end{CSLReferences}
+
+\hypertarget{other-publications}{%
+\section{Other publications}\label{other-publications}}
+
+\hypertarget{refs-acd3d2f20247c35a4e4afc08d3e11a95}{}
+\begin{CSLReferences}{0}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-policinginsight}{}}%
+\CSLLeftMargin{1. }%
+\CSLRightInline{Farrell, G., Langton, S., \& Dixon, A. (2020). \emph{Six
+months in: Pandemic crime trends in England and Wales to August 2020}.
+\url{https://policinginsight.com/features/analysis/six-months-in-pandemic-crime-trends-in-england-and-wales-to-august-2020/.}}
+
+\leavevmode\vadjust pre{\hypertarget{ref-leeds}{}}%
+\CSLLeftMargin{2. }%
+\CSLRightInline{Langton, S. (2020). \emph{Crime and Anti-social
+behaviour in Greater London}.
+\url{https://covid19-crime.com/wp-content/uploads/sites/92/2020/07/COVIDCrimeStatsBulletin_3_Langton_GtrLondonCrime-3.pdf.}}
+
+\leavevmode\vadjust pre{\hypertarget{ref-convo1}{}}%
+\CSLLeftMargin{3. }%
+\CSLRightInline{Langton, S. (2020). \emph{Lockdown crime trends: Why
+antisocial behaviour is up.}
+\url{https://theconversation.com/lockdown-crime-trends-why-antisocial-behaviour-is-up-140479.}}
+
+\leavevmode\vadjust pre{\hypertarget{ref-convo2}{}}%
+\CSLLeftMargin{4. }%
+\CSLRightInline{Langton, S. (2019). \emph{Even the most beautiful maps
+can be misleading.}
+\url{https://theconversation.com/even-the-most-beautiful-maps-can-be-misleading-126474.}}
+
+\leavevmode\vadjust pre{\hypertarget{ref-convo3}{}}%
+\CSLLeftMargin{5. }%
+\CSLRightInline{Langton, S. (2017). \emph{When crime drops, the demands
+on the police don't necessarily fall.}
+\url{https://theconversation.com/when-crime-drops-the-demands-on-the-police-dont-necessarily-fall-79288.}}
+
+\end{CSLReferences}
+
+\hypertarget{presentations}{%
+\section{Presentations}\label{presentations}}
+
+\begin{longtable}{@{\extracolsep{\fill}}ll}
+2023 & \parbox[t]{0.85\textwidth}{%
+\textbf{The spatio-temporal relationship between bars and violence}\\[-0.1cm]{\footnotesize Environmental Criminology and Crime Analysis, Stockholm, Sweden.}}\\[0.4cm]
+2022 & \parbox[t]{0.85\textwidth}{%
+\textbf{Demand for emergency police services in the Netherlands}\\[-0.1cm]{\footnotesize Environmental Criminology and Crime Analysis, Harrogate, UK.}}\\[0.4cm]
+2022 & \parbox[t]{0.85\textwidth}{%
+\textbf{Demand for emergency (police) services in the Netherlands using open data}\\[-0.1cm]{\footnotesize Nederlandse Vereniging voor Criminologie, Leiden, Netherlands.}}\\[0.4cm]
+2021 & \parbox[t]{0.85\textwidth}{%
+\textbf{Police demand and supply in the Netherlands: an evidence-based approach of police deployment}\\[-0.1cm]{\footnotesize Onderzoek bij, voor en door de Politie (online).}}\\[0.4cm]
+2021 & \parbox[t]{0.85\textwidth}{%
+\textbf{Demand for emergency (police) services in the Netherlands using open data}\\[-0.1cm]{\footnotesize European Society of Criminology conference (online).}}\\[0.4cm]
+2021 & \parbox[t]{0.85\textwidth}{%
+\textbf{Open Science for Crime and Open Science for Crime and
+Policing Research}\\[-0.1cm]{\footnotesize University of Manchester seminar on bias in police records (online).}}\\[0.4cm]
+2020 & \parbox[t]{0.85\textwidth}{%
+\textbf{Six Months In: Pandemic Crime Trends in England and Wales}\\[-0.1cm]{\footnotesize COVID-19 and crime research seminar, hosted by University of Leeds and University College London (online).}}\\[0.4cm]
+2019 & \parbox[t]{0.85\textwidth}{%
+\textbf{Demonstrating the theoretical and empirical distinctions between offenders and crimes}\\[-0.1cm]{\footnotesize European Society of Criminology conference, Ghent, Belgium.}}\\[0.4cm]
+2019 & \parbox[t]{0.85\textwidth}{%
+\textbf{Improving interpretation through cartograms, hexograms and regular grids}\\[-0.1cm]{\footnotesize GISRUK annual proceedings, Newcastle, UK.}}\\[0.4cm]
+2019 & \parbox[t]{0.85\textwidth}{%
+\textbf{Offender residential concentrations: a longitudinal study in the United Kingdom}\\[-0.1cm]{\footnotesize European Society of Criminology conference, Sarajevo, Bosnia and Herzegovina.}}\\[0.4cm]
+2018 & \parbox[t]{0.85\textwidth}{%
+\textbf{Rapid change in ethnic composition – part of a wider Brexit picture?}\\[-0.1cm]{\footnotesize GISRUK annual proceedings, Leicester, UK.}}\\[0.4cm]
+2017 & \parbox[t]{0.85\textwidth}{%
+\textbf{Neighbourhood trajectories: a longitudinal study of offender residence concentrations}\\[-0.1cm]{\footnotesize European Society of Criminology conference, Cardiff, UK.}}\\[0.4cm]
+2016 & \parbox[t]{0.85\textwidth}{%
+\textbf{Residential burglary target selection: an analysis at the property-level using Google Street View}\\[-0.1cm]{\footnotesize Postgrad session at Spatial Behaviour and Crime symposium, Royal Netherlands Academy of Sciences, Amsterdam, Netherlands.}}\\[0.4cm]
+\end{longtable}
+
+\newpage
+
+\hypertarget{invited-presentations}{%
+\section{Invited presentations}\label{invited-presentations}}
+
+\begin{longtable}{@{\extracolsep{\fill}}ll}
+2023 & \parbox[t]{0.85\textwidth}{%
+\textbf{Demand for police in the Netherlands}\\[-0.1cm]{\footnotesize The Hague regional police force, the Netherlands.}}\\[0.4cm]
+2022 & \parbox[t]{0.85\textwidth}{%
+\textbf{How decisions about spatial data visualisation affect map legibility}\\[-0.1cm]{\footnotesize Ministry of Defence, UK (online).}}\\[0.4cm]
+2019 & \parbox[t]{0.85\textwidth}{%
+\textbf{The geography of offender housing in Birmingham}\\[-0.1cm]{\footnotesize West Midlands Police HQ, Birmingham, UK.}}\\[0.4cm]
+2019 & \parbox[t]{0.85\textwidth}{%
+\textbf{Visualising geographic information: examining methods of improving the thematic map}\\[-0.1cm]{\footnotesize Quantitative Spatial Science Group, School of Geographical Sciences, University of Bristol, UK.}}\\[0.4cm]
+2019 & \parbox[t]{0.85\textwidth}{%
+\textbf{Visualising and explaining small area offender trajectories in Birmingham, England}\\[-0.1cm]{\footnotesize Centre for Criminology and Criminal Justice, University of Manchester, Manchester, UK.}}\\[0.4cm]
+2019 & \parbox[t]{0.85\textwidth}{%
+\textbf{Visualising geographic information: examining methods of improving the thematic map}\\[-0.1cm]{\footnotesize Open Data Manchester, Manchester, UK.}}\\[0.4cm]
+\end{longtable}
+
+\hypertarget{teaching}{%
+\section{Teaching}\label{teaching}}
+
+\begin{longtable}{@{\extracolsep{\fill}}ll}
+2021-now & \parbox[t]{0.85\textwidth}{%
+\textbf{Instructor and co-organiser, internal R workshops \& Data Carpentry sessions}\\[-0.1cm]{\footnotesize Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.}}\\[0.4cm]
+2020 & \parbox[t]{0.85\textwidth}{%
+\textbf{Lead instructor, A gentle introduction to QGIS}\\[-0.1cm]{\footnotesize Open Data Manchester webinar series (online).}}\\[0.4cm]
+2020 & \parbox[t]{0.85\textwidth}{%
+\textbf{Lead instructor, Introduction to QGIS}\\[-0.1cm]{\footnotesize Cathie Marsh Institute for Social Research, University of Manchester, Manchester, UK.}}\\[0.4cm]
+2020 & \parbox[t]{0.85\textwidth}{%
+\textbf{Lead instructor, Data visualisation in R using crime data}\\[-0.1cm]{\footnotesize UK Data Service and Cathie Marsh Institute for Social Research, University of Manchester, Manchester, UK.}}\\[0.4cm]
+2019 & \parbox[t]{0.85\textwidth}{%
+\textbf{Lead instructor, R for police forces}\\[-0.1cm]{\footnotesize West Midlands Police HQ, Birmingham, UK.}}\\[0.4cm]
+2019 & \parbox[t]{0.85\textwidth}{%
+\textbf{Instructor and co-organiser, Intro to R for criminologists}\\[-0.1cm]{\footnotesize European Society of Criminology conference, Ghent, Belgium.}}\\[0.4cm]
+2018-2020 & \parbox[t]{0.85\textwidth}{%
+\textbf{Co-instructor, Getting started in R: an introduction to data analysis and visualisation}\\[-0.1cm]{\footnotesize Methods@Manchester Summer School, University of Manchester, Manchester, UK.}}\\[0.4cm]
+2019 & \parbox[t]{0.85\textwidth}{%
+\textbf{Instructor, Introduction to cluster analysis using R}\\[-0.1cm]{\footnotesize Cathie Marsh Institute for Social Research, University of Manchester,  Manchester, UK.}}\\[0.4cm]
+2018 & \parbox[t]{0.85\textwidth}{%
+\textbf{Instructor qualification}\\[-0.1cm]{\footnotesize Data and Software Carpentry}}\\[0.4cm]
+2018 & \parbox[t]{0.85\textwidth}{%
+\textbf{Lead instructor, Introduction to R}\\[-0.1cm]{\footnotesize Researcher Development Programme for Postgrads and Staff, Manchester Metropolitan University, Manchester, UK.}}\\[0.4cm]
+\end{longtable}
+
+\hypertarget{supervision}{%
+\section{Supervision}\label{supervision}}
+
+\begin{longtable}{@{\extracolsep{\fill}}ll}
+2023-now & \parbox[t]{0.85\textwidth}{%
+\textbf{Natascha de Leeuw doctoral thesis (caretaker), Van aangifte tot opheldering en vervolging}\\[-0.1cm]{\footnotesize Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.}}\\[0.4cm]
+2021-now & \parbox[t]{0.85\textwidth}{%
+\textbf{Tim Verlaan doctoral thesis, Demand and supply for policing in the Netherlands}\\[-0.1cm]{\footnotesize Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.}}\\[0.4cm]
+2022-2023 & \parbox[t]{0.85\textwidth}{%
+\textbf{Aisling Connolly research internship, Temporal analysis of risky facilities and police demand}\\[-0.1cm]{\footnotesize Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.}}\\[0.4cm]
+\end{longtable}
+
+\hypertarget{reviewer}{%
+\section{Reviewer}\label{reviewer}}
+
+Peer-reviewed papers for \emph{European Journal of Criminology},
+\emph{Crime Science}, \emph{Police Practice and Research}, \emph{Applied
+Geography}, \emph{Environment and Planning B: Urban Analytics and City
+Science}, \emph{Journal of Housing and the Built Environment},
+\emph{International Criminal Justice Review}, and the UK Home Office.
+
+\hypertarget{other-employment}{%
+\section{Other employment}\label{other-employment}}
+
+\begin{longtable}{@{\extracolsep{\fill}}ll}
+2017-2019 & \parbox[t]{0.85\textwidth}{%
+\textbf{Freelance data analyst and author}\\[-0.1cm]{\footnotesize Policing Insight website (remote).}}\\[0.4cm]
+2015-2016 & \parbox[t]{0.85\textwidth}{%
+\textbf{Teaching and student assistant}\\[-0.1cm]{\footnotesize Department of Sociology, Utrecht University, Utrecht, Netherlands}}\\[0.4cm]
+2012-2014 & \parbox[t]{0.85\textwidth}{%
+\textbf{Insolvency administrator and trainee accountant}\\[-0.1cm]{\footnotesize Accura Accountants, London, UK.}}\\[0.4cm]
+\end{longtable}
+
+\hypertarget{software-experience}{%
+\section{Software experience}\label{software-experience}}
+
+R/RStudio, QGIS, Atlas.ti, GeoDa.
+
+\hypertarget{languages}{%
+\section{Languages}\label{languages}}
+
+English (native), Dutch (A2-B1).
+
+\hypertarget{other-interests}{%
+\section{Other interests}\label{other-interests}}
+
+Running, outdoor swimming, freediving, playing bass guitar and learning
+piano.
+
+\end{document}

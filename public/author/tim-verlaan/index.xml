@@ -5,12 +5,20 @@
     <link>/author/tim-verlaan/</link>
       <atom:link href="/author/tim-verlaan/index.xml" rel="self" type="application/rss+xml" />
     <description>Tim Verlaan</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 22 Jul 2022 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 19 Dec 2023 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_3.png</url>
       <title>Tim Verlaan</title>
       <link>/author/tim-verlaan/</link>
     </image>
+    
+    <item>
+      <title>Operationalizing deployment time in police calls for service</title>
+      <link>/publication/amsterdam_gms/</link>
+      <pubDate>Tue, 19 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>/publication/amsterdam_gms/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Describing the scale and composition of calls for police service. A replication and extension using open data</title>
