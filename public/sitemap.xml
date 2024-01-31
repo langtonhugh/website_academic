@@ -3,18 +3,48 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>/publication-type/2/</loc>
-    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
+    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/authors/</loc>
-    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tag/calls-for-service/</loc>
-    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
+    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/crime/</loc>
-    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
+    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/demand/</loc>
+    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/author/linda-schoonmade/</loc>
+    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/policing/</loc>
+    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publication_types/</loc>
+    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publication/</loc>
+    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/author/samuel-langton/</loc>
+    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/</loc>
+    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/spatial/</loc>
+    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/author/stijn-ruiter/</loc>
+    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publication/scoping_crimescience/</loc>
+    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/calls-for-service/</loc>
     <lastmod>2023-12-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/deployment-time/</loc>
@@ -23,34 +53,19 @@
     <loc>/publication/amsterdam_gms/</loc>
     <lastmod>2023-12-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tag/policing/</loc>
-    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/publication_types/</loc>
-    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/publication/</loc>
-    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/author/samuel-langton/</loc>
-    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/</loc>
-    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/author/stijn-ruiter/</loc>
-    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tags/</loc>
-    <lastmod>2023-12-19T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/author/tim-verlaan/</loc>
     <lastmod>2023-12-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publication-type/0/</loc>
+    <lastmod>2023-12-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/gis/</loc>
     <lastmod>2023-12-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/mapping/</loc>
+    <lastmod>2023-12-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/police/</loc>
     <lastmod>2023-12-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/project/</loc>
@@ -68,6 +83,9 @@
     <loc>/tag/r/</loc>
     <lastmod>2023-12-01T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/publication/gms_tvp/</loc>
+    <lastmod>2023-12-01T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/tag/rstudio/</loc>
     <lastmod>2023-12-01T00:00:00+00:00</lastmod>
   </url><url>
@@ -76,9 +94,6 @@
   </url><url>
     <loc>/tag/visualisation/</loc>
     <lastmod>2023-12-01T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/publication-type/0/</loc>
-    <lastmod>2023-07-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/author/aisling-connolly/</loc>
     <lastmod>2023-07-01T00:00:00+00:00</lastmod>
@@ -110,26 +125,11 @@
     <loc>/publication/demand_detroit/</loc>
     <lastmod>2022-07-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/publication/demand_prereg/</loc>
-    <lastmod>2022-06-01T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/tag/deprivation/</loc>
     <lastmod>2022-01-27T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/post/mod_blog/</loc>
     <lastmod>2022-01-27T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/author/linda-schoonmade/</loc>
-    <lastmod>2021-10-08T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tag/literature-review/</loc>
-    <lastmod>2021-10-08T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/publication/erpd_prereg/</loc>
-    <lastmod>2021-10-08T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tag/scoping-review/</loc>
-    <lastmod>2021-10-08T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/geography/</loc>
     <lastmod>2021-07-30T00:00:00+00:00</lastmod>
