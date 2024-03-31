@@ -1,7 +1,7 @@
 ---
 authors:
 - admin
-bio: My research focuses on the spatial and temporal patterning of crime. I am also interested in promoting the use of open software -- mainly R -- through my teaching and openly available code. If you want to collaborate on an open data project, please get in touch!
+bio: I am currently working to promote and develop open science practices, FAIR data, reproducibility and software sustainability at the Amsterdam UMC.
 education:
   courses:
   - course: PhD in Criminology
@@ -14,16 +14,15 @@ education:
     institution: London School of Economics, UK
     year: 2012
 email: "SLangton@nscr.nl"
-interests:
-- Geography of crime
-- Crime science
-- Police demand
-- Open science
-- R, QGIS, GeoDa
 organizations:
-- name: Netherlands Institute for the Study of Crime and Law Enforcement
+- name: Amsterdam University Medical Center
  # url: "https://nscr.nl/"
-role: Postdoctoral researcher
+role: Research Software Consultant
+interests:
+- Open science
+- FAIR data
+- Teaching open software
+- Reproducible research
 social:
 - icon: envelope
   icon_pack: fas
@@ -45,6 +44,9 @@ user_groups:
 - Visitors
 ---
 
-I am a postdoctoral researcher at the [Netherlands Institute for the Study of Crime and Law Enforcement](https://nscr.nl/). I am also a Visiting Research Fellow for the [Policy Evaluation and Research Unit](https://www.mmuperu.co.uk/) at [Manchester Metropolitan University](https://www.mmu.ac.uk/).
+I am currently working to promote and develop [open science practices](https://www.nwo.nl/en/open-science), [FAIR data](https://www.go-fair.org/fair-principles/), [reproducibility](https://www.ncbi.nlm.nih.gov/books/NBK547546/) and [software sustainability](https://www.software.ac.uk/) at the [Amsterdam UMC](https://www.amsterdamumc.org/en/organization/amsterdam-umc.htm).
 
-My research focuses on the spatial and temporal patterning of crime. I am also interested in promoting the use of open software -- mainly R -- through my [teaching](https://www.samlangton.info/project/r-teaching/) and [openly available code](https://github.com/langtonhugh). If you want to collaborate on an open data project, please [get in touch](http://localhost:4321/#contact)!
+This website provides an overview of my ongoing work. If you'd like to speak about any of the above, or collaborate on an open data project, please [get in touch](https://www.samlangton.info/#contact)!
+
+
+

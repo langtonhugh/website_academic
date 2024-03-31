@@ -1,7 +1,7 @@
 ---
 name: Samuel
 surname: Langton
-position: "Postdoc researcher"
+position: "Research Software Consultant"
 # address: "De Boelelaan 1077, 1081HV, Amsterdam"
 www: www.samlangton.info
 email: "slangton@nscr.nl"
@@ -35,13 +35,15 @@ tribble(
   brief_entries(what = Degree, when = Year, with = Institution)
 ```
 
-# Research employment
+# Research & university roles
 
 ```{r}
 research_emp <- tribble(
   ~ pos, ~ date, ~ instit, #~ details,
+    # umc
+  "Research Software Consultant", "2024-now", "Amsterdam University Medical Center, Amsterdam, Netherlands.",
   # nscr
-  "Postdoc Researcher", "2021-now", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
+  "Postdoc Researcher", "2021-2024", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
   # c("Evidence-based policing research group",
   #   "Examining emergency demand for police",
   #   ""),
@@ -60,9 +62,7 @@ research_emp %>%
 
 ```
 
-# Visiting positions
-
-```{r}
+```{r, eval = F}
 research_pos <- tribble(
   ~ pos, ~ date, ~ instit, #~ details,
   # peru
@@ -159,6 +159,8 @@ Policing Research", "University of Manchester seminar on bias in police records 
 ```{r}
 tribble(
   ~ date, ~ title, ~ where,
+    # ASReview
+   "2024", "An R tool for assessing inter-rater reliability after literature screening in ASReview", "ASReview User meeting, Utrecht University, the Netherlands.", 
   # Den Haag eenheid
    "2023", "Demand for police in the Netherlands", "The Hague regional police force, the Netherlands.", 
   # mod
@@ -181,7 +183,7 @@ tribble(
 tribble(
   ~ date, ~ job, ~ details,
   # NSC-R workshops
-  "2021-now", "Instructor and co-organiser, internal R workshops & Data Carpentry sessions", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
+  "2021-2024", "Instructor and co-organiser, internal R workshops & Data Carpentry sessions", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
   # QGIS Open Data Manchester
   "2020", "Lead instructor, A gentle introduction to QGIS", "Open Data Manchester webinar series (online).",
   # QGIS UofM
@@ -209,8 +211,8 @@ tribble(
 ```{r}
 tribble(
   ~ date, ~ job, ~ details,
-    "2023-now", "Natascha de Leeuw doctoral thesis (caretaker), Van aangifte tot opheldering en vervolging", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
-  "2021-now", "Tim Verlaan doctoral thesis, Demand and supply for policing in the Netherlands", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
+    "2023-2024", "Natascha de Leeuw doctoral thesis (caretaker), Van aangifte tot opheldering en vervolging", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
+  "2021-2024", "Tim Verlaan doctoral thesis, Demand and supply for policing in the Netherlands", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
     "2022-2023", "Aisling Connolly research internship, Temporal analysis of risky facilities and police demand", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands."
 ) %>% 
   brief_entries(job, date, details)
@@ -242,4 +244,4 @@ English (native), Dutch (A2-B1).
 
 # Other interests
 
-Running, outdoor swimming, freediving, playing bass guitar and learning piano.
+Running, outdoor swimming, bouldering, freediving, playing bass guitar and learning piano.

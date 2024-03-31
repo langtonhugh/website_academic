@@ -93,11 +93,11 @@ email = "slangton@nscr.nl"
 
 # Address
 # For country_code, use the 2-letter ISO code (see https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 )
-address = {street = "De Boelelaan 1077", city = "Amsterdam", postcode = "1081 HV", country = "Netherlands", country_code = "NL"}
+address = {street = "Van der Boechorststraat 7", city = "Amsterdam", postcode = "1081 BT", country = "Netherlands", country_code = "NL"}
 
 # Geographic coordinates
 # To get your coordinates, right-click on Google Maps and choose "What's here?". The coords will show up at the bottom.
-coordinates = {latitude = "52.3333902", longitude = "4.8672993"} 
+coordinates = {latitude = "52.3336055", longitude = "4.8624471"} 
 
 # Directions for visitors to locate you.
 #directions = "Enter Building 1 and take the stairs to Office 200 on Floor 2"
