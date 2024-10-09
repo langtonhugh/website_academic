@@ -13,7 +13,7 @@ education:
   - course: BSc in Social Policy with Government
     institution: London School of Economics, UK
     year: 2012
-email: "SLangton@nscr.nl"
+email: "s.h.langton@amsterdamumc.nl"
 organizations:
 - name: Amsterdam University Medical Center
  # url: "https://nscr.nl/"
@@ -47,6 +47,4 @@ user_groups:
 I am currently working to promote and develop [open science practices](https://www.nwo.nl/en/open-science), [FAIR data](https://www.go-fair.org/fair-principles/), [reproducibility](https://www.ncbi.nlm.nih.gov/books/NBK547546/) and [software sustainability](https://www.software.ac.uk/) at the [Amsterdam UMC](https://www.amsterdamumc.org/en/organization/amsterdam-umc.htm).
 
 This website provides an overview of my ongoing work. If you'd like to speak about any of the above, or collaborate on an open data project, please [get in touch](https://www.samlangton.info/#contact)!
-
-
 
