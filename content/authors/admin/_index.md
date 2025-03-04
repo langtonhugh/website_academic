@@ -1,7 +1,7 @@
 ---
 authors:
 - admin
-bio: I am currently working to promote and develop open science practices, FAIR data, reproducibility and software sustainability at the Amsterdam UMC.
+bio: I am a former researcher in crime and policing, and currently working to promote and develop open science practices and computational reproducibility at Amsterdam UMC.
 education:
   courses:
   - course: PhD in Criminology
@@ -13,23 +13,20 @@ education:
   - course: BSc in Social Policy with Government
     institution: London School of Economics, UK
     year: 2012
-email: "s.h.langton@amsterdamumc.nl"
+email: "langtonhugh@gmail.com"
 organizations:
 - name: Amsterdam University Medical Center
  # url: "https://nscr.nl/"
 role: Research Software Consultant
 interests:
 - Open science
-- FAIR data
+- R
 - Teaching open software
 - Reproducible research
 social:
 - icon: envelope
   icon_pack: fas
   link: '#contact'
-- icon: twitter
-  icon_pack: fab
-  link: https://twitter.com/sh_langton
 - icon: google-scholar
   icon_pack: ai
   link: https://scholar.google.com/citations?user=GKweRb8AAAAJ&hl=en&oi=ao
@@ -44,7 +41,7 @@ user_groups:
 - Visitors
 ---
 
-I am currently working to promote and develop [open science practices](https://www.nwo.nl/en/open-science), [FAIR data](https://www.go-fair.org/fair-principles/), [reproducibility](https://www.ncbi.nlm.nih.gov/books/NBK547546/) and [software sustainability](https://www.software.ac.uk/) at the [Amsterdam UMC](https://www.amsterdamumc.org/en/organization/amsterdam-umc.htm).
+I am a [former researcher in crime and policing](https://scholar.google.com/citations?user=GKweRb8AAAAJ&hl=en&oi=ao), currently working to promote and develop open science practices and computational reproducibility at the [Amsterdam University Medical Center](https://www.amsterdamumc.org/en/organization/amsterdam-umc.htm).
 
-This website provides an overview of my ongoing work. If you'd like to speak about any of the above, or collaborate on an open data project, please [get in touch](https://www.samlangton.info/#contact)!
+If you'd like to speak about any of the above, or collaborate on an open (crime) data project, please [get in touch](https://www.samlangton.info/#contact)!
 

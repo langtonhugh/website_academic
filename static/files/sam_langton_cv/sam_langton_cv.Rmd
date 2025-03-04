@@ -4,8 +4,7 @@ surname: Langton
 position: "Research Software Consultant"
 # address: "De Boelelaan 1077, 1081HV, Amsterdam"
 www: www.samlangton.info
-email: "slangton@nscr.nl"
-twitter: sh_langton
+email: "langtonhugh@gmail.com"
 github: langtonhugh
 date: "`r format(Sys.time(), '%B %Y')`"
 output: vitae::hyndman
@@ -159,8 +158,10 @@ Policing Research", "University of Manchester seminar on bias in police records 
 ```{r}
 tribble(
   ~ date, ~ title, ~ where,
-    # ASReview
-   "2024", "An R tool for assessing inter-rater reliability after literature screening in ASReview", "ASReview User meeting, Utrecht University, the Netherlands.", 
+  # ASReview 2
+   "2025", "An R tool for assessing inter-rater reliability after literature screening in ASReview (v2)", "ASReview User meeting, Utrecht University, the Netherlands.", 
+  # ASReview 1
+   "2024", "An R tool for assessing inter-rater reliability after literature screening in ASReview (v1)", "ASReview User meeting, Utrecht University, the Netherlands.", 
   # Den Haag eenheid
    "2023", "Demand for police in the Netherlands", "The Hague regional police force, the Netherlands.", 
   # mod
@@ -182,6 +183,12 @@ tribble(
 ```{r}
 tribble(
   ~ date, ~ job, ~ details,
+  # Git AUMC
+    "2025", "Introduction to version control using GitHub Desktop", "Department of Psychiatry, Amsterdam University Medical Center, Amsterdam, Netherlands.",
+  # RUM-UMC
+  "2024-2025", "Founder and lead instructor, R User Meet-up Amsterdam UMC", "Amsterdam University Medical Center, Amsterdam, Netherlands.",
+  # VU
+  "2024", "Helper, Software Carpentry sessions introducing Python and Git BASH", "Vrij Universiteit, Amsterdam, Netherlands.",
   # NSC-R workshops
   "2021-2024", "Instructor and co-organiser, internal R workshops & Data Carpentry sessions", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
   # QGIS Open Data Manchester
@@ -236,7 +243,9 @@ tribble(
 
 # Software experience
 
-R/RStudio, QGIS, Atlas.ti, GeoDa.
+Daily usage: R/RStudio, GitHub.
+
+Occasional usage: Python, Bash, QGIS, GeoDa.
 
 # Languages
 
