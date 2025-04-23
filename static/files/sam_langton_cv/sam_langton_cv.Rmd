@@ -1,7 +1,7 @@
 ---
 name: Samuel
 surname: Langton
-position: "Research Software Consultant"
+# position: "Research Software Consultant"
 # address: "De Boelelaan 1077, 1081HV, Amsterdam"
 www: www.samlangton.info
 email: "langtonhugh@gmail.com"
@@ -17,10 +17,6 @@ library(vitae)
 library(tibble)
 library(dplyr)
 ```
-
-<!-- # Summary -->
-
-<!-- This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary. This is summary.  -->
 
 # Education
 
@@ -40,7 +36,7 @@ tribble(
 research_emp <- tribble(
   ~ pos, ~ date, ~ instit, #~ details,
     # umc
-  "Research Software Consultant", "2024-now", "Amsterdam University Medical Center, Amsterdam, Netherlands.",
+  "Research Software Consultant", "2024-2025", "Amsterdam University Medical Center, Amsterdam, Netherlands.",
   # nscr
   "Postdoc Researcher", "2021-2024", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
   # c("Evidence-based policing research group",
@@ -72,12 +68,40 @@ research_pos %>%
   brief_entries(what = pos, when = date, with = instit) # , why = details
 ```
 
-<!-- # Peer-reviewed journal articles (in progress) -->
+# Open science teaching
 
-<!-- ```{r} -->
-<!-- # knitr::write_bib("papers.bib") -->
-<!-- bibliography_entries("in_progress_papers.bib") -->
-<!-- ``` -->
+```{r}
+tribble(
+  ~ date, ~ job, ~ details,
+  # Git AUMC
+    "2025", "Introduction to version control using GitHub Desktop", "Department of Psychiatry, Amsterdam University Medical Center, Amsterdam, Netherlands.",
+  # RUM-UMC
+  "2024-2025", "Founder and lead instructor, R User Meet-up Amsterdam UMC", "Amsterdam University Medical Center, Amsterdam, Netherlands.",
+  # VU
+  "2024", "Helper, Software Carpentry sessions introducing Python and Git BASH", "Vrij Universiteit, Amsterdam, Netherlands.",
+  # NSC-R workshops
+  "2021-2024", "Instructor and co-organiser, internal R workshops & Data Carpentry sessions", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
+  # QGIS Open Data Manchester
+  "2020", "Lead instructor, A gentle introduction to QGIS", "Open Data Manchester webinar series (online).",
+  # QGIS UofM
+  "2020", "Lead instructor, Introduction to QGIS", "Cathie Marsh Institute for Social Research, University of Manchester, Manchester, UK.",
+  # UK data service R
+  "2020", "Lead instructor, Data visualisation in R using crime data", "UK Data Service and Cathie Marsh Institute for Social Research, University of Manchester, Manchester, UK.",
+  # WMP RR
+  "2019", "Lead instructor, R for police forces", "West Midlands Police HQ, Birmingham, UK.",
+  # ESC 2019 R
+  "2019", "Instructor and co-organiser, Intro to R for criminologists", "European Society of Criminology conference, Ghent, Belgium.",
+  # Methods@Manchester summer school
+  "2018-2020", "Co-instructor, Getting started in R: an introduction to data analysis and visualisation", "Methods@Manchester Summer School, University of Manchester, Manchester, UK.",
+  # Cluster R UofM
+  "2019", "Instructor, Introduction to cluster analysis using R", "Cathie Marsh Institute for Social Research, University of Manchester,  Manchester, UK.",
+  # Carpentries instructor
+  "2018", "Instructor qualification", "Data and Software Carpentry",
+  # MMU R
+  "2018", "Lead instructor, Introduction to R", "Researcher Development Programme for Postgrads and Staff, Manchester Metropolitan University, Manchester, UK."
+) %>% 
+  brief_entries(job, date, details)
+```
 
 # Peer-reviewed journal articles
 
@@ -151,8 +175,6 @@ Policing Research", "University of Manchester seminar on bias in police records 
   brief_entries(title, date, where)
 ```
 
-\newpage
-
 # Invited presentations
 
 ```{r}
@@ -178,40 +200,7 @@ tribble(
   brief_entries(title, date, where)
 ```
 
-# Teaching
-
-```{r}
-tribble(
-  ~ date, ~ job, ~ details,
-  # Git AUMC
-    "2025", "Introduction to version control using GitHub Desktop", "Department of Psychiatry, Amsterdam University Medical Center, Amsterdam, Netherlands.",
-  # RUM-UMC
-  "2024-2025", "Founder and lead instructor, R User Meet-up Amsterdam UMC", "Amsterdam University Medical Center, Amsterdam, Netherlands.",
-  # VU
-  "2024", "Helper, Software Carpentry sessions introducing Python and Git BASH", "Vrij Universiteit, Amsterdam, Netherlands.",
-  # NSC-R workshops
-  "2021-2024", "Instructor and co-organiser, internal R workshops & Data Carpentry sessions", "Netherlands Institute for the Study of Crime and Law Enforcement, Amsterdam, Netherlands.",
-  # QGIS Open Data Manchester
-  "2020", "Lead instructor, A gentle introduction to QGIS", "Open Data Manchester webinar series (online).",
-  # QGIS UofM
-  "2020", "Lead instructor, Introduction to QGIS", "Cathie Marsh Institute for Social Research, University of Manchester, Manchester, UK.",
-  # UK data service R
-  "2020", "Lead instructor, Data visualisation in R using crime data", "UK Data Service and Cathie Marsh Institute for Social Research, University of Manchester, Manchester, UK.",
-  # WMP RR
-  "2019", "Lead instructor, R for police forces", "West Midlands Police HQ, Birmingham, UK.",
-  # ESC 2019 R
-  "2019", "Instructor and co-organiser, Intro to R for criminologists", "European Society of Criminology conference, Ghent, Belgium.",
-  # Methods@Manchester summer school
-  "2018-2020", "Co-instructor, Getting started in R: an introduction to data analysis and visualisation", "Methods@Manchester Summer School, University of Manchester, Manchester, UK.",
-  # Cluster R UofM
-  "2019", "Instructor, Introduction to cluster analysis using R", "Cathie Marsh Institute for Social Research, University of Manchester,  Manchester, UK.",
-  # Carpentries instructor
-  "2018", "Instructor qualification", "Data and Software Carpentry",
-  # MMU R
-  "2018", "Lead instructor, Introduction to R", "Researcher Development Programme for Postgrads and Staff, Manchester Metropolitan University, Manchester, UK."
-) %>% 
-  brief_entries(job, date, details)
-```
+\newpage
 
 # Supervision
 
@@ -251,6 +240,6 @@ Occasional usage: Python, Bash, QGIS, GeoDa.
 
 English (native), Dutch (A2-B1).
 
-# Other interests
+# Other activities
 
-Running, outdoor swimming, bouldering, freediving, playing bass guitar and learning piano.
+Running, rock climbing, outdoor swimming, freediving, playing bass and acoustic guitar.

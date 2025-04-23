@@ -1,7 +1,7 @@
 ---
 authors:
 - admin
-bio: I am a former researcher in crime and policing, and currently working to promote and develop open science practices and computational reproducibility at Amsterdam UMC.
+bio: I am a former researcher and current open science enthusiast. I've recently finished a project on promoting and developing open science practices and computational reproducibility at Amsterdam UMC. 
 education:
   courses:
   - course: PhD in Criminology
@@ -14,13 +14,14 @@ education:
     institution: London School of Economics, UK
     year: 2012
 email: "langtonhugh@gmail.com"
-organizations:
-- name: Amsterdam University Medical Center
+#organizations:
+#- name: Amsterdam University Medical Center
  # url: "https://nscr.nl/"
-role: Research Software Consultant
+#role: Research Software Consultant
 interests:
 - Open science
 - R
+- Spatial data and visualisation
 - Teaching open software
 - Reproducible research
 social:
@@ -41,7 +42,9 @@ user_groups:
 - Visitors
 ---
 
-I am a [former researcher in crime and policing](https://scholar.google.com/citations?user=GKweRb8AAAAJ&hl=en&oi=ao), currently working to promote and develop open science practices and computational reproducibility at the [Amsterdam University Medical Center](https://www.amsterdamumc.org/en/organization/amsterdam-umc.htm).
 
-If you'd like to speak about any of the above, or collaborate on an open (crime) data project, please [get in touch](https://www.samlangton.info/#contact)!
+
+I am a [former postdoc researcher](https://scholar.google.com/citations?user=GKweRb8AAAAJ&hl=en&oi=ao) and current open science enthusiast. I've recently finished [a project](https://zenodo.org/records/15095022) on promoting and developing open science practices and computational reproducibility at [Amsterdam University Medical Center](https://www.amsterdamumc.org/en/organization/amsterdam-umc.htm). 
+
+If you'd like to speak about any of the above, or collaborate on an open data project, please [get in touch](https://www.samlangton.info/#contact)!
 

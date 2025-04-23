@@ -5,7 +5,7 @@ tags:
 - R
 - RStudio
 - teaching
-date: "2023-12-01T00:00:00Z"
+date: "2025-04-01T00:00:00Z"
 
 # Optional external URL for project (replaces project detail page).
 external_link: ""
@@ -28,7 +28,11 @@ url_video: ""
 slides: example
 ---
 
-I have taught a number of courses using R and RStudio, including the development of teaching material both on my own and with colleagues.
+I have designed and taught a number of courses using R and RStudio, including the development of teaching material both on my own and with colleagues.
+
+## Amsterdam University Medical Center
+
+I founded the first organisation-wide R user group. You can read more about our activities on the dedicated [website](https://langtonhugh.github.io/rum_umc/). I also designed and taught a pilot workshop on GitHub Desktop. The material is available on [GitHub](https://github.com/langtonhugh/github_desktop). I gave a number of presentations about how to improve reproducibility in R, which are also [openly available](https://github.com/langtonhugh/reprod_r). 
 
 ## NSCR
 
