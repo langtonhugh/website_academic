@@ -5,12 +5,3876 @@
     <link>/tag/spatial/</link>
       <atom:link href="/tag/spatial/index.xml" rel="self" type="application/rss+xml" />
     <description>spatial</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 17 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 14 Jun 2025 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_3.png</url>
       <title>spatial</title>
       <link>/tag/spatial/</link>
     </image>
+    
+    <item>
+      <title>Handling and visualising archive data from Strava</title>
+      <link>/post/strava/</link>
+      <pubDate>Sat, 14 Jun 2025 00:00:00 +0000</pubDate>
+      <guid>/post/strava/</guid>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;/rmarkdown-libs/lightable/lightable.css&#34; rel=&#34;stylesheet&#34; /&gt;
+
+
+&lt;p&gt;Some time last year, I rage quit Strava. I’d had enough of the terrible data visualisations, the distraction of comparing split times, and the pestering over upgrading to a paid subscription. All I really cared about was how far I had ran, for how long, and where I had been. Since then, I first moved to an open source alternative called &lt;a href=&#34;https://play.google.com/store/apps/details?id=de.tadris.fitness&amp;amp;hl=en_GB&amp;amp;pli=1&#34;&gt;FitoTrack&lt;/a&gt; (which I would recommend as a simple alternative). I’ve now settled with recording time for each run using my Casio, and then swiftly moving on with my life.&lt;/p&gt;
+&lt;p&gt;But, before quitting Strava, I downloaded all my archived data. As much as I’d like to rise above obsessions over split times and average pace, I do like to look back on specific runs and check PBs periodically. When you archive Strava data, you get given your activities as individual GPX files. These files are of course utterly useless to most people, which I suppose deters many users from deleting the app. But with a fairly simple R script, you can get decent summaries of all your activities and mess around with data visualisation to your heart’s content. This is what I’ve begun to do myself, making all my &lt;a href=&#34;https://github.com/langtonhugh/fstrava&#34;&gt;data and code openly available&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The main challenge of the whole project was simply extracting the relevant information from the GPX files and compiling that information into a usable data frame. Printing the raw text contents of the files looks like absolute garbage, and without much experience of XML files, a lot my explorations were trial and error. I settled on using functions from the &lt;code&gt;XML&lt;/code&gt; package to parse the files and extract information about each activity. This included stuff like the name (e.g., “Morning run”) and type (e.g., running, cycling), but importantly, also ping-level information collected throughout the duration of the activity, like the time of day, coordinate location and elevation at one or two second intervals.&lt;/p&gt;
+&lt;p&gt;The preliminary stuff at the top of script just loads in the packages required, lists all my GPX files in the data folder, and then imports them into RStudio using &lt;code&gt;htmlTreeParse()&lt;/code&gt;. If you clone/download the repository and throw your GPX files into the &lt;code&gt;data&lt;/code&gt; folder, you should be able to replicate everything shown here for your own data.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Load libraries.
+library(pbapply)
+library(XML)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(ggplot2)
+library(leaflet)
+library(maptiles)
+library(tidyterra)
+library(sf)
+
+# Settings.
+theme_set(theme_minimal())
+
+# Create list of all the gpx files that we have.
+file_names &amp;lt;- paste0(
+  &amp;quot;data/&amp;quot;,
+  list.files(&amp;quot;data&amp;quot;, pattern = glob2rx(&amp;quot;*.gpx&amp;quot;))
+)
+
+# Read them all into a list.
+raw_list &amp;lt;- pblapply(file_names, function(x){
+  htmlTreeParse(file = x, useInternalNodes = TRUE)
+}
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can then execute the main parsing function: extracting the nodes we need and then sticking them together into a list of usable data frames. The final step uses &lt;code&gt;st_as_sf()&lt;/code&gt; to convert the coordinates into an &lt;code&gt;sf&lt;/code&gt; object, so we can easily calculate distances and create maps later on. I had around 200 activities and this took 1-2 monutes to run on a standard laptop.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Function for extracting the relevant information.
+acts_clean &amp;lt;- list()
+
+for (i in seq_along(raw_list)){
+  
+# Extract name.
+name &amp;lt;- xpathSApply(doc = raw_list[[i]], path = &amp;quot;//trk/name&amp;quot;, fun = xmlValue)
+
+# Extract type.
+type &amp;lt;- xpathSApply(doc = raw_list[[i]], path = &amp;quot;//trk/type&amp;quot;, fun = xmlValue)
+
+# Extract coords.
+coords &amp;lt;- xpathSApply(doc = raw_list[[i]], path = &amp;quot;//trkpt&amp;quot;, fun = xmlAttrs)
+
+# Extract elevation.
+elevation &amp;lt;- xpathSApply(doc = raw_list[[i]], path = &amp;quot;//trkpt/ele&amp;quot;, fun = xmlValue)
+
+# Extract time.
+time &amp;lt;- xpathSApply(doc = raw_list[[i]], path = &amp;quot;//trkpt/time&amp;quot;, fun = xmlValue)
+
+# Extract information into a dataframe.
+gpx_sf &amp;lt;- data.frame(
+  act_name    = name,
+  act_type    = type,
+  timestamps  = time,
+  lat         = coords[&amp;quot;lat&amp;quot;, ],
+  lon         = coords[&amp;quot;lon&amp;quot;, ],
+  ele         = as.numeric(elevation)
+) %&amp;gt;% 
+  mutate(timestamps = ymd_hms(timestamps),
+         week_lub   = week(timestamps),
+         year_lub   = year(timestamps)) %&amp;gt;% 
+  st_as_sf(coords = c(x = &amp;quot;lon&amp;quot;, y = &amp;quot;lat&amp;quot;), crs = 4326) 
+
+# Insert each into the list.
+acts_clean[[i]] &amp;lt;- gpx_sf
+
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Each element of the &lt;code&gt;acts_clean&lt;/code&gt; list is a single activity, with each row representing a single GPS ping recording the time and elevation.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;View(acts_clean[[1]])&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can easily bind all the data frames together. At this point, I subset my activities for running-only. You can of course keep all your different activity types, but remember that later on, you will need to &lt;code&gt;group_by(act_type)&lt;/code&gt; to get equivalent summaries, or use some equivalent loop or facet.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Bind together for broad summaries, then filter for runs only.
+acts_sf &amp;lt;- bind_rows(acts_clean, .id = &amp;quot;act_id&amp;quot;) %&amp;gt;% 
+  filter(act_type == &amp;quot;running&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The final key data handling step before we can begin summarising activities is spatial. At the moment, the ping-level data consists of coordinate locations recorded at one or two second intervals throughout the activity. But for mapping visuals and to easily calculate distances, we need to convert these series of points to lines. I do this by computing a &lt;a href=&#34;https://pro.arcgis.com/en/pro-app/latest/tool-reference/analysis/union.htm&#34;&gt;union&lt;/a&gt; on each activity and casting the output to a linestring.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Convert coords to lines.
+acts_lines_sf &amp;lt;- acts_sf %&amp;gt;% 
+  group_by(act_id) %&amp;gt;% 
+  summarize(do_union=FALSE) %&amp;gt;% 
+  st_cast(&amp;quot;LINESTRING&amp;quot;) %&amp;gt;% 
+  ungroup() &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can then calculate the distance of each line using &lt;code&gt;st_length()&lt;/code&gt;. I made this a standalone dataframe, with no spatial information, so it can be quickly joined back later on.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Create df of the distances.
+acts_dist_df &amp;lt;- acts_lines_sf %&amp;gt;% 
+  mutate(total_km = round(as.numeric(st_length(.)/1000), 2)) %&amp;gt;% 
+  as_tibble() %&amp;gt;% 
+  select(-geometry) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Okay, now we can actually calculate something… Here, we create usable ping-level information for each activity, including joining back the distance data.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Ping-level data for every activity. 
+pings_df &amp;lt;- acts_sf %&amp;gt;% 
+  as_tibble() %&amp;gt;% 
+  group_by(act_id) %&amp;gt;% 
+  mutate(
+  act_time   = max(timestamps)-min(timestamps),
+  act_mins   = as.numeric(act_time, units = &amp;quot;mins&amp;quot;),
+  ele_gain   = sum(diff(ele)[diff(ele) &amp;gt; 0])
+) %&amp;gt;% 
+  ungroup() %&amp;gt;% 
+  left_join(acts_dist_df) %&amp;gt;%
+  mutate(av_km_time = act_mins/total_km,
+         act_id     = as.numeric(act_id),
+         ping_id    = 1:nrow(.))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This allows us to make a usable descriptive summary table in one go.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Summary table example.
+sum_table_df &amp;lt;- pings_df %&amp;gt;% 
+  mutate(av_km_time = round(av_km_time, 2),
+         act_mins   = round(act_mins, 2),
+         ele_gain   = round(ele_gain, 0),
+         act_date = format(date(timestamps), &amp;quot;%d.%m.%y&amp;quot;)) %&amp;gt;% 
+  select(act_id, act_date, act_name, act_mins, total_km, ele_gain, av_km_time) %&amp;gt;% 
+  distinct(act_id, .keep_all = TRUE) %&amp;gt;% 
+  arrange(act_id) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This table pretty much contains most information I would ever want from my archive data. &lt;a href=&#34;https://github.com/langtonhugh/fstrava/blob/main/scripts/activities_explore.R&#34;&gt;The script&lt;/a&gt; should be adaptable with your own data to add or remove anything.&lt;/p&gt;
+&lt;div style=&#34;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:800px; &#34;&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+act_id
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+act_date
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+act_name
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+act_mins
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+total_km
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+ele_gain
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+av_km_time
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+16.02.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Stretford - Jackson’s Boat - Home
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+31.62
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.72
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.53
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+19.02.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Water Park - Jackson’s Boat - Home
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+33.83
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.09
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.56
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+05.03.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Blair Witch Vibes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28.70
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.33
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.38
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+10.03.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Stretford meander
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30.28
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.72
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.29
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+13.03.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Misjudged bridge situation
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+35.18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.74
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.22
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+20.03.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Charlie Don’t Surf
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+34.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.51
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+32
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+24.03.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Final run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+55.65
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10.04
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.54
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+33
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+30.03.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Jog back from test centre
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18.28
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.59
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.09
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+34
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+31.03.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Misjudged bridge situation 2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+81.28
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11.58
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.02
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+35
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+04.04.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Blimey
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38.70
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.81
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.96
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+36
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+10.04.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Morning run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21.53
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.37
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.93
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+18.04.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+First city run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29.10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.67
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.13
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+22.04.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Vondel run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25.65
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.03
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+29.04.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+33.52
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.89
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+11.05.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+23.25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.82
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.82
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+66
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+03.09.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Tide’s out legs out
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37.65
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.66
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.65
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+67
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+11.09.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hilbre
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+43.98
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.14
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+68
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+19.09.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26.12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.51
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.74
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+69
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+25.09.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39.10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.51
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.21
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+30.09.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Roman
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16.53
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.58
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.62
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+74
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+03.10.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+PT
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20.52
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.43
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.98
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+75
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+04.10.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Night 5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.05
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.80
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+76
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+08.10.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Following the lights
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24.43
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.74
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+77
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+09.10.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+PT
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25.25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.06
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+78
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+13.10.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Night 5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29.10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.72
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.09
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+79
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+16.10.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27.18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.98
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.55
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+80
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+18.10.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+PT
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+32.12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.07
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+19
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.33
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+81
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+21.10.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Evening 10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+52.63
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10.10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+36
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.21
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+83
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+25.10.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+PT
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30.67
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.06
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+19
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.06
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+84
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+27.10.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+PT
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+31.10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.09
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+29.10.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sloterplas 10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+51.30
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10.25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+86
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+01.11.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41.12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.13
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+87
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+04.11.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+PT
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28.37
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.06
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.61
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+88
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+06.11.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Porridge
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+87.33
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16.26
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+32
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.37
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+89
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+10.11.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt recovery
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+23.27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.38
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.31
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+90
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+17.11.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26.73
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.43
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+19
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.92
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+93
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+30.11.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Knee test
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30.93
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.94
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.21
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+94
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+09.12.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Kneed knees
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25.55
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.06
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.05
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+95
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+16.12.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Dune run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30.78
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.52
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.58
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+96
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+24.12.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Explore
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29.60
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.92
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+108
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.55
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+97
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+26.12.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hill climber
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28.97
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.09
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+156
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.69
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+98
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+28.12.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Explore turbo
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+22.70
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.94
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+111
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.76
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+99
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+02.01.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+PT
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20.13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.46
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.82
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+100
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+05.01.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26.92
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.17
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+101
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+09.01.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Combo
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+47.17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.95
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.27
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+102
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+16.01.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sloterplas 10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+53.55
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10.19
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.26
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+103
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+20.01.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Night run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27.38
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.35
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+104
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+22.01.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24.73
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+19
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.71
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+105
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+26.01.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Evening run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26.87
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.12
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+106
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+29.01.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sloterplas 10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+50.10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10.16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+32
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.93
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+107
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+03.02.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Evening run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25.07
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.91
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+108
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+06.02.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24.77
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.04
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+19
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.91
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+109
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+08.02.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40.47
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.08
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.01
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+110
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+12.02.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West 10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+53.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10.48
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.08
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+111
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+15.02.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+22.57
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.03
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.49
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+112
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+23.02.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Lunchtime run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.97
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+113
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+25.02.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Morning run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24.75
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.14
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.82
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+115
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+28.02.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41.42
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.03
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.16
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+116
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+01.03.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Lunchtime run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.05
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.68
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+117
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+12.03.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Spring
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25.32
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+19
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.91
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+119
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+16.03.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sandy
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24.68
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.03
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.91
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+120
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+19.03.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40.48
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.78
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.20
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+121
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+21.03.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Morning run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15.33
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.38
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+124
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+27.03.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Evening run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16.43
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.02
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.44
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+125
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+06.04.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Back to it
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+33.18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.40
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+19
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.18
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+126
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+15.04.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afternoon run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12.15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.35
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+128
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+18.04.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sloterplas 10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+51.45
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10.19
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.05
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+129
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+20.04.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Cake
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+36.10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.09
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.09
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+130
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+27.04.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.02
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.02
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+134
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+08.05.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sunday run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20.52
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.02
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+135
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+09.05.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Morning run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12.73
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.55
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.99
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+136
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+14.05.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West meander
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29.15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.80
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.03
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+138
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+16.05.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+PT
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13.20
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.36
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.59
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+139
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+20.05.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12.77
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.63
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.85
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+140
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+21.05.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sloterplas 10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+53.88
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10.08
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.35
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+141
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+25.05.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27.37
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.46
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+143
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+29.05.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25.25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.81
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+144
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+04.06.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+35.17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.94
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+145
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+12.06.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21.60
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.51
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.79
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+147
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+10.07.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Urban trail series
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+36.95
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.45
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.73
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+148
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+27.07.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Heal the heel
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17.55
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.40
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.16
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+150
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+01.08.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24.92
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.34
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.74
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+151
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+05.08.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Alright then
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24.47
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.04
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.85
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+152
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+10.08.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Toasty
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30.18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.03
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.01
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+153
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+14.08.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37.05
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.13
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+154
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+19.08.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Westish
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25.50
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.44
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.69
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+155
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+22.08.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Blimey
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26.57
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+129
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.18
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+156
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+26.08.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Jogaroo
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15.70
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.47
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.52
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+157
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+01.09.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West 10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+48.28
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10.12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.77
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+158
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+11.09.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Pancakes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+63.33
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12.86
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+32
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.92
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+159
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+18.09.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Summit attempt
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26.00
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+116
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.25
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+160
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+25.09.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Paros 5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+33.90
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.79
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+163
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.85
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+161
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+29.09.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West (pt1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.08
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.64
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.93
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+162
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+29.09.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West (pt2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+35.65
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.37
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.84
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+163
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+03.10.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+22.20
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.62
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.81
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+164
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+06.10.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+43.18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+31
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.25
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+165
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+08.10.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Ginger cake
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85.43
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16.56
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+47
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.16
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+166
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+13.10.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21.02
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.34
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.84
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+167
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+16.10.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Amsterdam half
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+106.42
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21.98
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+70
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.84
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+168
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+30.10.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+22.60
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.46
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.07
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+169
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+02.11.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37.88
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.81
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.85
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+170
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+05.11.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24.57
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.81
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+171
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+09.11.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+31.20
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.31
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+172
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+11.11.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+22.20
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.48
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.96
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+173
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+15.11.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28.17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.09
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.63
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+174
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+15.11.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West finish
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.64
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+175
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+19.11.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+31.87
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.06
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+19
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.51
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+176
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+22.11.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+PT
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40.63
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.06
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.76
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+177
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+24.11.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+31.65
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.88
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.38
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+178
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+27.11.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West 10ish
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+56.10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.00
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+179
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+03.12.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West 10ish
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+50.78
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10.92
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.65
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+180
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+06.12.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West meander
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29.72
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.81
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+181
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+08.12.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West / Sloterplas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38.80
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.72
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+182
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+13.12.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Canal loop
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28.10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.71
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+19
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.92
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+183
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+17.12.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West / Sloterplas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+53.48
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10.98
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+32
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.87
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+184
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+23.12.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Wirral
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+82.30
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15.64
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+33
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.26
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+185
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+28.12.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Windy bastard
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+23.65
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.67
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+152
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.06
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+186
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+30.12.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+LPA (pt1)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.35
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.33
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+45
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.53
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+187
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+30.12.22
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+LPA (pt2)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+49.72
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9.77
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+139
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.09
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+188
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+04.01.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21.73
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.74
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.59
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+189
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+08.01.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Egmond half
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+113.02
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21.85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+89
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.17
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+190
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+18.01.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Back to it
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16.02
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.44
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.66
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+191
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+22.01.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28.62
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.75
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.02
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+194
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+04.02.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16.45
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.99
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.12
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+195
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+05.02.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+PT
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40.65
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.38
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.51
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+196
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+08.02.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18.65
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.41
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+197
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+12.02.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12.08
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.95
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+198
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+07.03.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run return
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17.60
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.92
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.49
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+199
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+11.03.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29.93
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.36
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.71
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+200
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+16.03.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Westish
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25.85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.87
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.40
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+201
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+19.03.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Urban pickle trail series
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+101.98
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.03
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.27
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+202
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+23.03.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Bats
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.32
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.38
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.02
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+203
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+26.03.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Zandvoort
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72.52
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12.35
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+102
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.87
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+204
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+24.07.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Chart
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.77
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+205
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+24.07.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Chart 2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.78
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.63
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+207
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+03.10.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Come on, legs
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15.75
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.53
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+208
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+07.10.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Michael Ketone
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16.98
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.02
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.62
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+16.10.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Jacket
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24.25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.31
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.63
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+17.10.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+PT
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.43
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.20
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.56
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+21.10.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Bugger this
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15.73
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.02
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.21
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+25.10.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+The Heel Strike’s Back
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20.13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.91
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+30.10.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rembrandt run
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21.63
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.32
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.01
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+04.11.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+21 bathrooms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27.33
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.56
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.99
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+25.11.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Room for a small one
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10.87
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.17
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+29.11.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Lil one
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11.18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.77
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.32
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+24.12.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sherry
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15.85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.50
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+88
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.34
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+27.12.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Audacity
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30.80
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.75
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+50
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.48
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+30.12.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Beachy
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10.27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.01
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.11
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+02.01.24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Watery bastard
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26.77
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.79
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.59
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+04.01.24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Mr. Motivator
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12.70
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.65
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.79
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+06.01.24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Jumbo
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15.60
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.44
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.39
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+10.01.24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nippy
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12.52
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.61
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.80
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+14.01.24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+No Vondelling
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25.70
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.01
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+18.01.24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Cheese
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25.58
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.38
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.84
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+22.01.24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Kattenlaan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21.25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.23
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.02
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+19
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+24.01.24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Vondel thingy
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24.72
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.08
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.87
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+27.01.24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Strava are bastards. Moving to FitoTrack
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15.28
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.76
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.54
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;That said, the table is quite boring. The fun of going through GPX file hell is in the visualisation that follows. I haven’t spent too long on this yet, so there’s plenty more fun to be had. Before getting into the &lt;code&gt;ggplot2&lt;/code&gt; chunks, I tidy up the summary table by renaming some columns and pivoting everything to long format. The pivot makes visualisation &lt;em&gt;way easier&lt;/em&gt; later on.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Initial handling before visuals.
+sum_visuals_df &amp;lt;- sum_table_df %&amp;gt;% 
+  select(-act_date, -act_name) %&amp;gt;% 
+  rename(`Time (mins)`   = act_mins,
+         `Distance (km)` = total_km,
+         `Elevation gain (metres)` = ele_gain,
+         `Km pace (mins)`          = av_km_time) %&amp;gt;% 
+  pivot_longer(cols = -act_id,
+               names_to = &amp;quot;measure&amp;quot;,
+               values_to = &amp;quot;value&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now we can easily create some visual summaries of distributions across different metrics.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Histograms.
+ggplot(data = sum_visuals_df) +
+  geom_histogram(mapping = aes(x = value), bins = 20, fill = &amp;quot;#fc4c02&amp;quot;) +
+  facet_wrap(~measure, scales = &amp;quot;free&amp;quot;, ncol = 4) +
+  labs(y = NULL, x = NULL) +
+  theme(
+    axis.text.y = element_blank()
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/langtonhugh/fstrava/refs/heads/main/blog_material/histograms.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;Or plot the individual points.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Scatter plot of individual runs.
+ggplot(data = sum_visuals_df) +
+  geom_jitter(mapping = aes(x = value, y = 0),
+               colour = &amp;quot;#fc4c02&amp;quot;, alpha = 0.5) +
+  facet_wrap(~measure, scales = &amp;quot;free&amp;quot;, nrow = 4) +
+  labs(y = NULL, x = NULL) +
+  theme(
+    axis.text.y = element_blank(),
+    panel.grid.major.y = element_blank()
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/langtonhugh/fstrava/refs/heads/main/blog_material/scatter.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;We can also select individual runs to visualise things like elevation. Here, I choose a run manually by name because it was a good example of a hilly one. Be careful doing this if you tend to use the same name for different runs. You can always use the activity id numeric variable instead.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# elevation.
+pings_df %&amp;gt;% 
+  filter(act_name == &amp;quot;Hill climber &amp;quot;) %&amp;gt;% # Name has to be distinct!
+  ggplot(data = .) +
+  geom_ribbon(mapping = aes(x = ping_id, ymin = min(ele)*0.5, ymax = ele, group = 1),
+              fill = &amp;quot;#fc4c02&amp;quot;, linewidth = 1) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_blank()
+  ) +
+  labs(y = &amp;quot;Elevation (metres)&amp;quot;, x = NULL)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/langtonhugh/fstrava/refs/heads/main/blog_material/elevation.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;To make some decent maps, we need to convert the point-level pings to lines. I do this for every activity in one go using &lt;code&gt;group_by()&lt;/code&gt;, followed by a spatial union and then ensuring the output is treated as a line.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Single activity map.
+# First, create the linestrings from the points.
+acts_line_sf &amp;lt;- acts_sf %&amp;gt;% 
+  group_by(act_id) %&amp;gt;% 
+  summarize(do_union=FALSE) %&amp;gt;% 
+  st_cast(&amp;quot;LINESTRING&amp;quot;) %&amp;gt;% 
+  ungroup()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;While not necessary, to give our activity maps some geographic context, I obtain &lt;a href=&#34;https://carto.com/basemaps&#34;&gt;CARTO base maps&lt;/a&gt; for each activity. You could do this for every activity in one go, but for now I just do it for a single example.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Single activity selection for examples.
+act_i &amp;lt;- 1
+
+# Second, obtain the osm layer for a single activity.
+osm_posit &amp;lt;- get_tiles(
+  filter(acts_line_sf, act_id == act_i),
+  provider = &amp;quot;CartoDB.Positron&amp;quot;,
+  crop = FALSE, zoom = 15
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then we can get mapping. I do a small wrangle beforehand because at some point I might add activity statistics to each individual map.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# First we subset to get the label and keep the other data.
+act1_sf &amp;lt;- acts_line_sf %&amp;gt;% 
+  filter(act_id == act_i) %&amp;gt;% 
+  mutate(act_id = as.numeric(act_id)) %&amp;gt;% 
+  left_join(sum_table_df, by = &amp;quot;act_id&amp;quot;) # get info back.
+
+# Map it out.
+ggplot(data = act1_sf) +
+  geom_spatraster_rgb(data = osm_posit) +
+  geom_sf(colour = &amp;quot;#fc4c02&amp;quot;, linewidth = 1) +
+  theme_void()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/langtonhugh/fstrava/refs/heads/main/blog_material/static_map.png&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;We can also, with a little effort, create an interactive map to better replicate the behaviour of the Strava app maps.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Interactive map for single activity.
+single_leaf &amp;lt;- leaflet() %&amp;gt;%
+  addProviderTiles(providers$CartoDB.Positron , group = &amp;quot;Positron (default)&amp;quot;) %&amp;gt;%
+  addProviderTiles(providers$OpenStreetMap    , group = &amp;quot;Open Street Map&amp;quot;) %&amp;gt;%
+  addProviderTiles(providers$Esri.WorldImagery, group = &amp;quot;World Imagery (satellite)&amp;quot;) %&amp;gt;% 
+  addPolylines(data = acts_line_sf %&amp;gt;% 
+                 filter(act_id == act_i),
+               color = &amp;quot;#fc4c02&amp;quot;) %&amp;gt;% 
+  addLayersControl(
+    baseGroups = c(
+      &amp;quot;Positron (default)&amp;quot;,
+      &amp;quot;Open Street Map&amp;quot;,
+      &amp;quot;World Imagery (satellite)&amp;quot;
+    ))&lt;/code&gt;&lt;/pre&gt;
+&lt;iframe src=&#34;github.com/langtonhugh/fstrava/blob/main/blog_material/single_leaf.html&#34; width=&#34;672&#34; height=&#34;400px&#34; data-external=&#34;1&#34;&gt;
+&lt;/iframe&gt;
+</description>
+    </item>
     
     <item>
       <title>The spatial patterning of emergency demand for police services. A scoping review.</title>

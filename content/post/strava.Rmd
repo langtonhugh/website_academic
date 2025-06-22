@@ -1,0 +1,325 @@
+---
+title: "Handling and visualising archive data from Strava"
+output: html_document
+tags:
+- strava
+- GPX
+- r
+- spatial
+date: '2025-06-21'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = T, echo = T, warning = F, message = F, eval = F)
+library(kableExtra)
+library(dplyr)
+library(flextable)
+```
+
+Some time last year, I rage quit Strava. I'd had enough of the terrible data visualisations, the distraction of comparing split times, and the pestering over upgrading to a paid subscription. All I really cared about was how far I had ran, for how long, and where I had been. Since then, I first moved to an open source alternative called [FitoTrack](https://play.google.com/store/apps/details?id=de.tadris.fitness&hl=en_GB&pli=1) (which I would recommend as a simple alternative). I've now settled with recording time for each run using my Casio, and then swiftly moving on with my life.
+
+But, before quitting Strava, I downloaded all my archived data. As much as I'd like to rise above obsessions over split times and average pace, I do like to look back on specific runs and check PBs periodically. When you archive Strava data, you get given your activities as individual GPX files. These files are of course utterly useless to most people, which I suppose deters many users from deleting the app. But with a fairly simple R script, you can get decent summaries of all your activities and mess around with data visualisation to your heart's content. This is what I've begun to do myself, making all my [data and code openly available](https://github.com/langtonhugh/fstrava).
+
+The main challenge of the whole project was simply extracting the relevant information from the GPX files and compiling that information into a usable data frame. Printing the raw text contents of the files looks like absolute garbage, and without much experience of XML files, a lot my explorations were trial and error. I settled on using functions from the `XML` package to parse the files and extract information about each activity. This included stuff like the name (e.g., "Morning run") and type (e.g., running, cycling), but importantly, also ping-level information collected throughout the duration of the activity, like the time of day, coordinate location and elevation at one or two second intervals.
+
+The preliminary stuff at the top of script just loads in the packages required, lists all my GPX files in the data folder, and then imports them into RStudio using `htmlTreeParse()`. If you clone/download the repository and throw your GPX files into the `data` folder, you should be able to replicate everything shown here for your own data.
+
+
+
+```{r}
+# Load libraries.
+library(pbapply)
+library(XML)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(ggplot2)
+library(leaflet)
+library(maptiles)
+library(tidyterra)
+library(sf)
+
+# Settings.
+theme_set(theme_minimal())
+
+# Create list of all the gpx files that we have.
+file_names <- paste0(
+  "data/",
+  list.files("data", pattern = glob2rx("*.gpx"))
+)
+
+# Read them all into a list.
+raw_list <- pblapply(file_names, function(x){
+  htmlTreeParse(file = x, useInternalNodes = TRUE)
+}
+)
+```
+
+We can then execute the main parsing function: extracting the nodes we need and then sticking them together into a list of usable data frames. The final step uses `st_as_sf()` to convert the coordinates into an `sf` object, so we can easily calculate distances and create maps later on. I had around 200 activities and this took 1-2 monutes to run on a standard laptop.
+
+```{r}
+# Function for extracting the relevant information.
+acts_clean <- list()
+
+for (i in seq_along(raw_list)){
+  
+# Extract name.
+name <- xpathSApply(doc = raw_list[[i]], path = "//trk/name", fun = xmlValue)
+
+# Extract type.
+type <- xpathSApply(doc = raw_list[[i]], path = "//trk/type", fun = xmlValue)
+
+# Extract coords.
+coords <- xpathSApply(doc = raw_list[[i]], path = "//trkpt", fun = xmlAttrs)
+
+# Extract elevation.
+elevation <- xpathSApply(doc = raw_list[[i]], path = "//trkpt/ele", fun = xmlValue)
+
+# Extract time.
+time <- xpathSApply(doc = raw_list[[i]], path = "//trkpt/time", fun = xmlValue)
+
+# Extract information into a dataframe.
+gpx_sf <- data.frame(
+  act_name    = name,
+  act_type    = type,
+  timestamps  = time,
+  lat         = coords["lat", ],
+  lon         = coords["lon", ],
+  ele         = as.numeric(elevation)
+) %>% 
+  mutate(timestamps = ymd_hms(timestamps),
+         week_lub   = week(timestamps),
+         year_lub   = year(timestamps)) %>% 
+  st_as_sf(coords = c(x = "lon", y = "lat"), crs = 4326) 
+
+# Insert each into the list.
+acts_clean[[i]] <- gpx_sf
+
+}
+```
+
+Each element of the `acts_clean` list is a single activity, with each row representing a single GPS ping recording the time and elevation.
+
+```{r}
+View(acts_clean[[1]])
+```
+
+We can easily bind all the data frames together. At this point, I subset my activities for running-only. You can of course keep all your different activity types, but remember that later on, you will need to `group_by(act_type)` to get equivalent summaries, or use some equivalent loop or facet.
+
+```{r}
+# Bind together for broad summaries, then filter for runs only.
+acts_sf <- bind_rows(acts_clean, .id = "act_id") %>% 
+  filter(act_type == "running")
+```
+
+The final key data handling step before we can begin summarising activities is spatial. At the moment, the ping-level data consists of coordinate locations recorded at one or two second intervals throughout the activity. But for mapping visuals and to easily calculate distances, we need to convert these series of points to lines. I do this by computing a [union](https://pro.arcgis.com/en/pro-app/latest/tool-reference/analysis/union.htm) on each activity and casting the output to a linestring.
+
+```{r}
+# Convert coords to lines.
+acts_lines_sf <- acts_sf %>% 
+  group_by(act_id) %>% 
+  summarize(do_union=FALSE) %>% 
+  st_cast("LINESTRING") %>% 
+  ungroup() 
+```
+
+We can then calculate the distance of each line using `st_length()`. I made this a standalone dataframe, with no spatial information, so it can be quickly joined back later on.
+
+```{r}
+# Create df of the distances.
+acts_dist_df <- acts_lines_sf %>% 
+  mutate(total_km = round(as.numeric(st_length(.)/1000), 2)) %>% 
+  as_tibble() %>% 
+  select(-geometry) 
+```
+
+Okay, now we can actually calculate something... Here, we create usable ping-level information for each activity, including joining back the distance data.
+
+```{r}
+# Ping-level data for every activity. 
+pings_df <- acts_sf %>% 
+  as_tibble() %>% 
+  group_by(act_id) %>% 
+  mutate(
+  act_time   = max(timestamps)-min(timestamps),
+  act_mins   = as.numeric(act_time, units = "mins"),
+  ele_gain   = sum(diff(ele)[diff(ele) > 0])
+) %>% 
+  ungroup() %>% 
+  left_join(acts_dist_df) %>%
+  mutate(av_km_time = act_mins/total_km,
+         act_id     = as.numeric(act_id),
+         ping_id    = 1:nrow(.))
+
+```
+
+This allows us to make a usable descriptive summary table in one go.
+
+```{r}
+# Summary table example.
+sum_table_df <- pings_df %>% 
+  mutate(av_km_time = round(av_km_time, 2),
+         act_mins   = round(act_mins, 2),
+         ele_gain   = round(ele_gain, 0),
+         act_date = format(date(timestamps), "%d.%m.%y")) %>% 
+  select(act_id, act_date, act_name, act_mins, total_km, ele_gain, av_km_time) %>% 
+  distinct(act_id, .keep_all = TRUE) %>% 
+  arrange(act_id) 
+```
+
+This table pretty much contains most information I would ever want from my archive data. [The script](https://github.com/langtonhugh/fstrava/blob/main/scripts/activities_explore.R) should be adaptable with your own data to add or remove anything.
+
+```{r, echo = F, eval = T}
+sum_table_df <- read.csv("https://raw.githubusercontent.com/langtonhugh/fstrava/refs/heads/main/blog_material/sum_table.csv")
+```
+
+```{r, eval = T, echo = F}
+sum_table_df %>% 
+  # slice(1:10) %>% 
+  select(-X) %>% 
+  kable() %>%
+  scroll_box(width = "800px", height = "400px")
+```
+
+That said, the table is quite boring. The fun of going through GPX file hell is in the visualisation that follows. I haven't spent too long on this yet, so there's plenty more fun to be had. Before getting into the `ggplot2` chunks, I tidy up the summary table by renaming some columns and pivoting everything to long format. The pivot makes visualisation _way easier_ later on.
+
+```{r}
+# Initial handling before visuals.
+sum_visuals_df <- sum_table_df %>% 
+  select(-act_date, -act_name) %>% 
+  rename(`Time (mins)`   = act_mins,
+         `Distance (km)` = total_km,
+         `Elevation gain (metres)` = ele_gain,
+         `Km pace (mins)`          = av_km_time) %>% 
+  pivot_longer(cols = -act_id,
+               names_to = "measure",
+               values_to = "value")
+```
+
+Now we can easily create some visual summaries of distributions across different metrics.
+
+```{r}
+# Histograms.
+ggplot(data = sum_visuals_df) +
+  geom_histogram(mapping = aes(x = value), bins = 20, fill = "#fc4c02") +
+  facet_wrap(~measure, scales = "free", ncol = 4) +
+  labs(y = NULL, x = NULL) +
+  theme(
+    axis.text.y = element_blank()
+  )
+```
+
+```{r, eval = T, echo = F}
+knitr::include_graphics("https://raw.githubusercontent.com/langtonhugh/fstrava/refs/heads/main/blog_material/histograms.png")
+```
+
+Or plot the individual points.
+
+```{r}
+# Scatter plot of individual runs.
+ggplot(data = sum_visuals_df) +
+  geom_jitter(mapping = aes(x = value, y = 0),
+               colour = "#fc4c02", alpha = 0.5) +
+  facet_wrap(~measure, scales = "free", nrow = 4) +
+  labs(y = NULL, x = NULL) +
+  theme(
+    axis.text.y = element_blank(),
+    panel.grid.major.y = element_blank()
+  )
+```
+
+```{r, eval = T, echo = F, out.height="30%"}
+knitr::include_graphics("https://raw.githubusercontent.com/langtonhugh/fstrava/refs/heads/main/blog_material/scatter.png")
+```
+
+We can also select individual runs to visualise things like elevation. Here, I choose a run manually by name because it was a good example of a hilly one. Be careful doing this if you tend to use the same name for different runs. You can always use the activity id numeric variable instead.
+
+```{r}
+# elevation.
+pings_df %>% 
+  filter(act_name == "Hill climber ") %>% # Name has to be distinct!
+  ggplot(data = .) +
+  geom_ribbon(mapping = aes(x = ping_id, ymin = min(ele)*0.5, ymax = ele, group = 1),
+              fill = "#fc4c02", linewidth = 1) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_blank()
+  ) +
+  labs(y = "Elevation (metres)", x = NULL)
+```
+
+```{r, eval = T, echo = F}
+knitr::include_graphics("https://raw.githubusercontent.com/langtonhugh/fstrava/refs/heads/main/blog_material/elevation.png")
+```
+
+To make some decent maps, we need to convert the point-level pings to lines. I do this for every activity in one go using `group_by()`, followed by a spatial union and then ensuring the output is treated as a line.
+
+```{r}
+# Single activity map.
+# First, create the linestrings from the points.
+acts_line_sf <- acts_sf %>% 
+  group_by(act_id) %>% 
+  summarize(do_union=FALSE) %>% 
+  st_cast("LINESTRING") %>% 
+  ungroup()
+```
+
+While not necessary, to give our activity maps some geographic context, I obtain [CARTO base maps](https://carto.com/basemaps) for each activity. You could do this for every activity in one go, but for now I just do it for a single example.
+
+
+```{r}
+# Single activity selection for examples.
+act_i <- 1
+
+# Second, obtain the osm layer for a single activity.
+osm_posit <- get_tiles(
+  filter(acts_line_sf, act_id == act_i),
+  provider = "CartoDB.Positron",
+  crop = FALSE, zoom = 15
+  )
+```
+
+Then we can get mapping. I do a small wrangle beforehand because at some point I might add activity statistics to each individual map.
+
+```{r}
+# First we subset to get the label and keep the other data.
+act1_sf <- acts_line_sf %>% 
+  filter(act_id == act_i) %>% 
+  mutate(act_id = as.numeric(act_id)) %>% 
+  left_join(sum_table_df, by = "act_id") # get info back.
+
+# Map it out.
+ggplot(data = act1_sf) +
+  geom_spatraster_rgb(data = osm_posit) +
+  geom_sf(colour = "#fc4c02", linewidth = 1) +
+  theme_void()
+```
+
+```{r, eval = T, echo = F}
+knitr::include_graphics("https://raw.githubusercontent.com/langtonhugh/fstrava/refs/heads/main/blog_material/static_map.png")
+```
+
+We can also, with a little effort, create an interactive map to better replicate the behaviour of the Strava app maps. You can view the output of the below codechunk [here](https://rpubs.com/langton_/fstrava_leaflet).
+
+```{r}
+act1_sf <- sf::st_read
+```
+
+```{r}
+# Interactive map for single activity.
+single_leaf <- leaflet() %>%
+  addProviderTiles(providers$CartoDB.Positron , group = "Positron (default)") %>%
+  addProviderTiles(providers$OpenStreetMap    , group = "Open Street Map") %>%
+  addProviderTiles(providers$Esri.WorldImagery, group = "World Imagery (satellite)") %>% 
+  addPolylines(data = acts_line_sf %>% 
+                 filter(act_id == act_i),
+               color = "#fc4c02") %>% 
+  addLayersControl(
+    baseGroups = c(
+      "Positron (default)",
+      "Open Street Map",
+      "World Imagery (satellite)"
+    ))
+```
+
+For now, that's that! Please feel free to make use of the code for your own archived data, and if you have any suggestions or make any further progress, feel free to get in touch,
