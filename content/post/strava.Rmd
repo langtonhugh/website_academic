@@ -16,13 +16,13 @@ library(dplyr)
 library(flextable)
 ```
 
-Some time last year, I rage quit Strava. I'd had enough of the terrible data visualisations, the distraction of comparing split times, and the pestering over upgrading to a paid subscription. All I really cared about was how far I had ran, for how long, and where I had been. Since then, I first moved to an open source alternative called [FitoTrack](https://play.google.com/store/apps/details?id=de.tadris.fitness&hl=en_GB&pli=1) (which I would recommend as a simple alternative). I've now settled with recording time for each run using my Casio, and then swiftly moving on with my life.
+Some time last year, I deleted Strava. All I really cared about was how far I had ran, for how long, and where I had been. But you can get all of this information from open source alternatives like [FitoTrack](https://play.google.com/store/apps/details?id=de.tadris.fitness&hl=en_GB&pli=1) without handing over all your data to a commercial enterprise, or being bombarded with ads for a paid subscription. I've now settled with recording time for each run using my Casio, and then swiftly moving on with my life.
 
-But, before quitting Strava, I downloaded all my archived data. As much as I'd like to rise above obsessions over split times and average pace, I do like to look back on specific runs and check PBs periodically. When you archive Strava data, you get given your activities as individual GPX files. These files are of course utterly useless to most people, which I suppose deters many users from deleting the app. But with a fairly simple R script, you can get decent summaries of all your activities and mess around with data visualisation to your heart's content. This is what I've begun to do myself, making all my [data and code openly available](https://github.com/langtonhugh/fstrava).
+Before quitting Strava, I downloaded all my archived data. As much as I'd like to rise above obsessions over split times and average pace, I do like to look back on specific runs and check PBs periodically. When you archive Strava data, you get given your activities as individual GPX files. These files are of course pretty useless on their own, which I suppose deters many users from deleting the app. But with a fairly simple R script, you can get decent summaries of all your activities and mess around with data visualisation to your heart's content. This is what I've begun to do myself, making all my [data and code openly available](https://github.com/langtonhugh/fstrava).
 
 The main challenge of the whole project was simply extracting the relevant information from the GPX files and compiling that information into a usable data frame. Printing the raw text contents of the files looks like absolute garbage, and without much experience of XML files, a lot my explorations were trial and error. I settled on using functions from the `XML` package to parse the files and extract information about each activity. This included stuff like the name (e.g., "Morning run") and type (e.g., running, cycling), but importantly, also ping-level information collected throughout the duration of the activity, like the time of day, coordinate location and elevation at one or two second intervals.
 
-The preliminary stuff at the top of script just loads in the packages required, lists all my GPX files in the data folder, and then imports them into RStudio using `htmlTreeParse()`. If you clone/download the repository and throw your GPX files into the `data` folder, you should be able to replicate everything shown here for your own data.
+The preliminary stuff at the top of script just loads in the packages required, lists all my GPX files in the data folder, and then imports them into RStudio using `htmlTreeParse()`. If you clone/download [the repository](https://github.com/langtonhugh/fstrava) and throw your GPX files into the `data` folder, you should be able to replicate everything shown here for your own data.
 
 
 
@@ -100,10 +100,6 @@ acts_clean[[i]] <- gpx_sf
 
 Each element of the `acts_clean` list is a single activity, with each row representing a single GPS ping recording the time and elevation.
 
-```{r}
-View(acts_clean[[1]])
-```
-
 We can easily bind all the data frames together. At this point, I subset my activities for running-only. You can of course keep all your different activity types, but remember that later on, you will need to `group_by(act_type)` to get equivalent summaries, or use some equivalent loop or facet.
 
 ```{r}
@@ -169,6 +165,8 @@ sum_table_df <- pings_df %>%
 
 This table pretty much contains most information I would ever want from my archive data. [The script](https://github.com/langtonhugh/fstrava/blob/main/scripts/activities_explore.R) should be adaptable with your own data to add or remove anything.
 
+<br>
+
 ```{r, echo = F, eval = T}
 sum_table_df <- read.csv("https://raw.githubusercontent.com/langtonhugh/fstrava/refs/heads/main/blog_material/sum_table.csv")
 ```
@@ -178,10 +176,12 @@ sum_table_df %>%
   # slice(1:10) %>% 
   select(-X) %>% 
   kable() %>%
-  scroll_box(width = "800px", height = "400px")
+  scroll_box(width = "900px", height = "400px")
 ```
 
-That said, the table is quite boring. The fun of going through GPX file hell is in the visualisation that follows. I haven't spent too long on this yet, so there's plenty more fun to be had. Before getting into the `ggplot2` chunks, I tidy up the summary table by renaming some columns and pivoting everything to long format. The pivot makes visualisation _way easier_ later on.
+<br>
+
+That said, the table is quite boring. The fun derived from going through GPX file hell is in the visualisation that follows. I haven't spent too long on this yet, so there's plenty more fun to be had. Before getting into the `ggplot2` chunks, I tidy up the summary table by renaming some columns and pivoting everything to long format. The pivot makes visualisation much easier later on.
 
 ```{r}
 # Initial handling before visuals.
@@ -228,7 +228,7 @@ ggplot(data = sum_visuals_df) +
   )
 ```
 
-```{r, eval = T, echo = F, out.height="30%"}
+```{r, eval = T, echo = F, out.width = "500px"}
 knitr::include_graphics("https://raw.githubusercontent.com/langtonhugh/fstrava/refs/heads/main/blog_material/scatter.png")
 ```
 
@@ -279,7 +279,7 @@ osm_posit <- get_tiles(
   )
 ```
 
-Then we can get mapping. I do a small wrangle beforehand because at some point I might add activity statistics to each individual map.
+Then we can get mapping. I do a small wrangle beforehand, first to subset the lines for my example activity, and then to join back the activity information. The latter step means I can make a joint graphic of both the map and the activity information (e.g., distance, pace) at some point later on, if wanted.
 
 ```{r}
 # First we subset to get the label and keep the other data.
@@ -295,31 +295,30 @@ ggplot(data = act1_sf) +
   theme_void()
 ```
 
-```{r, eval = T, echo = F}
+```{r, eval = T, echo = F, warning = F, message = F}
 knitr::include_graphics("https://raw.githubusercontent.com/langtonhugh/fstrava/refs/heads/main/blog_material/static_map.png")
 ```
 
-We can also, with a little effort, create an interactive map to better replicate the behaviour of the Strava app maps. You can view the output of the below codechunk [here](https://rpubs.com/langton_/fstrava_leaflet).
+We can also, with a little effort, create an interactive map using `leaflet`. Here, I just use the basic Open Street Map layer, but you can add other (prettier) layers and an interactive legend with a bit more fiddling. You can view a more elaborate example [here](https://rpubs.com/langton_/fstrava_leaflet).
 
-```{r}
-act1_sf <- sf::st_read
+```{r, echo = F, message = F, warning = F, eval = T}
+library(sf)
+library(leaflet)
+library(maptiles)
+library(tidyterra)
+
+# Load in single activity sf example.
+act1_sf <- st_read("https://github.com/langtonhugh/fstrava/raw/refs/heads/main/blog_material/acts_sf.gpkg", quiet = TRUE)
 ```
 
-```{r}
+```{r, eval = T, results='asis'}
 # Interactive map for single activity.
-single_leaf <- leaflet() %>%
-  addProviderTiles(providers$CartoDB.Positron , group = "Positron (default)") %>%
-  addProviderTiles(providers$OpenStreetMap    , group = "Open Street Map") %>%
-  addProviderTiles(providers$Esri.WorldImagery, group = "World Imagery (satellite)") %>% 
-  addPolylines(data = acts_line_sf %>% 
-                 filter(act_id == act_i),
-               color = "#fc4c02") %>% 
-  addLayersControl(
-    baseGroups = c(
-      "Positron (default)",
-      "Open Street Map",
-      "World Imagery (satellite)"
-    ))
+leaflet() %>%
+  addTiles() %>%
+  addPolylines(data = act1_sf,
+               color = "#fc4c02") 
 ```
 
-For now, that's that! Please feel free to make use of the code for your own archived data, and if you have any suggestions or make any further progress, feel free to get in touch,
+<br>
+
+For now, that's that! Please feel free to make use of the code for your own archived data, and if you have any suggestions or make any further progress, feel free to get in touch.
