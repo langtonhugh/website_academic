@@ -38,6 +38,36 @@
     <loc>/tag/teaching/</loc>
     <lastmod>2025-04-01T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/publication-type/1/</loc>
+    <lastmod>2025-03-03T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/aumc/</loc>
+    <lastmod>2025-03-03T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/authors/</loc>
+    <lastmod>2025-03-03T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publication/repro_amc/</loc>
+    <lastmod>2025-03-03T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/medical/</loc>
+    <lastmod>2025-03-03T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publication_types/</loc>
+    <lastmod>2025-03-03T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publication/</loc>
+    <lastmod>2025-03-03T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/reproducibility/</loc>
+    <lastmod>2025-03-03T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/author/samuel-langton/</loc>
+    <lastmod>2025-03-03T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/author/thomas-pronk/</loc>
+    <lastmod>2025-03-03T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/tag/bbc/</loc>
     <lastmod>2024-03-31T00:00:00+00:00</lastmod>
   </url><url>
@@ -53,7 +83,7 @@
     <loc>/publication-type/2/</loc>
     <lastmod>2024-01-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/authors/</loc>
+    <loc>/publication/internal_demand/</loc>
     <lastmod>2024-01-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/crime/</loc>
@@ -62,25 +92,28 @@
     <loc>/tag/demand/</loc>
     <lastmod>2024-01-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/author/linda-schoonmade/</loc>
+    <loc>/author/harold-van-voornveld/</loc>
+    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/internal/</loc>
+    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/author/john-duivenvoorden/</loc>
+    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/author/koen-kraassenberg/</loc>
+    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/author/natascha-de-leeuw/</loc>
     <lastmod>2024-01-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/policing/</loc>
     <lastmod>2024-01-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/publication_types/</loc>
-    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/publication/</loc>
-    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/author/samuel-langton/</loc>
-    <lastmod>2024-01-17T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/author/stijn-ruiter/</loc>
     <lastmod>2024-01-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/publication/scoping_crimescience/</loc>
+    <loc>/tag/time/</loc>
     <lastmod>2024-01-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/calls-for-service/</loc>
@@ -118,6 +151,12 @@
   </url><url>
     <loc>/tag/visualisation/</loc>
     <lastmod>2023-12-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/author/linda-schoonmade/</loc>
+    <lastmod>2023-10-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publication/scoping_crimescience/</loc>
+    <lastmod>2023-10-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/author/aisling-connolly/</loc>
     <lastmod>2023-07-01T00:00:00+00:00</lastmod>

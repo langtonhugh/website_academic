@@ -3936,6 +3936,14 @@ leaflet() %&amp;gt;%
     </item>
     
     <item>
+      <title>Computational reproducibility at Amsterdam University Medical Center.</title>
+      <link>/publication/repro_amc/</link>
+      <pubDate>Mon, 03 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>/publication/repro_amc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Scraping &#39;most read&#39; stories from the BBC</title>
       <link>/post/bbc_scrapes/</link>
       <pubDate>Sun, 31 Mar 2024 00:00:00 +0000</pubDate>
@@ -4146,10 +4154,10 @@ King Charles diagnosed with cancer
     </item>
     
     <item>
-      <title>The spatial patterning of emergency demand for police services. A scoping review.</title>
-      <link>/publication/scoping_crimescience/</link>
+      <title>After the incident. Measuring organizational (internal) police demand.</title>
+      <link>/publication/internal_demand/</link>
       <pubDate>Wed, 17 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>/publication/scoping_crimescience/</guid>
+      <guid>/publication/internal_demand/</guid>
       <description></description>
     </item>
     
@@ -4182,6 +4190,14 @@ King Charles diagnosed with cancer
       <link>/publication/gms_tvp/</link>
       <pubDate>Fri, 01 Dec 2023 00:00:00 +0000</pubDate>
       <guid>/publication/gms_tvp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>The spatial patterning of emergency demand for police services. A scoping review.</title>
+      <link>/publication/scoping_crimescience/</link>
+      <pubDate>Tue, 10 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>/publication/scoping_crimescience/</guid>
       <description></description>
     </item>
     

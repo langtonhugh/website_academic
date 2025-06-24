@@ -5,7 +5,7 @@
     <link>/publication/</link>
       <atom:link href="/publication/index.xml" rel="self" type="application/rss+xml" />
     <description>Publications</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 17 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 03 Mar 2025 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_hu347c2c227070d4d829f6f2e71f22c263_2514_512x512_fill_lanczos_center_3.png</url>
       <title>Publications</title>
@@ -13,10 +13,18 @@
     </image>
     
     <item>
-      <title>The spatial patterning of emergency demand for police services. A scoping review.</title>
-      <link>/publication/scoping_crimescience/</link>
+      <title>Computational reproducibility at Amsterdam University Medical Center.</title>
+      <link>/publication/repro_amc/</link>
+      <pubDate>Mon, 03 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>/publication/repro_amc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>After the incident. Measuring organizational (internal) police demand.</title>
+      <link>/publication/internal_demand/</link>
       <pubDate>Wed, 17 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>/publication/scoping_crimescience/</guid>
+      <guid>/publication/internal_demand/</guid>
       <description></description>
     </item>
     
@@ -33,6 +41,14 @@
       <link>/publication/gms_tvp/</link>
       <pubDate>Fri, 01 Dec 2023 00:00:00 +0000</pubDate>
       <guid>/publication/gms_tvp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>The spatial patterning of emergency demand for police services. A scoping review.</title>
+      <link>/publication/scoping_crimescience/</link>
+      <pubDate>Tue, 10 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>/publication/scoping_crimescience/</guid>
       <description></description>
     </item>
     
